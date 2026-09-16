@@ -1,0 +1,286 @@
+{
+  "tested_at": "2026-09-16T11:23:37.928Z",
+  "results": [
+    {
+      "name": "Binance spot",
+      "base": "https://data-api.binance.vision",
+      "path": "/api/v3/ticker/24hr",
+      "parameters": {
+        "symbol": "BTCUSDT"
+      },
+      "status": "ok",
+      "received_at": "2026-09-16T11:22:01.941Z",
+      "response_shape": "object"
+    },
+    {
+      "name": "Binance CVD",
+      "base": "https://data-api.binance.vision",
+      "path": "/api/v3/klines",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "interval": "1m",
+        "limit": 2
+      },
+      "status": "ok",
+      "received_at": "2026-09-16T11:22:01.899Z",
+      "response_shape": "list"
+    },
+    {
+      "name": "Coinbase BTC price",
+      "base": "https://api.exchange.coinbase.com",
+      "path": "/products/BTC-USD/ticker",
+      "parameters": {},
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "name": "Coinbase USDT price",
+      "base": "https://api.exchange.coinbase.com",
+      "path": "/products/USDT-USD/ticker",
+      "parameters": {},
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30003 milliseconds with 0 bytes received"
+    },
+    {
+      "name": "Coinbase trades",
+      "base": "https://api.exchange.coinbase.com",
+      "path": "/products/BTC-USD/trades",
+      "parameters": {
+        "limit": 5
+      },
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "name": "Binance OI",
+      "base": "https://fapi.binance.com",
+      "path": "/fapi/v1/openInterest",
+      "parameters": {
+        "symbol": "BTCUSDT"
+      },
+      "status": "ok",
+      "received_at": "2026-09-16T11:22:11.240Z",
+      "response_shape": "object"
+    },
+    {
+      "name": "Binance OI history",
+      "base": "https://fapi.binance.com",
+      "path": "/futures/data/openInterestHist",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "period": "5m",
+        "limit": 2
+      },
+      "status": "ok",
+      "received_at": "2026-09-16T11:22:19.885Z",
+      "response_shape": "list"
+    },
+    {
+      "name": "Binance mark/funding",
+      "base": "https://fapi.binance.com",
+      "path": "/fapi/v1/premiumIndex",
+      "parameters": {
+        "symbol": "BTCUSDT"
+      },
+      "status": "ok",
+      "received_at": "2026-09-16T11:22:30.315Z",
+      "response_shape": "object"
+    },
+    {
+      "name": "Deribit perpetual",
+      "base": "https://www.deribit.com/api/v2",
+      "path": "/public/ticker",
+      "parameters": {
+        "instrument_name": "BTC-PERPETUAL"
+      },
+      "status": "ok",
+      "received_at": "2026-09-16T11:22:38.629Z",
+      "response_shape": "object"
+    },
+    {
+      "name": "Deribit options inventory",
+      "base": "https://www.deribit.com/api/v2",
+      "path": "/public/get_instruments",
+      "parameters": {
+        "currency": "any",
+        "kind": "option",
+        "expired": "false"
+      },
+      "status": "ok",
+      "received_at": "2026-09-16T11:22:50.494Z",
+      "response_shape": "object",
+      "btc_contracts": 1468,
+      "sample_option_ticker": "BTC-17SEP26-68000-C",
+      "greeks": "verified"
+    },
+    {
+      "name": "Deribit futures inventory",
+      "base": "https://www.deribit.com/api/v2",
+      "path": "/public/get_instruments",
+      "parameters": {
+        "currency": "BTC",
+        "kind": "future",
+        "expired": "false"
+      },
+      "status": "ok",
+      "received_at": "2026-09-16T11:23:05.165Z",
+      "response_shape": "object",
+      "sample_dated_ticker": "BTC-17SEP26"
+    }
+  ],
+  "http_audit": [
+    {
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=2",
+      "requested_at": 1789557711.2921357,
+      "received_at": 1789557721.899937,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=BTCUSDT",
+      "requested_at": 1789557711.172001,
+      "received_at": 1789557721.9411976,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/openInterest?symbol=BTCUSDT",
+      "requested_at": 1789557721.9413276,
+      "received_at": 1789557731.2404377,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=5m&limit=2",
+      "requested_at": 1789557731.2406611,
+      "received_at": 1789557739.885728,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+      "requested_at": 1789557711.172442,
+      "received_at": 1789557741.186858,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
+      "requested_at": 1789557711.4325533,
+      "received_at": 1789557741.4417496,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/premiumIndex?symbol=BTCUSDT",
+      "requested_at": 1789557739.8858433,
+      "received_at": 1789557750.315359,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=5",
+      "requested_at": 1789557721.9000604,
+      "received_at": 1789557751.908637,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL",
+      "requested_at": 1789557750.3154783,
+      "received_at": 1789557758.6298687,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/get_instruments?currency=any&kind=option&expired=false",
+      "requested_at": 1789557758.629991,
+      "received_at": 1789557770.494571,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+      "requested_at": 1789557743.187181,
+      "received_at": 1789557773.1963828,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
+      "requested_at": 1789557743.4472744,
+      "received_at": 1789557773.4577253,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-17SEP26-68000-C",
+      "requested_at": 1789557770.4949281,
+      "received_at": 1789557777.9094973,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=5",
+      "requested_at": 1789557753.908882,
+      "received_at": 1789557783.9183686,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/get_instruments?currency=BTC&kind=future&expired=false",
+      "requested_at": 1789557777.9153938,
+      "received_at": 1789557785.1656933,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-17SEP26",
+      "requested_at": 1789557785.1657696,
+      "received_at": 1789557792.0496123,
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+      "requested_at": 1789557777.1966178,
+      "received_at": 1789557807.2078261,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
+      "requested_at": 1789557777.4579475,
+      "received_at": 1789557807.4677546,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30003 milliseconds with 0 bytes received"
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=5",
+      "requested_at": 1789557787.918614,
+      "received_at": 1789557817.9276185,
+      "http_status": null,
+      "status": "error",
+      "error": "curl: curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received"
+    }
+  ],
+  "note": "Actual network responses. Error is not evidence of endpoint deprecation; inspect HTTP/timeout reason."
+}

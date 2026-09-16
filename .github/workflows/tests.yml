@@ -1,0 +1,26 @@
+name: Tests
+on:
+  push:
+    paths:
+      - 'btc_collector/**'
+      - 'tests/**'
+      - 'scripts/**'
+      - '.github/workflows/**'
+      - 'pyproject.toml'
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Run BTC collector tests
+        run: |
+          python -m unittest discover -s tests -p 'test_core.py' -v
+          python -m unittest discover -s tests -p 'test_btc_http.py' -v
+          python -m unittest discover -s tests -p 'test_integration.py' -v
+          python -m unittest discover -s tests -p 'test_options.py' -v

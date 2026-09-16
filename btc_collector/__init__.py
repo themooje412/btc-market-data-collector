@@ -1,0 +1,1 @@
+"""BTC Market Data Collector."""
