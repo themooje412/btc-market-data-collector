@@ -8,6 +8,7 @@ from pathlib import Path
 import time
 from .core import WINDOWS, epoch, iso, metric, missing, oi_changes, premium
 from .http import Client
+from .market_structure import collect_market_structure
 from .options import collect_options
 from .sources import (BINANCE, COINBASE, DERIBIT, FUTURES, binance_spot, coinbase_spot,
                       get_binance_cvd,get_coinbase_cvd,binance_futures,deribit_perpetual,deribit_dated_futures,safe)
@@ -21,10 +22,17 @@ def failed_options(reason):
     return {'status':'error','contracts':[],'active_contract_count':None,'by_expiry':{},'reason':reason,
             **{k:missing(DERIBIT,reason) for k in ('total_oi','gross_gex_proxy','put_wall','call_wall','gamma_concentrations',
                                                    'net_gex_estimate_usd_per_1pct','gex_by_strike','zero_gamma_flip',
+                                                   'zero_gamma_flip_repriced','zero_gamma_flip_cumulative_strike',
                                                    'spot_to_gamma_flip_pct','gamma_regime','selected_flip_crossing_direction',
                                                    'crossing_count')},
             'dealer_gex_estimate':{'status':'error','reason':reason},
             'headline_surface':{k:missing(DERIBIT,reason) for k in ('atm_iv','risk_reversal_25d')}}
+
+def failed_market_structure(reason):
+    fields=('vwap','poc','vah','val','value_area_volume_pct','spot_location','distance_to_vwap_pct',
+            'distance_to_poc_pct','distance_to_vah_pct','distance_to_val_pct')
+    return {'status':'error','reason':reason,**{window:{'status':'error',**{k:missing(BINANCE,reason) for k in fields}}
+            for window in ('utc_session','rolling_24h','rolling_7d')}}
 
 def age_metrics(obj,now,path='',ages=None):
     if ages is None: ages={}
@@ -48,6 +56,8 @@ def collect(root,client=None,max_pages=600,option_budget=720):
     errors=[]
     try: state=read_json(root/'state/coinbase.json',{})
     except Exception as e: state={}; errors.append('State reset after read error: '+str(e))
+    try: market_state=read_json(root/'state/market_structure.json',{})
+    except Exception as e: market_state={}; errors.append('Market-structure state reset after read error: '+str(e))
     history=read_history(root/'history.csv')
     fail_cvd=lambda src,e:{w:missing(src,e,unit='BTC') for w in WINDOWS}
     tasks={
@@ -59,8 +69,10 @@ def collect(root,client=None,max_pages=600,option_budget=720):
       'binance_futures':(lambda:binance_futures(client),lambda e:failed_futures(FUTURES,e)),
       'deribit_futures':(lambda:deribit_perpetual(client),lambda e:failed_futures(DERIBIT,e)),
       'dated_futures':(lambda:deribit_dated_futures(client),lambda e:missing(DERIBIT,e)),
-      'options':(lambda:collect_options(client,option_budget),failed_options)}
-    with ThreadPoolExecutor(max_workers=9) as pool:
+      'options':(lambda:collect_options(client,option_budget),failed_options),
+      'market_structure':(lambda:collect_market_structure(client,end,market_state,type(client) is Client),
+                          lambda e:(failed_market_structure(e),market_state))}
+    with ThreadPoolExecutor(max_workers=10) as pool:
         jobs={name:pool.submit(safe,fn,fallback) for name,(fn,fallback) in tasks.items()}
         results={name:job.result() for name,job in jobs.items()}
     bn,db=results['binance_futures'],results['deribit_futures']; opt=results['options']
@@ -68,7 +80,7 @@ def collect(root,client=None,max_pages=600,option_budget=720):
     for venue,data in (('binance',bn),('deribit',db)):
         points=history_points(history,venue)+data.pop('historical_points',[])
         oi[venue]={'current':data['oi'],'changes':oi_changes(data['oi'],points,venue+' same-market OI')}
-    cb_cvd,new_state,cb_details=results['coinbase_cvd']
+    cb_cvd,new_state,cb_details=results['coinbase_cvd']; market_structure,new_market_state=results['market_structure']
     now=time.time()
     premiums=premium(results['coinbase_spot'],results['binance_spot'],results['usdt_usd'])
     snapshot={'schema_version':'1.1.0','timestamp':iso(now),'collection_started_at':iso(started),
@@ -83,6 +95,7 @@ def collect(root,client=None,max_pages=600,option_budget=720):
                  'deribit':{k:v for k,v in db.items() if k not in ('oi','funding','basis')}},
       'open_interest':oi,'funding':{'binance':bn['funding'],'deribit':db['funding']},
       'basis':{'binance':bn['basis'],'deribit':db['basis'],'dated_futures':results['dated_futures']},
+      'market_structure':market_structure,
       'options':opt,'put_wall':opt['put_wall'],'call_wall':opt['call_wall'],
       'atm_iv':opt['headline_surface']['atm_iv'],'skew_25d':opt['headline_surface']['risk_reversal_25d'],
       'gamma_concentrations':opt['gamma_concentrations'],
@@ -91,7 +104,7 @@ def collect(root,client=None,max_pages=600,option_budget=720):
                  'oi_warning':'Binance BTCUSDT and Deribit BTC-PERPETUAL are separate markets, not total global BTC OI',
                  'freshness_policy':'Age is measured at publication. Consumer must also compare timestamp to current UTC; do not trust cached age alone.'}}
     snapshot['data_age']=age_metrics(snapshot,now)
-    counts={'ok':0,'error':0,'stale':0,'not_applicable':0}
+    counts={'ok':0,'error':0,'stale':0,'not_applicable':0,'warming_up':0}
     def count(obj):
         if isinstance(obj,dict):
             if 'value' in obj and obj.get('status') in counts: counts[obj['status']]+=1
@@ -99,7 +112,7 @@ def collect(root,client=None,max_pages=600,option_budget=720):
         elif isinstance(obj,list):
             for v in obj: count(v)
     count(snapshot); snapshot['quality']['metric_status_counts']=counts
-    snapshot['status']='partial' if counts['error'] or counts['stale'] else 'ok'
+    snapshot['status']='partial' if counts['error'] or counts['stale'] or counts['warming_up'] else 'ok'
     if counts['ok']==0: snapshot['status']='error'
     # Full option inventory stays downloadable; the raw analysis URL stays compact.
     chain=copy.deepcopy(snapshot['options'])
@@ -124,6 +137,7 @@ def collect(root,client=None,max_pages=600,option_budget=720):
     write_json(root/'latest.json',snapshot)
     update_history(root/'history.csv',snapshot)
     write_json(root/'state/coinbase.json',new_state)
+    write_json(root/'state/market_structure.json',new_market_state)
     report={'tested_at':iso(now),'status':snapshot['status'],'endpoint_requests':[
         {**x,'requested_at':iso(x['requested_at']),'received_at':iso(x['received_at'])} for x in client.audit]}
     write_json(root/'docs/latest-endpoint-check.json',report)

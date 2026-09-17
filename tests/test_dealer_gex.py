@@ -2,7 +2,7 @@ import math
 import unittest
 
 from btc_collector.core import black_scholes_gamma, metric, missing, signed_dealer_gamma
-from btc_collector.options import dealer_gex_estimate,primary_zero_crossing,zero_crossings
+from btc_collector.options import dealer_gex_estimate,gamma_reconciliation,primary_zero_crossing,zero_crossings
 
 NOW=1_800_000_000
 YEAR=365.25*86400
@@ -12,7 +12,9 @@ def option(strike,side,oi,iv=50,years=1,index=100):
             'strike':strike,'option_type':side,'expiry':'2028-01-15T08:00:00.000Z',
             'open_interest':metric(oi,'test',NOW-1,'BTC'),
             'mark_iv':metric(iv,'test',NOW-1,'volatility percentage points'),
-            'index_price':metric(index,'test',NOW-1,'USD')}
+            'index_price':metric(index,'test',NOW-1,'USD'),
+            'underlying_price':metric(index,'test',NOW-1,'USD'),
+            'interest_rate':metric(0,'test',NOW-1,'fraction')}
 
 def with_expiry(row,years):
     from btc_collector.core import iso
@@ -50,6 +52,45 @@ class DealerGexTests(unittest.TestCase):
         result=dealer_gex_estimate([row],NOW)
         gamma=black_scholes_gamma(100,100,.5,1)
         self.assertAlmostEqual(result['net_gex_estimate_usd_per_1pct']['value'],gamma*3*100**2*.01)
+
+    def test_expiry_underlying_price_drives_gamma_and_normalization(self):
+        row=with_expiry(option(100,'put',3),1); row['underlying_price']=metric(110,'test',NOW-1,'USD')
+        result=dealer_gex_estimate([row],NOW)
+        expected=black_scholes_gamma(110,100,.5,1)*3*110**2*.01
+        self.assertAlmostEqual(result['net_gex_estimate_usd_per_1pct']['value'],expected)
+        legacy=result['model_comparison']['model_a_legacy_single_index']['net_gex_usd_per_1pct']
+        self.assertNotAlmostEqual(legacy,expected)
+
+    def test_gamma_reconciliation_selects_expiry_underlying(self):
+        row=with_expiry(option(100,'put',3,index=100),1)
+        row['underlying_price']=metric(120,'test',NOW-1,'USD')
+        gamma=black_scholes_gamma(120,100,.5,1)
+        row['gamma']=metric(round(gamma,5),'test',NOW-1,'1/USD')
+        result=gamma_reconciliation([row])
+        self.assertEqual(result['selected_method'],'expiry_specific_underlying_price')
+        selected=result['candidate_error_statistics']['expiry_specific_underlying_price']
+        self.assertEqual(selected['rounded_5_decimal_match_pct'],100)
+
+    def test_snapshot_span_and_model_version_diagnostics(self):
+        row=with_expiry(option(100,'put',3),1)
+        result=dealer_gex_estimate([row],NOW,snapshot_metadata={
+            'gex_input_snapshot_span_seconds':.25,'gex_input_method':'test bulk','_calculation_time':NOW})
+        self.assertEqual(result['gex_input_snapshot_span_seconds'],.25)
+        self.assertEqual(result['gex_model_version'],'2.0.0-underlying-forward')
+        self.assertNotIn('_calculation_time',result)
+
+    def test_same_chain_is_reproducible(self):
+        rows=[with_expiry(option(90,'put',2),.5),with_expiry(option(110,'call',1),1)]
+        a=dealer_gex_estimate(rows,NOW); b=dealer_gex_estimate(rows,NOW)
+        self.assertEqual(a['net_gex_estimate_usd_per_1pct']['value'],b['net_gex_estimate_usd_per_1pct']['value'])
+        self.assertEqual(a['zero_gamma_flip']['value'],b['zero_gamma_flip']['value'])
+
+    def test_opposite_sign_model_is_diagnostic_only(self):
+        rows=[with_expiry(option(90,'put',2),.5),with_expiry(option(110,'call',1),1)]
+        result=dealer_gex_estimate(rows,NOW)['model_comparison']
+        selected=result['model_b_selected_expiry_underlying']['net_gex_usd_per_1pct']
+        opposite=result['model_d_opposite_sign_diagnostic_only']['net_gex_usd_per_1pct']
+        self.assertAlmostEqual(selected,-opposite)
 
     def test_aggregation_across_expiries_and_strike(self):
         rows=[with_expiry(option(90,'put',2),.5),with_expiry(option(90,'put',3),1),
@@ -122,8 +163,10 @@ class DealerGexTests(unittest.TestCase):
         rows=[with_expiry(option(80,'put',10,20),.5),with_expiry(option(120,'call',10,20),.5)]
         result=dealer_gex_estimate(rows,NOW)
         for key in ('net_gex_estimate_usd_per_1pct','gex_by_strike','zero_gamma_flip',
+                    'zero_gamma_flip_repriced','zero_gamma_flip_cumulative_strike',
                     'spot_to_gamma_flip_pct','gamma_regime','selected_flip_crossing_direction',
-                    'crossing_count','methodology','assumptions','calculation_timestamp','data_coverage'):
+                    'crossing_count','methodology','assumptions','calculation_timestamp','data_coverage',
+                    'gex_model_version','gex_reference_price_method','gex_flip_method'):
             self.assertIn(key,result)
         expected='long_gamma' if result['net_gex_estimate_usd_per_1pct']['value']>0 else 'short_gamma'
         self.assertEqual(result['gamma_regime']['value'],expected)

@@ -8,7 +8,7 @@ from .core import (black_scholes_gamma, epoch, fresh, gross_gamma, interpolate_d
                    metric, missing, number, signed_dealer_gamma)
 from .sources import DERIBIT
 
-FIELDS=('open_interest','mark_iv','delta','gamma','index_price','underlying_price')
+FIELDS=('open_interest','mark_iv','delta','gamma','index_price','underlying_price','interest_rate')
 
 def zero_crossings(xs,ys):
     """Return interpolated roots and their sign orientation for a sampled curve."""
@@ -53,10 +53,10 @@ def option_row(client,inst):
         if r.get('state')!='open': raise ValueError('Instrument is no longer open')
         for key in FIELDS:
             unit={'open_interest':'BTC','mark_iv':'volatility percentage points','delta':'BTC/BTC','gamma':'1/USD',
-                  'index_price':'USD','underlying_price':'USD'}[key]
+                  'index_price':'USD','underlying_price':'USD','interest_rate':'fraction'}[key]
             try:
                 raw=r.get('greeks',{}).get(key) if key in ('delta','gamma') else r.get(key)
-                low=-1 if key=='delta' else (1e-12 if key in ('index_price','underlying_price','mark_iv') else 0)
+                low=-1 if key in ('delta','interest_rate') else (1e-12 if key in ('index_price','underlying_price','mark_iv') else 0)
                 high=1 if key=='delta' else None
                 row[key]=fresh(number(raw,low,high),src,t,received,unit,max_age=900)
             except ValueError as e: row[key]=missing(src,str(e),unit=unit)
@@ -119,159 +119,250 @@ def aggregate(rows,source='Deribit public option tickers'):
     return {'total_oi':oi_total,'gross_gex_proxy':gex_total,'by_strike':by_strike,**walls,
             'gamma_concentrations':metric(concentrations,source,epoch(gex_total['timestamp'])) if gex_total['status']=='ok' else missing(source,'Incomplete gamma coverage')}
 
-def dealer_gex_estimate(rows,calculation_time=None,grid_min_ratio=.5,grid_max_ratio=1.5,grid_points=201):
-    """Estimate signed dealer GEX and revalue it to locate a zero-gamma crossing."""
+def _model_summary(items, gamma_fn, sign_multiplier=1, strike_range=None):
+    """Compact decomposition for one GEX convention over one immutable chain."""
+    by_strike={}; by_expiry={}; calls=puts=0.0
+    for item in items:
+        if strike_range and not strike_range[0] <= item['strike'] <= strike_range[1]:
+            continue
+        gamma,normalization=gamma_fn(item)
+        sign=(-1 if item['option_type']=='call' else 1)*sign_multiplier
+        value=sign*gamma*item['oi']*normalization**2*.01
+        by_strike[item['strike']]=by_strike.get(item['strike'],0.0)+value
+        by_expiry[item['expiry_iso']]=by_expiry.get(item['expiry_iso'],0.0)+value
+        if item['option_type']=='call': calls+=value
+        else: puts+=value
+    values=list(by_strike.values())
+    top_strikes=sorted(({'strike':k,'net_gex_usd_per_1pct':v} for k,v in by_strike.items()),
+                       key=lambda x:abs(x['net_gex_usd_per_1pct']),reverse=True)[:10]
+    top_expiries=sorted(({'expiry':k,'net_gex_usd_per_1pct':v} for k,v in by_expiry.items()),
+                        key=lambda x:abs(x['net_gex_usd_per_1pct']),reverse=True)[:10]
+    return {'net_gex_usd_per_1pct':sum(values),'call_contribution_usd_per_1pct':calls,
+            'put_contribution_usd_per_1pct':puts,
+            'gross_positive_usd_per_1pct':sum(v for v in values if v>0),
+            'gross_negative_usd_per_1pct':sum(v for v in values if v<0),
+            'top_strikes_by_absolute_contribution':top_strikes,
+            'top_expiries_by_absolute_contribution':top_expiries,'by_strike':by_strike}
+
+def _cumulative_strike_crossings(by_strike):
+    strikes=sorted(by_strike)
+    if len(strikes)<2: return []
+    cumulative=[]; total=0.0
+    for strike in strikes:
+        total+=by_strike[strike]; cumulative.append(total)
+    return zero_crossings(strikes,cumulative)
+
+def gamma_reconciliation(rows):
+    """Reconcile recomputed Black-Scholes gamma against Deribit's rounded ticker gamma."""
+    candidates={'single_latest_index_price':[], 'per_contract_index_price':[],
+                'expiry_specific_underlying_price':[]}
+    valid=[r for r in rows if r.get('open_interest',{}).get('status')=='ok'
+           and r['open_interest']['value']>0 and r.get('gamma',{}).get('status')=='ok'
+           and r.get('mark_iv',{}).get('status')=='ok' and r.get('underlying_price',{}).get('status')=='ok'
+           and r.get('index_price',{}).get('status')=='ok' and epoch(r['expiry'])>epoch(r['gamma']['timestamp'])]
+    if not valid: return {'status':'error','reason':'No positive-OI ticker rows with gamma'}
+    latest=max(valid,key=lambda r:epoch(r['index_price']['timestamp']))['index_price']['value']
+    for row in valid:
+        observed=row['gamma']['value']; tau=(epoch(row['expiry'])-epoch(row['gamma']['timestamp']))/(365.25*86400)
+        for name,ref in (('single_latest_index_price',latest),('per_contract_index_price',row['index_price']['value']),
+                         ('expiry_specific_underlying_price',row['underlying_price']['value'])):
+            computed=black_scholes_gamma(ref,row['strike'],row['mark_iv']['value']/100,tau,0)
+            candidates[name].append((row,observed,computed))
+    def stats(values):
+        rel=sorted(abs(c-o)/o for _,o,c in values if o>0)
+        material=sorted(abs(c-o)/o for _,o,c in values if o>=5e-5)
+        percentile=lambda xs,p: xs[round((len(xs)-1)*p)] if xs else None
+        return {'contracts_compared':len(values),'published_gamma_zero_count':sum(o==0 for _,o,_ in values),
+                'nonzero_relative_error_count':len(rel),
+                'median_relative_error_pct':percentile(rel,.5)*100 if rel else None,
+                'p90_relative_error_pct':percentile(rel,.9)*100 if rel else None,
+                'material_relative_error_count':len(material),
+                'material_median_relative_error_pct':percentile(material,.5)*100 if material else None,
+                'material_p90_relative_error_pct':percentile(material,.9)*100 if material else None,
+                'max_material_relative_error_pct':max(material)*100 if material else None,
+                'material_gamma_threshold':'published gamma >= 0.00005 1/USD',
+                'rounded_5_decimal_match_pct':sum(round(c,5)==o for _,o,c in values)/len(values)*100}
+    selected=candidates['expiry_specific_underlying_price']
+    by_expiry={}; by_moneyness={k:[] for k in ('deep_itm','itm','atm','otm','deep_otm')}
+    for row,obs,computed in selected:
+        by_expiry.setdefault(row['expiry'],[]).append((row,obs,computed))
+        ref=row['underlying_price']['value']; x=abs(math.log(row['strike']/ref)); itm=(row['option_type']=='call')==(row['strike']<ref)
+        bucket='atm' if x<=.025 else (('itm' if x<=.1 else 'deep_itm') if itm else ('otm' if x<=.1 else 'deep_otm'))
+        by_moneyness[bucket].append((row,obs,computed))
+    chosen=[]
+    for side in ('call','put'):
+        side_rows=[x for x in selected if x[0]['option_type']==side]
+        if side_rows:
+            chosen.append(('near_atm_'+side,min(side_rows,key=lambda x:abs(math.log(x[0]['strike']/x[0]['underlying_price']['value'])))))
+            otm=[x for x in side_rows if (x[0]['strike']>x[0]['underlying_price']['value'])==(side=='call')
+                 and abs(math.log(x[0]['strike']/x[0]['underlying_price']['value']))>=.10]
+            if otm: chosen.append(('otm_'+side,min(otm,key=lambda x:abs(abs(math.log(x[0]['strike']/x[0]['underlying_price']['value']))-.15))))
+            latest=max(epoch(x[0]['expiry']) for x in side_rows)
+            longdated=[x for x in side_rows if epoch(x[0]['expiry'])==latest]
+            chosen.append(('long_dated_'+side,min(longdated,key=lambda x:abs(math.log(x[0]['strike']/x[0]['underlying_price']['value'])))))
+    traces=[]
+    for category,(row,observed,computed) in chosen:
+        ref=row['underlying_price']['value']; sign=-1 if row['option_type']=='call' else 1
+        traces.append({'category':category,'instrument':row['instrument_name'],'ticker_timestamp':row['gamma']['timestamp'],
+          'expiry':row['expiry'],'strike':row['strike'],'option_type':row['option_type'],
+          'index_price':row['index_price']['value'],'underlying_price':ref,'mark_iv_pct':row['mark_iv']['value'],
+          'deribit_gamma':observed,'our_gamma':computed,'open_interest_btc':row['open_interest']['value'],
+          'dealer_sign':sign,'usd_gex_per_1pct':sign*computed*row['open_interest']['value']*ref**2*.01})
+    return {'status':'ok','selected_method':'expiry_specific_underlying_price',
+            'deribit_gamma_precision_note':'Ticker gamma is rounded to five decimal places; relative errors are unstable near zero',
+            'candidate_error_statistics':{k:stats(v) for k,v in candidates.items()},
+            'selected_errors_by_expiry':{k:stats(v) for k,v in sorted(by_expiry.items())},
+            'selected_errors_by_moneyness':{k:stats(v) for k,v in by_moneyness.items() if v},
+            'representative_contract_traces':traces}
+
+def dealer_gex_estimate(rows,calculation_time=None,grid_min_ratio=.5,grid_max_ratio=1.5,grid_points=201,
+                        snapshot_metadata=None,published_gamma_rows=None):
+    """Estimate signed dealer GEX from a coherent Deribit bulk snapshot."""
     now=time.time() if calculation_time is None else number(calculation_time,0)
-    source='Deribit public option tickers; Black-Scholes repricing'
+    source='Deribit public/get_book_summary_by_currency; Black-Scholes repricing'
     assumptions={'dealer_calls':'net short','dealer_puts':'net long','risk_free_rate':0,
                  'dividend_yield':0,'open_interest_unit':'BTC base currency as reported by Deribit',
-                 'volatility_unit':'mark_iv percentage points divided by 100'}
+                 'volatility_unit':'mark_iv percentage points divided by 100','observable_positioning':False}
     methodology={
       'label':'Estimated signed dealer GEX; not observable dealer positioning',
-      'dealer_position_assumption':'Dealers net short calls and net long puts relative to customers',
-      'gamma_model':'Black-Scholes spot gamma with r=0 and q=0',
+      'dealer_position_assumption':'Dealer short calls (negative gamma), dealer long puts (positive gamma)',
+      'gamma_model':'Standard Black-Scholes gamma with r=0 and q=0',
       'volatility_input':'Deribit mark_iv divided by 100',
-      'spot_input':'Most recent valid Deribit BTC index_price in the collected option chain',
-      'open_interest_units':'Deribit BTC option open_interest is BTC; contract_size is not multiplied again',
-      'gex_units':'USD per 1% BTC spot move = gamma * OI_BTC * spot^2 * 0.01',
-      'flip_method':f'Revalue all covered contracts from {grid_min_ratio:.0%} to {grid_max_ratio:.0%} of current spot on {grid_points} equally spaced points; linearly interpolate sign changes',
-      'regime_rule':'Sign of aggregate estimated dealer GEX at current spot: positive=long_gamma, negative=short_gamma, approximately zero=zero_gamma',
-      'spot_to_flip_definition':'(spot - zero_gamma_flip) / zero_gamma_flip * 100',
-      'not_retailinterest':'Independent estimate; does not scrape or depend on RetailInterest'}
+      'reference_price_input':'Each option expiry underlying_price used by Deribit for IV calculations',
+      'open_interest_units':'Deribit option open_interest is underlying BTC; contract_size is not multiplied again',
+      'gex_units':'USD per 1% move in the expiry-specific underlying = gamma * OI_BTC * underlying_price^2 * 0.01',
+      'repriced_flip_method':f'Parallel-shift each expiry underlying with spot over {grid_min_ratio:.0%}-{grid_max_ratio:.0%} on {grid_points} points; hold contract IV fixed; interpolate sign changes',
+      'cumulative_strike_flip_method':'Sort current signed GEX by strike, cumulate low-to-high, and interpolate cumulative zero crossings',
+      'regime_rule':'Sign of aggregate estimated dealer GEX at current snapshot',
+      'not_retailinterest':'Independent model; RetailInterest is not queried by the collector'}
     names=[r.get('instrument_name') for r in rows]
+    required=('open_interest','mark_iv','underlying_price','index_price')
     coverage={'active_instruments_expected':len(rows),'unique_instruments':len(set(names)),
               'duplicate_instruments':len(rows)-len(set(names)),
-              'instruments_successfully_fetched':sum(all(r.get(k,{}).get('status')=='ok' for k in FIELDS) for r in rows),
-              'instruments_used_in_signed_gex':0,'instruments_excluded':0,
-              'positive_oi_contracts':0,'covered_positive_oi_contracts':0,
-              'zero_oi_contracts':0,'missing_oi_contracts':0,'missing_input_contracts':0,
-              'exclusion_reasons':{'zero_open_interest':0,'missing_open_interest':0,'missing_mark_iv':0,
-                                   'expired_at_calculation':0,'invalid_contract_metadata':0,
-                                   'duplicate_instrument_names':len(rows)-len(set(names))}}
+              'instruments_successfully_fetched':sum(all(r.get(k,{}).get('status')=='ok' for k in required) for r in rows),
+              'instruments_used_in_signed_gex':0,'instruments_excluded':0,'positive_oi_contracts':0,
+              'covered_positive_oi_contracts':0,'zero_oi_contracts':0,'missing_oi_contracts':0,
+              'missing_input_contracts':0,'exclusion_reasons':{'zero_open_interest':0,'missing_open_interest':0,
+              'missing_mark_iv':0,'missing_underlying_price':0,'expired_at_calculation':0,
+              'invalid_contract_metadata':0,'duplicate_instrument_names':len(rows)-len(set(names))}}
     index=[r['index_price'] for r in rows if r.get('index_price',{}).get('status')=='ok']
-    if not index:
-        reason='No valid Deribit BTC index price'
-        failed=lambda unit=None: missing(source,reason,unit=unit)
-        return {'status':'error','diagnostic_reason':reason,'calculation_timestamp':iso(now),'data_coverage':coverage,
-                'methodology':methodology,'assumptions':assumptions,
-                'net_gex_estimate_usd_per_1pct':failed('USD per 1% BTC move'),
-                'gex_by_strike':failed(),'zero_gamma_flip':failed('USD'),
-                'spot_to_gamma_flip_pct':failed('%'),'gamma_regime':failed(),
-                'selected_flip_crossing_direction':failed(),'crossing_count':failed(),
-                'all_zero_gamma_crossings':failed(),
-                'largest_positive_gamma_concentrations_near_spot':failed(),
-                'largest_negative_gamma_concentrations_near_spot':failed()}
-    spot_metric=max(index,key=lambda m:epoch(m['timestamp']))
-    spot=spot_metric['value']
-    usable=[]; timestamps=[epoch(spot_metric['timestamp'])]
+    spot_metric=max(index,key=lambda m:epoch(m['timestamp'])) if index else None
+    usable=[]; timestamps=[epoch(spot_metric['timestamp'])] if spot_metric else []
+    published_map={r.get('instrument_name'):r.get('gamma',{}).get('value') for r in (published_gamma_rows or [])
+                   if r.get('gamma',{}).get('status')=='ok'}
     for row in rows:
         oi=row.get('open_interest',{})
         if oi.get('status')!='ok' or oi.get('value') is None:
-            coverage['missing_oi_contracts']+=1
-            coverage['exclusion_reasons']['missing_open_interest']+=1
-            continue
+            coverage['missing_oi_contracts']+=1; coverage['exclusion_reasons']['missing_open_interest']+=1; continue
         if oi['value']==0:
-            coverage['zero_oi_contracts']+=1
-            coverage['exclusion_reasons']['zero_open_interest']+=1
-            continue
-        coverage['positive_oi_contracts']+=1
-        iv=row.get('mark_iv',{})
-        exclusion=None
+            coverage['zero_oi_contracts']+=1; coverage['exclusion_reasons']['zero_open_interest']+=1; continue
+        coverage['positive_oi_contracts']+=1; exclusion=None
         try:
-            expiry=epoch(row['expiry'])
-            if iv.get('status')!='ok' or iv.get('value') is None:
-                exclusion='missing_mark_iv'
-                raise ValueError('missing IV')
-            if expiry<=now:
-                exclusion='expired_at_calculation'
-                raise ValueError('expired input')
-            if row.get('option_type') not in ('call','put'):
-                exclusion='invalid_contract_metadata'
-                raise ValueError('invalid metadata')
-            if not isinstance(row.get('instrument_name'),str) or not row['instrument_name']:
-                exclusion='invalid_contract_metadata'
-                raise ValueError('missing instrument name')
-            entry={'strike':number(row['strike'],1e-12),'option_type':row['option_type'],
-                   'oi':number(oi['value'],0),'sigma':number(iv['value'],1e-12)/100,
-                   'tau':(expiry-now)/(365.25*86400)}
-            usable.append(entry); timestamps.extend((epoch(oi['timestamp']),epoch(iv['timestamp'])))
+            expiry=epoch(row['expiry']); iv=row.get('mark_iv',{}); underlying=row.get('underlying_price',{})
+            if iv.get('status')!='ok' or iv.get('value') is None: exclusion='missing_mark_iv'; raise ValueError
+            if underlying.get('status')!='ok' or underlying.get('value') is None: exclusion='missing_underlying_price'; raise ValueError
+            if expiry<=now: exclusion='expired_at_calculation'; raise ValueError
+            if row.get('option_type') not in ('call','put') or not row.get('instrument_name'):
+                exclusion='invalid_contract_metadata'; raise ValueError
+            usable.append({'instrument_name':row['instrument_name'],'strike':number(row['strike'],1e-12),
+              'option_type':row['option_type'],'oi':number(oi['value'],0),'sigma':number(iv['value'],1e-12)/100,
+              'tau':(expiry-now)/(365.25*86400),'expiry':expiry,'expiry_iso':row['expiry'],
+              'underlying':number(underlying['value'],1e-12),
+              'published_gamma':published_map.get(row['instrument_name'],row.get('gamma',{}).get('value'))})
+            timestamps.extend((epoch(oi['timestamp']),epoch(iv['timestamp']),epoch(underlying['timestamp'])))
             coverage['covered_positive_oi_contracts']+=1
         except (KeyError,ValueError):
-            coverage['exclusion_reasons'][exclusion or 'invalid_contract_metadata']+=1
-            coverage['missing_input_contracts']+=1
-    coverage['instruments_used_in_signed_gex']=len(usable)
-    coverage['instruments_excluded']=len(rows)-len(usable)
-    coverage['fetch_coverage_pct']=(coverage['instruments_successfully_fetched']/len(rows)*100 if rows else 0)
+            coverage['exclusion_reasons'][exclusion or 'invalid_contract_metadata']+=1; coverage['missing_input_contracts']+=1
+    coverage['instruments_used_in_signed_gex']=len(usable); coverage['instruments_excluded']=len(rows)-len(usable)
+    coverage['fetch_coverage_pct']=coverage['instruments_successfully_fetched']/len(rows)*100 if rows else 0
     coverage['coverage_pct']=(coverage['covered_positive_oi_contracts']/coverage['positive_oi_contracts']*100
                               if coverage['positive_oi_contracts'] else 100.0)
-    complete=(coverage['missing_oi_contracts']==0 and coverage['missing_input_contracts']==0
-              and coverage['duplicate_instruments']==0)
+    complete=bool(spot_metric and not coverage['missing_oi_contracts'] and not coverage['missing_input_contracts']
+                  and not coverage['duplicate_instruments'])
+    metadata={k:v for k,v in (snapshot_metadata or {}).items() if not k.startswith('_')}
+    metadata.update(gex_model_version='2.0.0-underlying-forward',
+                    gex_reference_price_method='Deribit expiry-specific underlying_price',
+                    gex_flip_method='full_surface_parallel_forward_repricing_constant_iv')
     if not complete:
         reason=('Incomplete signed-GEX inputs: '
                 f"{coverage['covered_positive_oi_contracts']}/{coverage['positive_oi_contracts']} positive-OI contracts covered; "
-                f"{coverage['missing_oi_contracts']} contracts missing OI; "
-                f"{coverage['duplicate_instruments']} duplicate instrument names")
+                f"{coverage['missing_oi_contracts']} missing OI; {coverage['missing_input_contracts']} missing pricing inputs")
         failed=lambda unit=None: missing(source,reason,unit=unit,**coverage)
         return {'status':'error','diagnostic_reason':reason,'calculation_timestamp':iso(now),'data_coverage':coverage,
-                'methodology':methodology,'assumptions':assumptions,
-                'index_price':spot_metric,'net_gex_estimate_usd_per_1pct':failed('USD per 1% BTC move'),
-                'gex_by_strike':failed(),'zero_gamma_flip':failed('USD'),
-                'spot_to_gamma_flip_pct':failed('%'),'gamma_regime':failed(),
-                'selected_flip_crossing_direction':failed(),'crossing_count':failed(),
-                'all_zero_gamma_crossings':failed(),
-                'largest_positive_gamma_concentrations_near_spot':failed(),
-                'largest_negative_gamma_concentrations_near_spot':failed()}
-    quote_time=min(timestamps)
-    def contributions(test_spot):
-        values=[]
-        for item in usable:
-            gamma=black_scholes_gamma(test_spot,item['strike'],item['sigma'],item['tau'],0)
-            values.append((item['strike'],signed_dealer_gamma(gamma,item['oi'],test_spot,item['option_type'])))
-        return values
-    current=contributions(spot)
-    net=sum(v for _,v in current)
-    strikes=[]
-    for strike in sorted({k for k,_ in current}):
-        strikes.append({'strike':strike,'net_gex_usd_per_1pct':sum(v for k,v in current if k==strike)})
-    near=[x for x in strikes if .75*spot<=x['strike']<=1.25*spot]
-    positive=sorted((x for x in near if x['net_gex_usd_per_1pct']>0),
-                    key=lambda x:x['net_gex_usd_per_1pct'],reverse=True)[:10]
-    negative=sorted((x for x in near if x['net_gex_usd_per_1pct']<0),
-                    key=lambda x:x['net_gex_usd_per_1pct'])[:10]
+                'methodology':methodology,'assumptions':assumptions,**metadata,
+                **{k:failed('USD' if 'flip' in k else None) for k in ('net_gex_estimate_usd_per_1pct','gex_by_strike',
+                  'zero_gamma_flip','zero_gamma_flip_repriced','zero_gamma_flip_cumulative_strike','spot_to_gamma_flip_pct',
+                  'gamma_regime','selected_flip_crossing_direction','crossing_count','all_zero_gamma_crossings')}}
+    spot=spot_metric['value']; quote_time=min(timestamps)
+    def production_gamma(item,ratio=1.0,iv_shift=0.0):
+        ref=item['underlying']*ratio; sigma=max(1e-6,item['sigma']+iv_shift)
+        return black_scholes_gamma(ref,item['strike'],sigma,item['tau'],0),ref
+    production=_model_summary(usable,lambda item:production_gamma(item))
+    legacy=_model_summary(usable,lambda item:(black_scholes_gamma(spot,item['strike'],item['sigma'],item['tau'],0),spot))
+    published=_model_summary(usable,lambda item:((item['published_gamma'] if item['published_gamma'] is not None else
+        black_scholes_gamma(item['underlying'],item['strike'],item['sigma'],item['tau'],0)),item['underlying']))
+    opposite=_model_summary(usable,lambda item:production_gamma(item),sign_multiplier=-1)
+    ri_public=_model_summary(usable,lambda item:(black_scholes_gamma(spot,item['strike'],item['sigma'],item['tau'],0),spot),
+                             sign_multiplier=-1,strike_range=(.8*spot,1.25*spot))
+    current=[{'strike':k,'net_gex_usd_per_1pct':v} for k,v in sorted(production['by_strike'].items())]
+    net=production['net_gex_usd_per_1pct']; near=[x for x in current if .75*spot<=x['strike']<=1.25*spot]
+    positive=sorted((x for x in near if x['net_gex_usd_per_1pct']>0),key=lambda x:x['net_gex_usd_per_1pct'],reverse=True)[:10]
+    negative=sorted((x for x in near if x['net_gex_usd_per_1pct']<0),key=lambda x:x['net_gex_usd_per_1pct'])[:10]
     xs=[spot*(grid_min_ratio+(grid_max_ratio-grid_min_ratio)*i/(grid_points-1)) for i in range(grid_points)]
-    ys=[sum(v for _,v in contributions(x)) for x in xs]
-    roots=zero_crossings(xs,ys)
+    def curve(iv_shift=0.0):
+        values=[]
+        for x in xs:
+            ratio=x/spot; total=0.0
+            for item in usable:
+                gamma,ref=production_gamma(item,ratio,iv_shift)
+                sign=-1 if item['option_type']=='call' else 1
+                total+=sign*gamma*item['oi']*ref**2*.01
+            values.append(total)
+        return values
+    ys=curve(); roots=zero_crossings(xs,ys); selected=primary_zero_crossing(roots,spot)
+    cumulative_roots=_cumulative_strike_crossings(production['by_strike'])
+    cumulative_selected=primary_zero_crossing(cumulative_roots,spot)
     common={'source':source,'timestamp':quote_time}
-    net_metric=metric(net,**common,unit='USD per 1% BTC move',**coverage)
-    strike_metric=metric(strikes,**common,covered_strikes=len(strikes))
-    pos_metric=metric(positive,**common,near_spot_range_pct=25)
-    neg_metric=metric(negative,**common,near_spot_range_pct=25)
-    if roots:
-        selected=primary_zero_crossing(roots,spot); flip=selected['price']
-        flip_metric=metric(flip,**common,unit='USD',crossing_count=len(roots),
-                           selected_crossing_direction=selected['direction'],tested_range_usd=[xs[0],xs[-1]])
-        distance=metric((spot-flip)/flip*100,**common,unit='%')
-        direction=metric(selected['direction'],**common)
+    if selected:
+        flip=selected['price']; flip_metric=metric(flip,**common,unit='USD',crossing_count=len(roots),
+          selected_crossing_direction=selected['direction'],tested_range_usd=[xs[0],xs[-1]])
+        distance=metric((spot-flip)/flip*100,**common,unit='%'); direction=metric(selected['direction'],**common)
     else:
         reason='No aggregate signed-GEX zero crossing inside the tested spot range'
         flip_metric=missing(source,reason,status='not_applicable',unit='USD',tested_range_usd=[xs[0],xs[-1]])
-        distance=missing(source,reason,status='not_applicable',unit='%')
-        direction=missing(source,reason,status='not_applicable')
-    magnitude=sum(abs(v) for _,v in current); net_tolerance=max(1e-6,magnitude*1e-9)
-    regime_value='long_gamma' if net>net_tolerance else ('short_gamma' if net<-net_tolerance else 'zero_gamma')
-    regime=metric(regime_value,**common,current_net_zero_tolerance_usd_per_1pct=net_tolerance)
-    crossings_metric=metric(roots,**common,tested_range_usd=[xs[0],xs[-1]])
-    crossing_count=metric(len(roots),**common,unit='crossings')
-    diagnostic='Complete positive-OI coverage; current regime follows signed GEX at current spot'
-    return {'status':'ok','diagnostic_reason':diagnostic,'calculation_timestamp':iso(now),'data_coverage':coverage,
-            'methodology':methodology,'assumptions':assumptions,
-            'index_price':spot_metric,'net_gex_estimate_usd_per_1pct':net_metric,
-            'gex_by_strike':strike_metric,'zero_gamma_flip':flip_metric,
-            'spot_to_gamma_flip_pct':distance,'gamma_regime':regime,
-            'selected_flip_crossing_direction':direction,'crossing_count':crossing_count,
-            'all_zero_gamma_crossings':crossings_metric,
-            'largest_positive_gamma_concentrations_near_spot':pos_metric,
-            'largest_negative_gamma_concentrations_near_spot':neg_metric}
+        distance=missing(source,reason,status='not_applicable',unit='%'); direction=missing(source,reason,status='not_applicable')
+    if cumulative_selected:
+        cumulative_metric=metric(cumulative_selected['price'],**common,unit='USD',
+            selected_crossing_direction=cumulative_selected['direction'],crossing_count=len(cumulative_roots),
+            definition='Low-to-high cumulative current signed GEX by strike')
+    else: cumulative_metric=missing(source,'No cumulative-by-strike zero crossing',status='not_applicable',unit='USD')
+    magnitude=sum(abs(v) for v in production['by_strike'].values()); tolerance=max(1e-6,magnitude*1e-9)
+    regime_value='long_gamma' if net>tolerance else ('short_gamma' if net<-tolerance else 'zero_gamma')
+    iv_sensitivity={}
+    for label,shift in (('mark_iv_minus_1_point',-.01),('constant_mark_iv',0),('mark_iv_plus_1_point',.01)):
+        shock_roots=zero_crossings(xs,curve(shift)); chosen=primary_zero_crossing(shock_roots,spot)
+        iv_sensitivity[label]=chosen['price'] if chosen else None
+    comparisons={'model_a_legacy_single_index':{k:v for k,v in legacy.items() if k!='by_strike'},
+      'model_b_selected_expiry_underlying':{k:v for k,v in production.items() if k!='by_strike'},
+      'model_c_deribit_published_gamma':{k:v for k,v in published.items() if k!='by_strike'},
+      'model_d_opposite_sign_diagnostic_only':{k:v for k,v in opposite.items() if k!='by_strike'},
+      'model_e_retailinterest_public_behavior_reconstruction':{
+        **{k:v for k,v in ri_public.items() if k!='by_strike'},
+        'evidence':'Calls positive, puts negative, single spot input, and 80%-125% strike filter reproduce the public API; contradicts its written dealer-sign methodology'}}
+    return {'status':'ok','diagnostic_reason':'Complete positive-OI coverage; production uses documented expiry underlying prices',
+      'calculation_timestamp':iso(now),'data_coverage':coverage,'methodology':methodology,'assumptions':assumptions,**metadata,
+      'index_price':spot_metric,'net_gex_estimate_usd_per_1pct':metric(net,**common,unit='USD per 1% move',**coverage),
+      'gex_by_strike':metric(current,**common,covered_strikes=len(current)),
+      'zero_gamma_flip':flip_metric,'zero_gamma_flip_repriced':flip_metric,
+      'zero_gamma_flip_cumulative_strike':cumulative_metric,'spot_to_gamma_flip_pct':distance,
+      'gamma_regime':metric(regime_value,**common,current_net_zero_tolerance_usd_per_1pct=tolerance),
+      'selected_flip_crossing_direction':direction,'crossing_count':metric(len(roots),**common,unit='crossings'),
+      'all_zero_gamma_crossings':metric(roots,**common,tested_range_usd=[xs[0],xs[-1]]),
+      'all_cumulative_strike_crossings':metric(cumulative_roots,**common),
+      'largest_positive_gamma_concentrations_near_spot':metric(positive,**common,near_spot_range_pct=25),
+      'largest_negative_gamma_concentrations_near_spot':metric(negative,**common,near_spot_range_pct=25),
+      'iv_sensitivity_diagnostic':iv_sensitivity,'model_comparison':comparisons,
+      'gamma_reconciliation':gamma_reconciliation(published_gamma_rows or [])}
 
 def surface(rows):
     src='Deribit mark IV; same expiry and settlement currency'
@@ -306,6 +397,58 @@ def surface(rows):
         out['put_minus_call_skew_25d']=missing(src,'Both 25D wings required')
     return out
 
+def gex_bulk_snapshot(client,instruments):
+    """Fetch a near-atomic full BTC option snapshot from official Deribit bulk endpoints."""
+    started=time.time(); instrument_map={i['instrument_name']:i for i in instruments}
+    currencies=sorted({i.get('quote_currency') for i in instruments if i.get('quote_currency') in ('BTC','USDC')})
+    def books(currency):
+        data,_,received=client.get(DERIBIT,'/public/get_book_summary_by_currency',currency=currency,kind='option')
+        exchange_time=number(data.get('usOut'),0)/1_000_000 if data.get('usOut') else received
+        return currency,data['result'],received,exchange_time
+    with ThreadPoolExecutor(max_workers=max(1,len(currencies)+1)) as pool:
+        book_jobs=[pool.submit(books,c) for c in currencies]
+        index_job=pool.submit(client.get,DERIBIT,'/public/get_index_price',index_name='btc_usd')
+        results=[job.result() for job in book_jobs]
+        index_data,_,index_received=index_job.result()
+    completed=time.time(); index_payload=index_data['result']
+    index_time=number(index_data.get('usOut'),0)/1_000_000 if index_data.get('usOut') else index_received
+    index_metric=fresh(number(index_payload['index_price'],1e-12),DERIBIT+'/public/get_index_price?index_name=btc_usd',
+                       index_time,index_received,'USD',max_age=900)
+    books_by_name={}; creation=[]
+    for currency,entries,_,_ in results:
+        for entry in entries:
+            name=entry.get('instrument_name')
+            if name in instrument_map and entry.get('base_currency')=='BTC':
+                if name in books_by_name: raise ValueError('Duplicate option in bulk summaries: '+name)
+                books_by_name[name]=(currency,entry)
+                if entry.get('creation_timestamp') is not None: creation.append(number(entry['creation_timestamp'])/1000)
+    missing_names=sorted(set(instrument_map)-set(books_by_name)); extra_names=sorted(set(books_by_name)-set(instrument_map))
+    rows=[]
+    for name,inst in instrument_map.items():
+        base={k:inst.get(k) for k in ('instrument_name','option_type','settlement_currency','quote_currency','contract_size','instrument_type')}
+        base.update(strike=number(inst['strike'],1e-12),expiry=iso(inst['expiration_timestamp']/1000),index_price=index_metric)
+        if name not in books_by_name:
+            for key,unit in (('open_interest','BTC'),('mark_iv','volatility percentage points'),
+                             ('underlying_price','USD'),('interest_rate','fraction')):
+                base[key]=missing(DERIBIT,'Instrument absent from bulk book summary',unit=unit)
+            rows.append(base); continue
+        currency,entry=books_by_name[name]; t=number(entry.get('creation_timestamp'))/1000
+        src=DERIBIT+f'/public/get_book_summary_by_currency?currency={currency}&kind=option'
+        for key,unit,low in (('open_interest','BTC',0),('mark_iv','volatility percentage points',1e-12),
+                             ('underlying_price','USD',1e-12),('interest_rate','fraction',-1)):
+            try: base[key]=fresh(number(entry.get(key),low),src,t,completed,unit,max_age=900)
+            except ValueError as e: base[key]=missing(src,str(e),unit=unit)
+        rows.append(base)
+    exchange_start=min(creation+[index_time]); exchange_end=max(creation+[index_time])
+    metadata={'gex_input_snapshot_started_at':iso(started),'gex_input_snapshot_completed_at':iso(completed),
+      'gex_input_snapshot_span_seconds':round(completed-started,3),
+      'gex_input_exchange_timestamp_span_seconds':round(exchange_end-exchange_start,3),
+      'gex_input_method':'Two concurrent Deribit public/get_book_summary_by_currency calls (BTC and USDC) plus public/get_index_price',
+      'gex_input_expected_instruments':len(instruments),'gex_input_returned_instruments':len(books_by_name),
+      'gex_input_missing_instruments':len(missing_names),'gex_input_extra_instruments':len(extra_names),
+      '_calculation_time':exchange_end}
+    return rows,metadata
+
 def collect_options(client,budget=720):
     started=time.monotonic()
     data,_,received=client.get(DERIBIT,'/public/get_instruments',currency='any',kind='option',expired='false')
@@ -314,6 +457,7 @@ def collect_options(client,budget=720):
     if not instruments: raise ValueError('No active BTC option instruments')
     if len({i['instrument_name'] for i in instruments})!=len(instruments): raise ValueError('Duplicate instrument names')
     instruments.sort(key=lambda i:(i['expiration_timestamp'],i['instrument_name']))
+    gex_rows,gex_metadata=gex_bulk_snapshot(client,instruments)
     def one(inst):
         if time.monotonic()-started>budget:
             row={k:inst.get(k) for k in ('instrument_name','option_type','settlement_currency','quote_currency','contract_size','instrument_type')}
@@ -329,17 +473,21 @@ def collect_options(client,budget=720):
             m=row[key]
             if m['status']=='ok' and (finished-epoch(m['timestamp'])>900 or epoch(row['expiry'])<=finished):
                 m.update(value=None,status='stale',reason='Expired contract or quote older than 15 minutes at collection end')
-    dealer=dealer_gex_estimate(rows,finished)
+    dealer=dealer_gex_estimate(gex_rows,gex_metadata['_calculation_time'],snapshot_metadata=gex_metadata,
+                               published_gamma_rows=rows)
     result={'status':'ok','source':DERIBIT,'inventory_timestamp':iso(received),
             'scope':'All active base_currency=BTC vanilla options; all settlement currencies; combos excluded',
             'contracts':rows,'active_contract_count':len(rows),'by_expiry':{},
             'gex_label':'Gross gamma exposure / GEX proxy; dealer direction unknown',**aggregate(rows),
             'dealer_gex_estimate':{k:v for k,v in dealer.items() if k not in
                 ('net_gex_estimate_usd_per_1pct','gex_by_strike','zero_gamma_flip',
-                 'spot_to_gamma_flip_pct','gamma_regime','selected_flip_crossing_direction')},
+                 'zero_gamma_flip_repriced','zero_gamma_flip_cumulative_strike','spot_to_gamma_flip_pct',
+                 'gamma_regime','selected_flip_crossing_direction')},
             **{k:dealer[k] for k in ('net_gex_estimate_usd_per_1pct','gex_by_strike','zero_gamma_flip',
+                                     'zero_gamma_flip_repriced','zero_gamma_flip_cumulative_strike',
                                      'spot_to_gamma_flip_pct','gamma_regime','selected_flip_crossing_direction',
-                                     'crossing_count')}}
+                                     'crossing_count','gex_model_version','gex_reference_price_method',
+                                     'gex_flip_method','gex_input_snapshot_span_seconds')}}
     for expiry in sorted({r['expiry'] for r in rows}):
         group=[r for r in rows if r['expiry']==expiry]
         stats=aggregate(group); stats['surfaces']={}

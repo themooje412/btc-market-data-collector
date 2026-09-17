@@ -17,6 +17,21 @@ PATHS = {
  'zero_gamma_flip':('options','zero_gamma_flip'),
  'spot_to_gamma_flip_pct':('options','spot_to_gamma_flip_pct'),
  'gamma_regime':('options','gamma_regime')}
+PATHS.update({
+ 'vwap_session':('market_structure','utc_session','vwap'),
+ 'vwap_24h':('market_structure','rolling_24h','vwap'),
+ 'vwap_7d':('market_structure','rolling_7d','vwap'),
+ 'poc_session':('market_structure','utc_session','poc'),
+ 'vah_session':('market_structure','utc_session','vah'),
+ 'val_session':('market_structure','utc_session','val'),
+ 'poc_24h':('market_structure','rolling_24h','poc'),
+ 'vah_24h':('market_structure','rolling_24h','vah'),
+ 'val_24h':('market_structure','rolling_24h','val'),
+ 'poc_7d':('market_structure','rolling_7d','poc'),
+ 'vah_7d':('market_structure','rolling_7d','vah'),
+ 'val_7d':('market_structure','rolling_7d','val'),
+ 'spot_location_24h':('market_structure','rolling_24h','spot_location'),
+ 'spot_location_7d':('market_structure','rolling_7d','spot_location')})
 for venue in ('binance','coinbase'):
     for window in ('15m','1h','4h','24h'): PATHS[f'{venue}_cvd_{window}']=('cvd',venue,window)
 for venue in ('binance','deribit'):
@@ -74,12 +89,12 @@ def update_history(path,snapshot):
     fields=list(new)
     # Preserve older/additional columns on future schema upgrades.
     fields+=sorted({k for r in rows for k in r}-set(fields))
-    buf=io.StringIO(newline=''); w=csv.DictWriter(buf,fieldnames=fields)
+    buf=io.StringIO(newline=''); w=csv.DictWriter(buf,fieldnames=fields,lineterminator='\n')
     w.writeheader(); w.writerows(by_hour[k] for k in sorted(by_hour))
     atomic_write(path,buf.getvalue())
 
 def validate(snapshot):
-    required=('timestamp','data_age','spot','cvd','coinbase_premium','raw_coinbase_premium','fx_adjusted_coinbase_premium','futures','open_interest','funding','basis','options',
+    required=('timestamp','data_age','spot','cvd','coinbase_premium','raw_coinbase_premium','fx_adjusted_coinbase_premium','futures','open_interest','funding','basis','market_structure','options',
               'put_wall','call_wall','atm_iv','skew_25d','gamma_concentrations')
     for key in required:
         if key not in snapshot: raise ValueError('Missing section '+key)
@@ -87,7 +102,9 @@ def validate(snapshot):
     def walk(x):
         if isinstance(x,dict):
             if 'value' in x and 'status' in x:
-                if x['status'] in ('error','stale','not_applicable') and x['value'] is not None:
+                if x['status'] not in ('ok','error','stale','not_applicable','warming_up'):
+                    raise ValueError('Unknown metric status')
+                if x['status'] in ('error','stale','not_applicable','warming_up') and x['value'] is not None:
                     raise ValueError('Failed metric must be null')
                 if x['status']=='ok' and (x['value'] is None or not x.get('timestamp')):
                     raise ValueError('OK metric requires value and timestamp')

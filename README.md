@@ -39,10 +39,12 @@ Kaynak: [GitHub ücretlendirme](https://docs.github.com/en/billing/concepts/prod
 
 | Dosya | İçerik |
 |---|---|
-| `latest.json` | ChatGPT için güncel, özet veri; gross GEX, signed dealer-GEX tahmini, zero-gamma flip ve vade bazında opsiyon özetleri |
+| `latest.json` | ChatGPT için güncel, özet veri; gross/signed GEX, iki zero-gamma tanımı, VWAP ve hacim-profili seviyeleri |
 | `options_chain.json` | Bütün aktif BTC opsiyon kontratları, her kontratın OI/IV/delta/gamma değeri, tam strike ve vade kırılımları |
 | `history.csv` | Saatlik fiyat/OI/funding/basis/CVD/IV/skew/wall/GEX özetleri; alan başına durum, kaynak, zaman ve birim |
 | `state/coinbase.json` | Tamamı gözlenmiş tarihsel Coinbase dakika hacimleri; yaklaşık 26 saat |
+| `state/market_structure.json` | Binance aggTrade'lerinden türetilmiş, dakika ve fiyat kovası bazında tam 7 günlük rolling profil durumu |
+| `docs/MILESTONE3_GEX_FORENSICS.md` | Deribit gamma mutabakatı ve RetailInterest farkının aynı-snapshot sayısal incelemesi |
 | `docs/latest-endpoint-check.json` | Son collector çalışmasının HTTP istekleri, sonuçları ve zamanları |
 | `docs/coinbase-runner-check.json` | GitHub runner içinden Coinbase ticker, trades ve pagination doğrulaması |
 | `docs/binance-futures-runner-check.json` | GitHub runner içinden resmi Binance Futures REST ve resmi gecikmeli veri arşivi kontrolü |
@@ -55,7 +57,7 @@ Tüm kontrat ayrıntıları güncel chain dosyasında, eski sürümleri Git comm
 
 Her ölçüm mümkün olduğunca `value`, `source`, UTC `timestamp`, `unit`, `status`, `data_age_seconds` içerir. Hata/gecikme durumunda `value: null`, `status: error/stale` ve `reason` vardır. Hesap matematiksel olarak tanımsızsa `not_applicable` kullanılır (perpetual annualized basis gibi).
 
-`timestamp` yayının bitişidir; `collection_started_at` başlangıçtır. Snapshot atomik tek bir piyasa anı değildir: kontratlar sıra ile taranır ve her ölçüm kendi zamanını taşır. Spot/futures zamanları alınırken 180 saniye, opsiyonlar 900 saniye sınırına tabi tutulur; yayın anında 15 dakikayı geçen ölçümler ayrıca null yapılır. Gelecek zaman/clock skew için 30 saniyeden fazla sapma reddedilir.
+`timestamp` yayının bitişidir; `collection_started_at` başlangıçtır. Ayrıntılı `options_chain.json` ticker'ları sıra ile taranır ve her ölçüm kendi zamanını taşır. Signed-GEX girdisi ise iki settlement para biriminin bulk Deribit book-summary yanıtlarıyla eşzamanlıya yakın alınır; başlangıç, bitiş ve span açıkça yayımlanır. Spot/futures zamanları alınırken 180 saniye, opsiyonlar 900 saniye sınırına tabi tutulur; yayın anında 15 dakikayı geçen ölçümler ayrıca null yapılır. Gelecek zaman/clock skew için 30 saniyeden fazla sapma reddedilir.
 
 `data_age` **dosyanın üretildiği andaki** yaştır. ChatGPT okuduğunda güncel UTC ile alanın `timestamp`'ini yeniden karşılaştırmalıdır. Eski JSON içinde `status: ok` bulunması verinin şimdi de güncel olduğunu göstermez. Son başarılı üretimin yaşı 90 dakikayı aşıyorsa önce veri gecikmesini belirtin. Dosyanın önbellekten gelmesi halinde timestamp'i esas alın.
 
@@ -149,17 +151,31 @@ Birim: **BTC fiyatında %1 hareket başına USD eşdeğeri delta-notional deği�
 
 ### Signed dealer-GEX tahmini ve zero-gamma flip
 
-`net_gex_estimate_usd_per_1pct` gözlenmiş dealer pozisyonu değil, açıkça etiketlenmiş bir model tahminidir. Bütün aktif Deribit BTC opsiyonları için Deribit `mark_iv` değeri yüzde puandan ondalığa çevrilir ve Black–Scholes spot gamma yeniden hesaplanır. Risksiz faiz ve temettü oranı sıfırdır; her kontratın gerçek strike'ı ve vade zamanı kullanılır. Spot, zincirde alınmış en yeni geçerli Deribit BTC `index_price` değeridir.
+`net_gex_estimate_usd_per_1pct` gözlenmiş dealer pozisyonu değil, açıkça etiketlenmiş bir model tahminidir. Bütün aktif Deribit BTC opsiyonları için bulk `get_book_summary_by_currency` içindeki `mark_iv` yüzde puandan ondalığa çevrilir ve Black–Scholes gamma yeniden hesaplanır. Risksiz faiz ve temettü oranı sıfırdır; her kontratın gerçek strike'ı ve vade zamanı kullanılır. Gamma ve USD normalizasyonunda kontratın vadesine ait Deribit `underlying_price` kullanılır; bu değer Deribit'in IV hesabında kullandığı expiry-specific forward/reference fiyatıdır. Ayrı `index_price` mevcut spot ve grid merkezidir.
 
 Varsayım: dealer müşteriye karşı call'larda net short, put'larda net long'dur. Buna göre call katkısı negatif, put katkısı pozitiftir:
 
-`signed_gex = dealer_sign × BS_gamma × OI_BTC × spot² × 0.01`
+`signed_gex = dealer_sign × BS_gamma(underlying_price) × OI_BTC × underlying_price² × 0.01`
 
 Deribit BTC option OI zaten BTC baz miktarıdır; `contract_size` yeniden çarpılmaz. `gex_by_strike` tüm aktif vadeleri strike bazında toplar. Spotun ±%25 çevresindeki en büyük pozitif ve negatif yoğunluklar ayrıca özetlenir. Pozitif OI'lı bir kontratta OI, IV veya vade girdisi eksikse signed toplam ve flip null/error olur; kısmi zincir tam veri gibi yayımlanmaz.
 
-`zero_gamma_flip`, mevcut spottaki net GEX değerine eşit değildir. Bütün kontratlar mevcut OI ve IV ile spotun %50–%150 aralığında 201 noktada yeniden değerlenir. Toplam signed GEX işaret değiştirdiğinde iki grid noktası arasında doğrusal interpolasyon yapılır; her kökün `negative_to_positive` veya `positive_to_negative` yönü saklanır. Birden fazla kök varsa mevcut spota en yakın olan seçilir ve bütün kökler tanılamada korunur. Aralıkta kök yoksa değer `null/not_applicable` ve sebebi açık olur. `spot_to_gamma_flip_pct = (spot − flip) / flip × 100` yalnız mesafedir. Rejim flip'in hangi tarafında olunduğundan değil, mevcut spottaki aggregate signed GEX'in işaretinden belirlenir: pozitif `long_gamma`, negatif `short_gamma`, sayısal sıfır toleransı içi `zero_gamma`. Bu rejim, yalnız belirtilen pozisyon varsayımının sonucudur.
+`zero_gamma_flip` / `zero_gamma_flip_repriced`, mevcut spottaki net GEX değerine eşit değildir. Bütün kontratlar mevcut OI ve sabit kontrat IV'siyle spotun %50–%150 aralığında 201 noktada yeniden değerlenir; her vade forward'ı spot grid oranı kadar paralel kaydırılır. Toplam signed GEX işaret değiştirdiğinde iki grid noktası arasında doğrusal interpolasyon yapılır; her kökün `negative_to_positive` veya `positive_to_negative` yönü saklanır. Birden fazla kök varsa mevcut spota en yakın olan seçilir ve bütün kökler tanılamada korunur. Aralıkta kök yoksa değer `null/not_applicable` ve sebebi açık olur. `zero_gamma_flip_cumulative_strike` ise ayrı bir tanımdır: mevcut signed GEX strike'a göre aşağıdan yukarı kümülatif toplanır ve sıfır kesişimi bulunur. İki flip sessizce birbirinin yerine kullanılmaz.
 
-Hesap RetailInterest'i scrape etmez veya ona bağımlı değildir. RetailInterest değerleri ancak dışarıdan manuel sanity check olarak karşılaştırılabilir; farklı kontrat evreni, OI anı, IV yüzeyi, spot zamanı, grid ve dealer pozisyon varsayımları nedeniyle sonuçların eşit olması beklenmez.
+`spot_to_gamma_flip_pct = (spot − repriced_flip) / repriced_flip × 100` yalnız mesafedir. Rejim flip'in hangi tarafında olunduğundan değil, mevcut spottaki aggregate signed GEX'in işaretinden belirlenir: pozitif `long_gamma`, negatif `short_gamma`, sayısal sıfır toleransı içi `zero_gamma`. Bu rejim, yalnız belirtilen pozisyon varsayımının sonucudur.
+
+Deribit'in yayımladığı 5 ondalık basamaklı gamma ayrıca bütün pozitif-OI ticker'larında yeniden hesaplanan gamma ile mutabakat edilir; tek spot, ticker index ve expiry-specific `underlying_price` adaylarının hata istatistikleri saklanır. Aynı zincirde model A–E katkıları, örnek call/put izleri ve IV ±1 yüzde puan duyarlılığı tanılama olarak bulunur.
+
+Hesap RetailInterest'i scrape etmez veya ona bağımlı değildir. Eylül 2026 aynı-anlık adli karşılaştırma, RetailInterest public API strike barlarının kendi yazılı “dealer short call / long put” varsayımının **ters işareti**, tek spot gamma girdisi ve spotun %80–%125 strike filtresiyle yeniden üretildiğini; başlık flip'inin de full-surface repricing değil kümülatif-strike kökü olduğunu gösterdi. Bu yüzden production işaretleri bir web kartına uydurulmadı. Tekrarlanabilir kanıt ve sınırlamalar `docs/MILESTONE3_GEX_FORENSICS.md` içindedir.
+
+### VWAP, POC, VAH ve VAL
+
+`market_structure` üç pencere yayımlar: UTC session, rolling 24 saat ve rolling 7 gün.
+
+- VWAP, tamamlanmış Binance BTCUSDT 1m kline'larındaki kesin borsa toplamlarından `Σ quote_volume / Σ base_volume` ile hesaplanır. Tipik fiyat yaklaşımı kullanılmaz; eksik dakika varsa metrik `warming_up` olur.
+- Hacim profili yalnız resmi Binance BTCUSDT aggregate trade'lerindeki gerçek `price × base quantity` dağılımından oluşur. Günlük resmi ZIP arşivlerinin SHA-256 checksum'ı doğrulanır, sonra son ID'den itibaren resmi `/api/v3/aggTrades` ile boşluksuz devam edilir. Mum hacmini tek fiyata yığan proxy yoktur.
+- Sabit ve yayımlanmış kova genişliği 50 USDT'dir. POC en yüksek BTC hacimli kovanın orta noktasıdır; eşitlikte düşük fiyat seçilir.
+- %70 değer alanı POC'tan bitişik kovalara genişler. Her adımda hacmi fazla olan komşu eklenir; eşitlikte alt taraf seçilir. VAL dahil edilen en düşük kovanın alt, VAH en yüksek kovanın üst sınırıdır.
+- Doğrulanmış ilk bootstrap bir kez yapılır. `state/market_structure.json` sonraki saatlerde yalnız yeni aggTrade ID'leriyle artımlı güncellenir; günlük ZIP'ler workflow cache'inde tutulur. Tam pencere yoksa kesin seviyeler uydurulmaz ve `warming_up` yayımlanır.
 
 CoinGlass liquidation heatmap ve gerçek dealer GEX vendor screenshot'ı **manuel kalır**.
 
@@ -167,7 +183,7 @@ CoinGlass liquidation heatmap ve gerçek dealer GEX vendor screenshot'ı **manue
 
 HTTPS GET dışında market işlemi yoktur. TLS doğrulaması açıktır. İstek başına 30 saniye üst sınır, 20 saniye bağlantı sınırı, en fazla 3 deneme ve ortak host bazlı hız sınırı kullanılır. Coinbase/Deribit yaklaşık 3.8 istek/sn, Binance yaklaşık 8.3 istek/sn; kullanılan Binance endpoint ağırlıkları düşük ve tek sembollüdür. Deribit instruments çağrıları ayrıca aralıklanır. Retry-After dikkate alınır; 30 saniyeyi aşan talep bir sonraki saatlik çalışmaya bırakılır. Tekrarlanan bağlantı/5xx hataları devre kesiciyi açar. HTTP 401/403/418/451 yeniden zorlanmaz.
 
-Coinbase için 600 sayfa/480 saniye, option taraması için 720 saniye bütçe vardır; eksik kapsam açıkça işaretlenir. Metadata ile ticker aynı anda atomik değildir; tarama sırasında expire olan kontratın ölçümleri stale yapılır. Bütün değerler önce doğrulanır; NaN/Infinity JSON'a yazılamaz.
+Coinbase için 600 sayfa/480 saniye, option taraması için 720 saniye bütçe vardır; eksik kapsam açıkça işaretlenir. Metadata ile ayrıntılı ticker zinciri aynı anda atomik değildir; tarama sırasında expire olan kontratın ölçümleri stale yapılır. Signed-GEX bulk snapshot'ı bu uzun taramadan ayrıdır. Market-profile bootstrap'ında resmi arşivler checksum ile cache'lenir, API devamı sınırlı paralellik ve ID-gap kontrolü kullanır. Bütün değerler önce doğrulanır; NaN/Infinity JSON'a yazılamaz.
 
 ## Geliştirici komutları
 
@@ -198,4 +214,6 @@ Dokümantasyon 16 Eylül 2026'da incelendi. Kullanılan pathler güncel resmi sa
 - [Coinbase rate limits](https://docs.cdp.coinbase.com/exchange/rest-api/rate-limits)
 - [Deribit instruments](https://docs.deribit.com/api-reference/market-data/public-get_instruments)
 - [Deribit ticker: OI birimleri, IV, delta ve gamma](https://docs.deribit.com/api-reference/market-data/public-ticker)
+- [Deribit bulk option book summary](https://docs.deribit.com/api-reference/market-data/public-get_book_summary_by_currency)
+- [Deribit option-data collection best practices](https://docs.deribit.com/articles/options-data-collection-best-practices)
 - [Deribit rate limits](https://docs.deribit.com/articles/rate-limits)

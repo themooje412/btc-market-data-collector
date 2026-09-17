@@ -59,6 +59,8 @@ class HappyClient:
             d=[{'trade_id':3,'time':iso(end+1),'side':'sell','size':'1','price':'100'},
                {'trade_id':2,'time':iso(end-10),'side':'sell','size':'2','price':'100'},
                {'trade_id':1,'time':iso(end-86401),'side':'buy','size':'1','price':'100'}]
+        elif path=='/api/v3/aggTrades':
+            d=[{'a':1,'p':'100','q':'2','T':(end-1)*1000,'m':False,'M':True}]
         elif path=='/api/v3/klines':
             start=kw['startTime']//1000
             d=[[i*1000,'100','100','100','100','10',(i+60)*1000-1,'1000',1,'7','700',0]
@@ -75,10 +77,20 @@ class HappyClient:
                                  expiration_timestamp=ms+30*86400000,base_currency='BTC',is_active=True,
                                  settlement_currency='BTC',quote_currency='BTC',contract_size=1,instrument_type='reversed')
                              for side in ('call','put')]}
+        elif path=='/public/get_book_summary_by_currency':
+            rows=[]
+            if kw['currency']=='BTC':
+                rows=[dict(instrument_name='TEST-'+side,base_currency='BTC',quote_currency='BTC',
+                           creation_timestamp=ms,open_interest=10,mark_iv=40 if side=='call' else 50,
+                           underlying_price=100,interest_rate=0) for side in ('call','put')]
+            d={'result':rows,'usOut':int(t*1_000_000)}
+        elif path=='/public/get_index_price':
+            d={'result':{'index_price':100,'estimated_delivery_price':100},'usOut':int(t*1_000_000)}
         elif path=='/public/ticker':
             name=kw['instrument_name']
             d={'result':dict(instrument_name=name,timestamp=ms,state='open',mark_price=101,index_price=100,
                             underlying_price=100,open_interest=10,funding_8h=.0001,mark_iv=40 if 'call' in name else 50,
+                            interest_rate=0,
                             greeks={'delta':.25 if 'call' in name else -.25,'gamma':.00002})}
         else: raise ValueError(path)
         return d,{'cb-after':'1'},t
@@ -105,8 +117,10 @@ class SuccessIntegrationTests(unittest.TestCase):
             self.assertGreater(chain['gross_gex_proxy']['value'],0)
             self.assertIn('net_gex_estimate_usd_per_1pct',s['options'])
             self.assertIn('zero_gamma_flip',s['options'])
+            self.assertIn('zero_gamma_flip_cumulative_strike',s['options'])
+            self.assertIn('market_structure',s)
             history=read_history(root/'history.csv')[0]
             for key in ('net_gex_estimate','zero_gamma_flip','spot_to_gamma_flip_pct','gamma_regime',
-                        'raw_coinbase_premium_bps','fx_adjusted_coinbase_premium_bps'):
+                        'raw_coinbase_premium_bps','fx_adjusted_coinbase_premium_bps','vwap_session','poc_24h'):
                 self.assertIn(key,history)
             self.assertEqual(len(read_history(root/'history.csv')),1)
