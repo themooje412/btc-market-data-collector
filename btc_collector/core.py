@@ -48,20 +48,29 @@ def fresh(value, source, t, now, unit=None, max_age=180, **extra):
     return metric(value, source, t, unit, **extra)
 
 def premium(cb, bn, fx=None, max_skew=60):
-    src = 'Coinbase BTC-USD / Binance BTCUSDT'
     def calc(items, converted):
+        src = ('Coinbase BTC-USD minus Binance BTCUSDT converted with Coinbase USDT-USD'
+               if converted else 'Coinbase BTC-USD minus Binance BTCUSDT (unadjusted)')
         if any(m['status'] != 'ok' or m['value'] is None for m in items):
-            return {k: missing(src, 'Fresh inputs unavailable', unit=u) for k,u in [('usd','USD'),('bps','bp')]}
+            return {k: missing(src, 'Fresh inputs unavailable', unit=u) for k,u in
+                    [('usd','USD'),('bps','bp'),('pct','%')]}
         ts = [epoch(m['timestamp']) for m in items]
         if max(ts)-min(ts) > max_skew:
-            return {k: missing(src, 'Input timestamps differ by more than 60s', status='stale', unit=u) for k,u in [('usd','USD'),('bps','bp')]}
+            return {k: missing(src, 'Input timestamps differ by more than 60s', status='stale', unit=u) for k,u in
+                    [('usd','USD'),('bps','bp'),('pct','%')]}
         base = number(bn['value'], 1e-12) * (number(fx['value'], 1e-12) if converted else 1)
         diff = number(cb['value'], 1e-12)-base
         return {'usd': metric(diff,src,min(ts),'USD',assumption=None if converted else '1 USDT = 1 USD'),
-                'bps': metric(diff/base*10000,src,min(ts),'bp')}
+                'bps': metric(diff/base*10000,src,min(ts),'bp'),
+                'pct': metric(diff/base*100,src,min(ts),'%')}
     raw = calc([cb,bn],False)
-    return dict(**raw, fx_adjusted=calc([cb,bn,fx],True) if fx else {
-        'usd':missing(src,'USDT-USD quote unavailable'), 'bps':missing(src,'USDT-USD quote unavailable')})
+    fx_adjusted = calc([cb,bn,fx],True) if fx else {
+        k:missing('Coinbase BTC-USD / Binance BTCUSDT','USDT-USD quote unavailable',unit=u)
+        for k,u in [('usd','USD'),('bps','bp'),('pct','%')]}
+    # Keep the original usd/bps/fx_adjusted paths while exposing unambiguous names.
+    return dict(**raw, fx_adjusted=fx_adjusted,
+                raw_coinbase_premium=raw, fx_adjusted_coinbase_premium=fx_adjusted,
+                methodology='Price difference, not the CoinGlass Coinbase Premium Index')
 
 def basis(mark, index, source, t, expiry=None):
     m, s = number(mark,1e-12), number(index,1e-12)
@@ -129,6 +138,21 @@ def interpolate_delta(rows, target):
 def gross_gamma(gamma, oi_base, spot):
     # Deribit inverse BTC option OI is already BTC; do NOT multiply by contract_size again.
     return number(gamma,0)*number(oi_base,0)*number(spot,1e-12)**2*0.01
+
+def black_scholes_gamma(spot, strike, volatility, time_to_expiry_years, risk_free_rate=0):
+    """Spot gamma for a European option; call and put gamma are identical."""
+    s=number(spot,1e-12); k=number(strike,1e-12); sigma=number(volatility,1e-12)
+    tau=number(time_to_expiry_years,1e-12); r=number(risk_free_rate)
+    root=math.sqrt(tau)
+    d1=(math.log(s/k)+(r+0.5*sigma*sigma)*tau)/(sigma*root)
+    return math.exp(-0.5*d1*d1)/(math.sqrt(2*math.pi)*s*sigma*root)
+
+def signed_dealer_gamma(gamma, oi_base, spot, option_type):
+    """Estimated dealer GEX under the explicit short-call / long-put assumption."""
+    if option_type not in ('call','put'):
+        raise ValueError('Option type must be call or put')
+    sign=-1 if option_type=='call' else 1
+    return sign*gross_gamma(gamma,oi_base,spot)
 
 def oi_changes(current, points, source, tolerance=1200):
     result = {}

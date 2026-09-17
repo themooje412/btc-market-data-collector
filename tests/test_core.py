@@ -16,8 +16,11 @@ class CoreTests(unittest.TestCase):
         result=premium(metric(101,'cb',1000),metric(100,'bn',1000),metric(.99,'fx',1000))
         self.assertEqual(result['usd']['value'],1)
         self.assertEqual(result['bps']['value'],100)
+        self.assertEqual(result['pct']['value'],1)
+        self.assertEqual(result['raw_coinbase_premium']['usd']['value'],1)
         self.assertEqual(result['fx_adjusted']['usd']['value'],2)
         self.assertAlmostEqual(result['fx_adjusted']['bps']['value'],2/99*10000)
+        self.assertAlmostEqual(result['fx_adjusted_coinbase_premium']['pct']['value'],2/99*100)
     def test_premium_time_mismatch(self):
         p=premium(metric(101,'cb',1000),metric(100,'bn',900))
         self.assertIsNone(p['bps']['value']); self.assertEqual(p['bps']['status'],'stale')

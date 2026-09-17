@@ -39,7 +39,7 @@ Kaynak: [GitHub ücretlendirme](https://docs.github.com/en/billing/concepts/prod
 
 | Dosya | İçerik |
 |---|---|
-| `latest.json` | ChatGPT için güncel, özet veri; en güçlü 20 gamma strike'ı; vade bazında opsiyon özetleri |
+| `latest.json` | ChatGPT için güncel, özet veri; gross GEX, signed dealer-GEX tahmini, zero-gamma flip ve vade bazında opsiyon özetleri |
 | `options_chain.json` | Bütün aktif BTC opsiyon kontratları, her kontratın OI/IV/delta/gamma değeri, tam strike ve vade kırılımları |
 | `history.csv` | Saatlik fiyat/OI/funding/basis/CVD/IV/skew/wall/GEX özetleri; alan başına durum, kaynak, zaman ve birim |
 | `state/coinbase.json` | Tamamı gözlenmiş tarihsel Coinbase dakika hacimleri; yaklaşık 26 saat |
@@ -67,7 +67,9 @@ Her ölçüm mümkün olduğunca `value`, `source`, UTC `timestamp`, `unit`, `st
 - Coinbase: BTC-USD son işlem fiyatı ve son işlem zamanı, Exchange API `/products/BTC-USD/ticker`.
 - Ham premium USD = `Coinbase BTC-USD − Binance BTCUSDT`; bu alışıldık karşılaştırma **1 USDT = 1 USD varsayımı** taşır.
 - Ham premium bp = `(Coinbase / Binance − 1) × 10,000`.
-- `fx_adjusted`: Binance fiyatını Coinbase USDT-USD fiyatıyla çarpar, ardından aynı farkı ve bp'yi hesaplar. USDT/USD kotasyonu alınamıyorsa bu alanlar null kalır; ham premium varsayımı açıkça korunur.
+- `raw_coinbase_premium`: ham farkı USD, bp ve yüzde olarak açıkça yayımlar.
+- `fx_adjusted_coinbase_premium`: Binance fiyatını Coinbase USDT-USD fiyatıyla çarpar, ardından aynı farkı USD, bp ve yüzde olarak hesaplar. USDT/USD kotasyonu alınamıyorsa bu alanlar null kalır; ham premium bağımsız kalır.
+- Eski `coinbase_premium.usd`, `.bps` ve `.fx_adjusted` yolları geriye uyumluluk için korunur. Bu ölçümler CoinGlass Coinbase Premium Index olarak etiketlenmez ve o ücretli endeksle metodolojik eşdeğerlik iddia etmez.
 - Fiyatların zamanları 60 saniyeden fazla farklıysa premium null/stale olur. Pozitif değer Coinbase'in daha pahalı olduğunu gösterir. Son işlem fiyatlarının farkı, eşzamanlı uygulanabilir arbitraj getirisi değildir.
 
 ### CVD — agresif işlemler
@@ -143,7 +145,21 @@ Her kontrat için:
 
 Birim: **BTC fiyatında %1 hareket başına USD eşdeğeri delta-notional değişimi**. Gelen long-option gamma negatifse reddedilir. Aynı strike üzerindeki call ve put gamma büyüklükleri toplanır. `share_pct`, strike büyüklüğünün toplam içindeki payıdır. OI zaten BTC olduğu için ikinci kez kontrat büyüklüğü çarpılmaz. Lineer stablecoin kontratlarının USD eşdeğerinde stablecoin/USD paritesi varsayılır; depeg sırasında bu proxy'nin sınırlamasıdır. Gamma borsanın Black–Scholes modeline dayanır; bu hesap gerçek hedge akışını ölçmez.
 
-**Bu veri Net Dealer GEX değildir.** Dealer'ın hangi opsiyonlarda long/short olduğu public OI'dan çıkmaz. Call'a artı, put'a eksi işareti verip dealer pozisyonu uydurulmaz. Gamma flip veya net dealer rejimi üretilmez. Pozitif OI olan bir kontratın gamma'sı eksikse toplam proxy null olur; eksik gamma sıfır varsayılmaz. Sıfır OI kontratlarının eksik gamma'sı toplamı etkilemez.
+**Bu gross veri Net Dealer GEX değildir ve ayrı korunur.** Dealer'ın gerçek long/short pozisyonu public OI'dan gözlenemez. Pozitif OI olan bir kontratın gamma'sı eksikse toplam proxy null olur; eksik gamma sıfır varsayılmaz. Sıfır OI kontratlarının eksik gamma'sı toplamı etkilemez.
+
+### Signed dealer-GEX tahmini ve zero-gamma flip
+
+`net_gex_estimate_usd_per_1pct` gözlenmiş dealer pozisyonu değil, açıkça etiketlenmiş bir model tahminidir. Bütün aktif Deribit BTC opsiyonları için Deribit `mark_iv` değeri yüzde puandan ondalığa çevrilir ve Black–Scholes spot gamma yeniden hesaplanır. Risksiz faiz ve temettü oranı sıfırdır; her kontratın gerçek strike'ı ve vade zamanı kullanılır. Spot, zincirde alınmış en yeni geçerli Deribit BTC `index_price` değeridir.
+
+Varsayım: dealer müşteriye karşı call'larda net short, put'larda net long'dur. Buna göre call katkısı negatif, put katkısı pozitiftir:
+
+`signed_gex = dealer_sign × BS_gamma × OI_BTC × spot² × 0.01`
+
+Deribit BTC option OI zaten BTC baz miktarıdır; `contract_size` yeniden çarpılmaz. `gex_by_strike` tüm aktif vadeleri strike bazında toplar. Spotun ±%25 çevresindeki en büyük pozitif ve negatif yoğunluklar ayrıca özetlenir. Pozitif OI'lı bir kontratta OI, IV veya vade girdisi eksikse signed toplam ve flip null/error olur; kısmi zincir tam veri gibi yayımlanmaz.
+
+`zero_gamma_flip`, mevcut spottaki net GEX değerine eşit değildir. Bütün kontratlar mevcut OI ve IV ile spotun %50–%150 aralığında 201 noktada yeniden değerlenir. Toplam signed GEX işaret değiştirdiğinde iki grid noktası arasında doğrusal interpolasyon yapılır; birden fazla kök varsa mevcut spota en yakın olan seçilir. Aralıkta kök yoksa değer `null/not_applicable` ve sebebi açık olur. `spot_to_gamma_flip_pct = (spot − flip) / flip × 100`; spot flip'in üstündeyse `long_gamma`, altındaysa `short_gamma` etiketi verilir. Bu rejim, yalnız belirtilen pozisyon varsayımının sonucudur.
+
+Hesap RetailInterest'i scrape etmez veya ona bağımlı değildir. RetailInterest değerleri ancak dışarıdan manuel sanity check olarak karşılaştırılabilir; farklı kontrat evreni, OI anı, IV yüzeyi, spot zamanı, grid ve dealer pozisyon varsayımları nedeniyle sonuçların eşit olması beklenmez.
 
 CoinGlass liquidation heatmap ve gerçek dealer GEX vendor screenshot'ı **manuel kalır**.
 

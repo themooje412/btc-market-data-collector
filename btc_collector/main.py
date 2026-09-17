@@ -19,7 +19,10 @@ def failed_futures(src,reason):
 
 def failed_options(reason):
     return {'status':'error','contracts':[],'active_contract_count':None,'by_expiry':{},'reason':reason,
-            **{k:missing(DERIBIT,reason) for k in ('total_oi','gross_gex_proxy','put_wall','call_wall','gamma_concentrations')},
+            **{k:missing(DERIBIT,reason) for k in ('total_oi','gross_gex_proxy','put_wall','call_wall','gamma_concentrations',
+                                                   'net_gex_estimate_usd_per_1pct','gex_by_strike','zero_gamma_flip',
+                                                   'spot_to_gamma_flip_pct','gamma_regime')},
+            'dealer_gex_estimate':{'status':'error','reason':reason},
             'headline_surface':{k:missing(DERIBIT,reason) for k in ('atm_iv','risk_reversal_25d')}}
 
 def age_metrics(obj,now,path='',ages=None):
@@ -66,11 +69,14 @@ def collect(root,client=None,max_pages=600,option_budget=720):
         oi[venue]={'current':data['oi'],'changes':oi_changes(data['oi'],points,venue+' same-market OI')}
     cb_cvd,new_state,cb_details=results['coinbase_cvd']
     now=time.time()
-    snapshot={'schema_version':'1.0.0','timestamp':iso(now),'collection_started_at':iso(started),
+    premiums=premium(results['coinbase_spot'],results['binance_spot'],results['usdt_usd'])
+    snapshot={'schema_version':'1.1.0','timestamp':iso(now),'collection_started_at':iso(started),
       'snapshot_hour':iso(int(started)//3600*3600),'cvd_window_end':iso(end),
       'collection_duration_seconds':round(now-started,3),'status':'ok','data_age':{},
       'spot':{'binance':results['binance_spot'],'coinbase':results['coinbase_spot'],'usdt_usd':results['usdt_usd']},
-      'coinbase_premium':premium(results['coinbase_spot'],results['binance_spot'],results['usdt_usd']),
+      'coinbase_premium':premiums,
+      'raw_coinbase_premium':premiums['raw_coinbase_premium'],
+      'fx_adjusted_coinbase_premium':premiums['fx_adjusted_coinbase_premium'],
       'cvd':{'binance':results['binance_cvd'],'coinbase':cb_cvd,'coinbase_collection':cb_details},
       'futures':{'binance':{k:v for k,v in bn.items() if k not in ('oi','funding','basis')},
                  'deribit':{k:v for k,v in db.items() if k not in ('oi','funding','basis')}},
@@ -80,7 +86,7 @@ def collect(root,client=None,max_pages=600,option_budget=720):
       'atm_iv':opt['headline_surface']['atm_iv'],'skew_25d':opt['headline_surface']['risk_reversal_25d'],
       'gamma_concentrations':opt['gamma_concentrations'],
       'quality':{'notes':errors,'manual_inputs':['CoinGlass liquidation heatmap','Real dealer GEX vendor screenshot'],
-                 'gex_warning':'Unsigned gross gamma proxy; dealer long/short positioning is unknown',
+                 'gex_warning':'Gross GEX is unsigned; signed dealer GEX is a model estimate using the documented short-call/long-put assumption, not observed positioning',
                  'oi_warning':'Binance BTCUSDT and Deribit BTC-PERPETUAL are separate markets, not total global BTC OI',
                  'freshness_policy':'Age is measured at publication. Consumer must also compare timestamp to current UTC; do not trust cached age alone.'}}
     snapshot['data_age']=age_metrics(snapshot,now)

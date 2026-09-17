@@ -90,6 +90,8 @@ class SuccessIntegrationTests(unittest.TestCase):
             s=collect(root,HappyClient()); validate(s)
             self.assertEqual(s['spot']['binance']['value'],100)
             self.assertEqual(s['coinbase_premium']['bps']['value'],100)
+            self.assertEqual(s['raw_coinbase_premium']['bps']['value'],100)
+            self.assertEqual(s['fx_adjusted_coinbase_premium']['bps']['value'],100)
             self.assertEqual(s['cvd']['coinbase']['24h']['value'],2)
             self.assertEqual(s['cvd']['binance']['24h']['value'],5760)
             self.assertEqual(s['skew_25d']['value'],-10)
@@ -101,4 +103,10 @@ class SuccessIntegrationTests(unittest.TestCase):
             chain=json.loads((root/'options_chain.json').read_text())
             self.assertEqual(len(chain['contracts']),2)
             self.assertGreater(chain['gross_gex_proxy']['value'],0)
+            self.assertIn('net_gex_estimate_usd_per_1pct',s['options'])
+            self.assertIn('zero_gamma_flip',s['options'])
+            history=read_history(root/'history.csv')[0]
+            for key in ('net_gex_estimate','zero_gamma_flip','spot_to_gamma_flip_pct','gamma_regime',
+                        'raw_coinbase_premium_bps','fx_adjusted_coinbase_premium_bps'):
+                self.assertIn(key,history)
             self.assertEqual(len(read_history(root/'history.csv')),1)

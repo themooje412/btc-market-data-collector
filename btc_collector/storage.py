@@ -9,8 +9,14 @@ PATHS = {
  'binance_spot':('spot','binance'), 'coinbase_spot':('spot','coinbase'),
  'usdt_usd':('spot','usdt_usd'), 'premium_usd':('coinbase_premium','usd'),
  'premium_bps':('coinbase_premium','bps'), 'premium_fx_bps':('coinbase_premium','fx_adjusted','bps'),
+ 'raw_coinbase_premium_bps':('raw_coinbase_premium','bps'),
+ 'fx_adjusted_coinbase_premium_bps':('fx_adjusted_coinbase_premium','bps'),
  'atm_iv':('atm_iv',), 'skew_25d':('skew_25d',), 'put_wall':('put_wall',), 'call_wall':('call_wall',),
- 'option_oi_btc':('options','total_oi'), 'gross_gex_proxy':('options','gross_gex_proxy')}
+ 'option_oi_btc':('options','total_oi'), 'gross_gex_proxy':('options','gross_gex_proxy'),
+ 'net_gex_estimate':('options','net_gex_estimate_usd_per_1pct'),
+ 'zero_gamma_flip':('options','zero_gamma_flip'),
+ 'spot_to_gamma_flip_pct':('options','spot_to_gamma_flip_pct'),
+ 'gamma_regime':('options','gamma_regime')}
 for venue in ('binance','coinbase'):
     for window in ('15m','1h','4h','24h'): PATHS[f'{venue}_cvd_{window}']=('cvd',venue,window)
 for venue in ('binance','deribit'):
@@ -73,7 +79,7 @@ def update_history(path,snapshot):
     atomic_write(path,buf.getvalue())
 
 def validate(snapshot):
-    required=('timestamp','data_age','spot','cvd','coinbase_premium','futures','open_interest','funding','basis','options',
+    required=('timestamp','data_age','spot','cvd','coinbase_premium','raw_coinbase_premium','fx_adjusted_coinbase_premium','futures','open_interest','funding','basis','options',
               'put_wall','call_wall','atm_iv','skew_25d','gamma_concentrations')
     for key in required:
         if key not in snapshot: raise ValueError('Missing section '+key)
