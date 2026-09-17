@@ -5,6 +5,8 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - 'btc_collector/**'
+      - 'tests/**'
       - '.github/workflows/collect.yml'
       - 'scripts/probe_coinbase.py'
       - 'scripts/probe_binance_futures.py'

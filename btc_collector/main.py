@@ -21,7 +21,8 @@ def failed_options(reason):
     return {'status':'error','contracts':[],'active_contract_count':None,'by_expiry':{},'reason':reason,
             **{k:missing(DERIBIT,reason) for k in ('total_oi','gross_gex_proxy','put_wall','call_wall','gamma_concentrations',
                                                    'net_gex_estimate_usd_per_1pct','gex_by_strike','zero_gamma_flip',
-                                                   'spot_to_gamma_flip_pct','gamma_regime')},
+                                                   'spot_to_gamma_flip_pct','gamma_regime','selected_flip_crossing_direction',
+                                                   'crossing_count')},
             'dealer_gex_estimate':{'status':'error','reason':reason},
             'headline_surface':{k:missing(DERIBIT,reason) for k in ('atm_iv','risk_reversal_25d')}}
 
