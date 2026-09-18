@@ -1,8 +1,52 @@
 {
-  "schema_version": "1.0.0",
-  "profile": "controlled_aggressive",
+  "schema_version": "1.1.0",
+  "profile": "controlled_aggressive_day_trend",
   "context_timestamp": "2026-09-18T12:39:12.737Z",
   "context_spot": 78032.36,
+  "strategic_bias": {
+    "value": "bullish",
+    "score": 5.5,
+    "threshold": 3.0,
+    "components": {
+      "7d_location": {
+        "value": "inside_value",
+        "score": 0.0
+      },
+      "24h_location": {
+        "value": "above_value",
+        "score": 1.5
+      },
+      "7d_vwap": {
+        "value": 77043.43948212023,
+        "score": 1.0
+      },
+      "24h_vwap": {
+        "value": 77237.10395623722,
+        "score": 1.0
+      },
+      "binance_4h_cvd": {
+        "value": 1809483.8501704985,
+        "score": 1.25
+      },
+      "binance_1h_cvd": {
+        "value": -5573633.4938188,
+        "score": -0.5
+      },
+      "coinbase_4h_cvd": {
+        "value": 14949909.177357702,
+        "score": 1.25
+      },
+      "coinbase_1h_cvd": {
+        "value": -3853996.628992722,
+        "score": -0.5
+      },
+      "fx_adjusted_premium_bps": {
+        "value": 0.6399898878914875,
+        "score": 0.5
+      }
+    },
+    "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
+  },
   "gamma_regime": "short_gamma",
   "levels": [
     {
@@ -160,12 +204,17 @@
     "a_plus_early_probe_min_rr": 1.6,
     "no_chase_atr": 0.65,
     "no_chase_r": 1.0,
+    "level_zone_buffer_pct": 0.1,
     "retest_buffer_pct": 0.08,
-    "invalidation_buffer_pct": 0.15
+    "invalidation_buffer_pct": 0.15,
+    "countertrend_min_flow_score": 3,
+    "opposite_direction_cooldown_minutes": 30
   },
   "semantics": {
+    "strategic_bias": "Slow hourly day/trend direction; five-minute noise cannot flip it alone",
+    "execution_state": "Fast 5m entry timing inside the strategic context",
     "repriced_gamma_flip": "structural gamma-regime threshold",
     "cumulative_gamma_flip": "tactical strike/OI balance level",
-    "note": "Fast watcher detects events; it does not recompute the hourly structural context."
+    "note": "Counter-trend trades require completed 15m acceptance plus strong aligned flow."
   }
 }
