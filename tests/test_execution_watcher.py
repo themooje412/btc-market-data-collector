@@ -20,8 +20,8 @@ def snapshot():
             'zero_gamma_flip_repriced': metric(90.0),
             'gamma_regime': metric('short_gamma'),
         },
-        'call_wall': metric(105.0),
-        'put_wall': metric(95.0),
+        'call_wall': metric(102.5),
+        'put_wall': metric(97.0),
     }
 
 
@@ -67,12 +67,13 @@ class ExecutionWatcherTests(unittest.TestCase):
         anchor = min(plan['levels'], key=lambda c: abs(c['value'] - 101.0))
         level = anchor['value']
         candles = [
-            {'open': level-1, 'high': level, 'low': level-1.2, 'close': level-0.2, 'quote_cvd': 0},
-            {'open': level-0.2, 'high': level+0.5, 'low': level-0.3, 'close': level+0.2, 'quote_cvd': 0},
+            {'open': level-0.3, 'high': level, 'low': level-0.35, 'close': level-0.2, 'quote_cvd': 0},
+            {'open': level-0.2, 'high': level+0.3, 'low': level-0.22, 'close': level+0.08, 'quote_cvd': 0},
         ]
-        state = classify_state(plan, fast(candles, spot=level+0.2), None)
+        state = classify_state(plan, fast(candles, spot=level+0.08), None)
         self.assertEqual(state['state'], 'LONG_TRIGGERED')
         self.assertEqual(state['direction'], 'long')
+        self.assertGreaterEqual(state['execution']['rr_to_target1'], 1.6)
 
     def test_failed_long_is_invalidated_not_averaged_down(self):
         plan = build_plan(snapshot())
@@ -88,6 +89,7 @@ class ExecutionWatcherTests(unittest.TestCase):
         ]
         state = classify_state(plan, fast(candles, cvd15=-2_000_000, cvd1h=-4_000_000, fx=-1.0, spot=level-0.5), previous)
         self.assertEqual(state['state'], 'INVALIDATED')
+        self.assertEqual(state['anchor']['id'], anchor['id'])
 
     def test_no_trade_away_from_structure(self):
         plan = build_plan(snapshot())
