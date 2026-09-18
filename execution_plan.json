@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1.0",
   "profile": "controlled_aggressive_day_trend",
-  "context_timestamp": "2026-09-18T13:35:47.385Z",
-  "context_spot": 78175.05,
+  "context_timestamp": "2026-09-18T14:34:59.148Z",
+  "context_spot": 80719.57,
   "strategic_bias": {
     "value": "bullish",
-    "score": 7.0,
+    "score": 9.5,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,31 +17,31 @@
         "score": 1.5
       },
       "7d_vwap": {
-        "value": 77033.06057981505,
+        "value": 77145.28848389463,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 77281.48034390308,
+        "value": 78122.5499252507,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": -4920502.4081470985,
-        "score": -1.25
+        "value": 100917108.2709226,
+        "score": 1.25
       },
       "binance_1h_cvd": {
-        "value": 3884773.475057401,
+        "value": 104209533.95095749,
         "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": 4225508.774248169,
+        "value": 61363527.9951825,
         "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": 1049460.101534735,
+        "value": 62768514.20491712,
         "score": 0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 1.5760152582576326,
+        "value": 0.8760431397192862,
         "score": 0.5
       }
     },
@@ -50,88 +50,45 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 76000.0,
+      "value": 78350.0,
       "labels": [
-        "24h_val"
+        "24h_vah"
       ],
       "values": [
-        76000.0
+        78350.0
       ],
       "confluence_count": 1,
-      "id": "24h_val"
+      "id": "24h_vah"
     },
     {
-      "value": 76625.0,
-      "labels": [
-        "24h_poc"
-      ],
-      "values": [
-        76625.0
-      ],
-      "confluence_count": 1,
-      "id": "24h_poc"
-    },
-    {
-      "value": 77033.06,
-      "labels": [
-        "7d_vwap"
-      ],
-      "values": [
-        77033.06
-      ],
-      "confluence_count": 1,
-      "id": "7d_vwap"
-    },
-    {
-      "value": 77268.83,
-      "labels": [
-        "session_val",
-        "7d_poc",
-        "24h_vwap"
-      ],
-      "values": [
-        77250.0,
-        77275.0,
-        77281.48
-      ],
-      "confluence_count": 3,
-      "id": "session_val+7d_poc+24h_vwap"
-    },
-    {
-      "value": 77627.29,
+      "value": 78482.38,
       "labels": [
         "session_vwap"
       ],
       "values": [
-        77627.29
+        78482.38
       ],
       "confluence_count": 1,
       "id": "session_vwap"
     },
     {
-      "value": 77850.07,
+      "value": 78771.15,
       "labels": [
-        "session_poc",
-        "24h_vah",
-        "7d_vah",
         "cumulative_gamma_flip"
       ],
       "values": [
-        77775.0,
-        77800.0,
-        77900.0,
-        77925.27
+        78771.15
       ],
-      "confluence_count": 4,
-      "id": "session_poc+24h_vah+7d_vah+cumulative_gamma_flip"
+      "confluence_count": 1,
+      "id": "cumulative_gamma_flip"
     },
     {
-      "value": 78250.0,
+      "value": 79300.0,
       "labels": [
         "session_vah"
       ],
       "values": [
-        78250.0
+        79300.0
       ],
       "confluence_count": 1,
       "id": "session_vah"
@@ -149,33 +106,17 @@
     }
   ],
   "nearest_below": {
-    "value": 77850.07,
+    "value": 80000.0,
     "labels": [
-      "session_poc",
-      "24h_vah",
-      "7d_vah",
-      "cumulative_gamma_flip"
+      "call_wall"
     ],
     "values": [
-      77775.0,
-      77800.0,
-      77900.0,
-      77925.27
-    ],
-    "confluence_count": 4,
-    "id": "session_poc+24h_vah+7d_vah+cumulative_gamma_flip"
-  },
-  "nearest_above": {
-    "value": 78250.0,
-    "labels": [
-      "session_vah"
-    ],
-    "values": [
-      78250.0
+      80000.0
     ],
     "confluence_count": 1,
-    "id": "session_vah"
+    "id": "call_wall"
   },
+  "nearest_above": null,
   "rules": {
     "early_probe_r": [
       0.4,
