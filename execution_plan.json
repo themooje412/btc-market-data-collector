@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0.0",
+  "profile": "controlled_aggressive",
+  "context_timestamp": "2026-09-18T11:47:24.598Z",
+  "context_spot": 78104.15,
+  "gamma_regime": "short_gamma",
+  "levels": [
+    {
+      "value": 75950.0,
+      "labels": [
+        "7d_val"
+      ],
+      "values": [
+        75950.0
+      ],
+      "confluence_count": 1,
+      "id": "7d_val"
+    },
+    {
+      "value": 76200.0,
+      "labels": [
+        "24h_val"
+      ],
+      "values": [
+        76200.0
+      ],
+      "confluence_count": 1,
+      "id": "24h_val"
+    },
+    {
+      "value": 76625.0,
+      "labels": [
+        "24h_poc"
+      ],
+      "values": [
+        76625.0
+      ],
+      "confluence_count": 1,
+      "id": "24h_poc"
+    },
+    {
+      "value": 77033.6,
+      "labels": [
+        "7d_vwap"
+      ],
+      "values": [
+        77033.6
+      ],
+      "confluence_count": 1,
+      "id": "7d_vwap"
+    },
+    {
+      "value": 77239.32,
+      "labels": [
+        "24h_vwap",
+        "session_val",
+        "7d_poc"
+      ],
+      "values": [
+        77192.96,
+        77250.0,
+        77275.0
+      ],
+      "confluence_count": 3,
+      "id": "24h_vwap+session_val+7d_poc"
+    },
+    {
+      "value": 77643.31,
+      "labels": [
+        "session_vwap",
+        "24h_vah"
+      ],
+      "values": [
+        77586.63,
+        77700.0
+      ],
+      "confluence_count": 2,
+      "id": "session_vwap+24h_vah"
+    },
+    {
+      "value": 77820.31,
+      "labels": [
+        "session_poc",
+        "cumulative_gamma_flip"
+      ],
+      "values": [
+        77775.0,
+        77865.61
+      ],
+      "confluence_count": 2,
+      "id": "session_poc+cumulative_gamma_flip"
+    },
+    {
+      "value": 78050.0,
+      "labels": [
+        "7d_vah"
+      ],
+      "values": [
+        78050.0
+      ],
+      "confluence_count": 1,
+      "id": "7d_vah"
+    },
+    {
+      "value": 78300.0,
+      "labels": [
+        "session_vah"
+      ],
+      "values": [
+        78300.0
+      ],
+      "confluence_count": 1,
+      "id": "session_vah"
+    },
+    {
+      "value": 80000.0,
+      "labels": [
+        "call_wall"
+      ],
+      "values": [
+        80000.0
+      ],
+      "confluence_count": 1,
+      "id": "call_wall"
+    }
+  ],
+  "nearest_below": {
+    "value": 78050.0,
+    "labels": [
+      "7d_vah"
+    ],
+    "values": [
+      78050.0
+    ],
+    "confluence_count": 1,
+    "id": "7d_vah"
+  },
+  "nearest_above": {
+    "value": 78300.0,
+    "labels": [
+      "session_vah"
+    ],
+    "values": [
+      78300.0
+    ],
+    "confluence_count": 1,
+    "id": "session_vah"
+  },
+  "rules": {
+    "early_probe_r": [
+      0.4,
+      0.5
+    ],
+    "confirmation_total_r": [
+      0.75,
+      0.9
+    ],
+    "max_total_r": 1.25,
+    "normal_min_rr": 1.8,
+    "a_plus_early_probe_min_rr": 1.6,
+    "no_chase_atr": 0.65,
+    "no_chase_r": 1.0,
+    "retest_buffer_pct": 0.08,
+    "invalidation_buffer_pct": 0.15
+  },
+  "semantics": {
+    "repriced_gamma_flip": "structural gamma-regime threshold",
+    "cumulative_gamma_flip": "tactical strike/OI balance level",
+    "note": "Fast watcher detects events; it does not recompute the hourly structural context."
+  }
+}
