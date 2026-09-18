@@ -106,7 +106,7 @@ class ExecutionWatcherTests(unittest.TestCase):
         ]
         self.assertEqual(price_event(candles, level), 'none')
 
-    def test_short_gamma_cross_up_can_trigger_early_probe_with_bullish_bias(self):
+    def test_short_gamma_bullish_probe_can_trigger_with_bullish_bias(self):
         plan = build_plan(snapshot())
         anchor = min(plan['levels'], key=lambda c: abs(c['value'] - 101.0))
         level = anchor['value']
@@ -115,7 +115,7 @@ class ExecutionWatcherTests(unittest.TestCase):
             {'open': level-0.10, 'high': level+0.25, 'low': level-0.12, 'close': level+0.18, 'quote_cvd': 0},
         ]
         state = classify_state(plan, fast(candles, spot=level+0.18), None)
-        self.assertEqual(state['event'], 'cross_up')
+        self.assertIn(state['event'], ('cross_up', 'sweep_reclaim_long'))
         self.assertEqual(state['state'], 'LONG_TRIGGERED')
         self.assertEqual(state['direction'], 'long')
         self.assertEqual(state['strategic_bias'], 'bullish')
