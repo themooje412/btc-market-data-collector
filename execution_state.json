@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
-  "state": "MISSED_DO_NOT_CHASE",
-  "direction": "short",
-  "setup_type": "failed-break/sweep-reject",
-  "event": "sweep_reject_short",
+  "state": "EARLY_SETUP",
+  "direction": "long",
+  "setup_type": "breakout",
+  "event": "cross_up",
   "anchor": {
     "value": 78050.0,
     "labels": [
@@ -16,20 +16,20 @@
     "id": "7d_vah"
   },
   "flow_score": -2,
-  "reason": "Trigger present but first-target R/R is below 1.8",
+  "reason": "Breakout lacks fast-flow confirmation",
   "context_timestamp": "2026-09-18T11:47:24.598Z",
-  "fast_timestamp": "2026-09-18T11:49:07.858Z",
-  "fast_spot": 78042.86,
+  "fast_timestamp": "2026-09-18T11:58:49.584Z",
+  "fast_spot": 78052.02,
   "execution": {
-    "entry_reference": 78042.86,
-    "hard_stop": 78211.65,
-    "target1": 77820.31,
-    "target2": 77643.31,
-    "risk_usd": 168.79,
-    "risk_pct": 0.2163,
-    "rr_to_target1": 1.319
+    "entry_reference": 78052.02,
+    "hard_stop": 77932.93,
+    "target1": 78300.0,
+    "target2": 80000.0,
+    "risk_usd": 119.1,
+    "risk_pct": 0.1526,
+    "rr_to_target1": 2.082
   },
-  "signature": "MISSED_DO_NOT_CHASE|short|7d_vah|failed-break/sweep-reject",
-  "previous_state": null,
-  "state_changed_at": "2026-09-18T11:49:07.858Z"
+  "signature": "EARLY_SETUP|long|7d_vah|breakout",
+  "previous_state": "MISSED_DO_NOT_CHASE",
+  "state_changed_at": "2026-09-18T11:58:49.584Z"
 }
