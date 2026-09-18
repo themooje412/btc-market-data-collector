@@ -1,12 +1,11 @@
 """Five-minute execution watcher built on the hourly collector context.
 
-The watcher does not recompute the expensive option surface or 7-day market
-profile. It reads ``latest.json`` as the slow context layer, samples a small
-set of fast public endpoints, and emits deterministic execution events around
-the already-computed structural levels.
+The hourly collector owns the slow day/trend context. This watcher owns only
+execution timing. A five-minute cross can arm or trigger an entry in the
+strategic direction, but it cannot flip the strategic bias by itself.
 
 ``execution_snapshot.json`` and ``execution_state.json`` are refreshed on each
-run so downstream consumers can see the latest 5-minute state. History grows
+run so downstream consumers can see the latest execution state. History grows
 only when the material state signature changes.
 """
 
@@ -16,6 +15,7 @@ import io
 import logging
 import time
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 from pathlib import Path
 
 from .core import binance_cvd, iso, premium
@@ -23,12 +23,15 @@ from .http import Client
 from .sources import BINANCE, binance_spot, coinbase_spot, deribit_perpetual
 from .storage import atomic_write, read_json, write_json
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 LEVEL_CLUSTER_TOLERANCE_PCT = 0.0015
 MAX_LEVEL_DISTANCE_PCT = 0.006
+LEVEL_ZONE_BUFFER_PCT = 0.0010
 RETEST_BUFFER_PCT = 0.0008
 INVALIDATION_BUFFER_PCT = 0.0015
 EARLY_PROXIMITY_PCT = 0.0025
+COUNTERTREND_MIN_FLOW_SCORE = 3
+OPPOSITE_COOLDOWN_SECONDS = 30 * 60
 ACTIVE_STATES = {
     "ARMED_LONG", "ARMED_SHORT", "LONG_TRIGGERED", "SHORT_TRIGGERED",
     "ADD_ALLOWED", "HOLD_MANAGE",
@@ -86,6 +89,68 @@ def cluster_levels(levels, tolerance_pct=LEVEL_CLUSTER_TOLERANCE_PCT):
     return clusters
 
 
+def compute_strategic_bias(snapshot, spot=None):
+    """Derive a slow day/trend bias from hourly structural and spot-flow data.
+
+    This is deliberately harder to flip than the five-minute execution state.
+    Gamma regime is not directional and therefore is not scored here.
+    """
+    if spot is None:
+        spot = _numeric_metric(snapshot, "spot", "binance")
+    score = 0.0
+    components = {}
+
+    for name, prefix, weight in (
+        ("7d_location", "rolling_7d", 2.0),
+        ("24h_location", "rolling_24h", 1.5),
+    ):
+        location = _metric_text(snapshot, "market_structure", prefix, "spot_location")
+        value = weight if location == "above_value" else -weight if location == "below_value" else 0.0
+        components[name] = {"value": location, "score": value}
+        score += value
+
+    for name, prefix, weight in (
+        ("7d_vwap", "rolling_7d", 1.0),
+        ("24h_vwap", "rolling_24h", 1.0),
+    ):
+        vwap = _numeric_metric(snapshot, "market_structure", prefix, "vwap")
+        value = 0.0
+        if spot is not None and vwap is not None:
+            value = weight if spot > vwap else -weight if spot < vwap else 0.0
+        components[name] = {"value": vwap, "score": value}
+        score += value
+
+    for venue in ("binance", "coinbase"):
+        for window, weight in (("4h", 1.25), ("1h", 0.5)):
+            cvd = _numeric_metric(snapshot, "cvd", venue, window, "quote_cvd")
+            value = 0.0
+            if cvd is not None:
+                value = weight if cvd > 0 else -weight if cvd < 0 else 0.0
+            components[f"{venue}_{window}_cvd"] = {"value": cvd, "score": value}
+            score += value
+
+    fx = _numeric_metric(snapshot, "fx_adjusted_coinbase_premium", "bps")
+    if fx is None:
+        fx = _numeric_metric(snapshot, "coinbase_premium", "fx_adjusted", "bps")
+    fx_score = 0.0
+    if fx is not None:
+        if fx > 0.5:
+            fx_score = 0.5
+        elif fx < -0.5:
+            fx_score = -0.5
+    components["fx_adjusted_premium_bps"] = {"value": fx, "score": fx_score}
+    score += fx_score
+
+    bias = "bullish" if score >= 3.0 else "bearish" if score <= -3.0 else "neutral"
+    return {
+        "value": bias,
+        "score": round(score, 2),
+        "threshold": 3.0,
+        "components": components,
+        "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow",
+    }
+
+
 def build_plan(snapshot):
     """Build a slow execution map from one hourly collector snapshot."""
     spot = _numeric_metric(snapshot, "spot", "binance")
@@ -121,9 +186,10 @@ def build_plan(snapshot):
 
     return {
         "schema_version": SCHEMA_VERSION,
-        "profile": "controlled_aggressive",
+        "profile": "controlled_aggressive_day_trend",
         "context_timestamp": snapshot.get("timestamp"),
         "context_spot": round(spot, 2),
+        "strategic_bias": compute_strategic_bias(snapshot, spot),
         "gamma_regime": _metric_text(snapshot, "options", "gamma_regime"),
         "levels": clusters,
         "nearest_below": nearest_below,
@@ -136,34 +202,39 @@ def build_plan(snapshot):
             "a_plus_early_probe_min_rr": 1.6,
             "no_chase_atr": 0.65,
             "no_chase_r": 1.0,
+            "level_zone_buffer_pct": LEVEL_ZONE_BUFFER_PCT * 100,
             "retest_buffer_pct": RETEST_BUFFER_PCT * 100,
             "invalidation_buffer_pct": INVALIDATION_BUFFER_PCT * 100,
+            "countertrend_min_flow_score": COUNTERTREND_MIN_FLOW_SCORE,
+            "opposite_direction_cooldown_minutes": OPPOSITE_COOLDOWN_SECONDS // 60,
         },
         "semantics": {
+            "strategic_bias": "Slow hourly day/trend direction; five-minute noise cannot flip it alone",
+            "execution_state": "Fast 5m entry timing inside the strategic context",
             "repriced_gamma_flip": "structural gamma-regime threshold",
             "cumulative_gamma_flip": "tactical strike/OI balance level",
-            "note": "Fast watcher detects events; it does not recompute the hourly structural context.",
+            "note": "Counter-trend trades require completed 15m acceptance plus strong aligned flow.",
         },
     }
 
 
-def aggregate_5m(klines):
-    """Aggregate exact closed Binance 1m klines into complete 5m candles."""
+def _aggregate_minutes(klines, minutes):
+    bucket_seconds = minutes * 60
     buckets = {}
     for row in klines:
         t = int(row[0]) // 1000
-        bucket = t - t % 300
+        bucket = t - t % bucket_seconds
         buckets.setdefault(bucket, []).append(row)
     out = []
     for bucket in sorted(buckets):
         rows = sorted(buckets[bucket], key=lambda r: int(r[0]))
-        expected = [bucket + i * 60 for i in range(5)]
+        expected = [bucket + i * 60 for i in range(minutes)]
         actual = [int(r[0]) // 1000 for r in rows]
         if actual != expected:
             continue
         out.append({
             "start": iso(bucket),
-            "end": iso(bucket + 300),
+            "end": iso(bucket + bucket_seconds),
             "open": float(rows[0][1]),
             "high": max(float(r[2]) for r in rows),
             "low": min(float(r[3]) for r in rows),
@@ -172,6 +243,16 @@ def aggregate_5m(klines):
             "quote_cvd": sum(2 * float(r[10]) - float(r[7]) for r in rows),
         })
     return out
+
+
+def aggregate_5m(klines):
+    """Aggregate exact closed Binance 1m klines into complete 5m candles."""
+    return _aggregate_minutes(klines, 5)
+
+
+def aggregate_15m(klines):
+    """Aggregate exact closed Binance 1m klines into complete 15m candles."""
+    return _aggregate_minutes(klines, 15)
 
 
 def flow_score(fast):
@@ -212,26 +293,107 @@ def nearest_cluster(plan, spot):
     return cluster
 
 
+def _zone(anchor):
+    level = float(anchor)
+    return level * (1 - LEVEL_ZONE_BUFFER_PCT), level * (1 + LEVEL_ZONE_BUFFER_PCT)
+
+
 def price_event(candles, anchor):
+    """Classify 5m price action using a zone, not a hair-trigger single line."""
     if len(candles) < 2:
         return "none"
     previous, current = candles[-2], candles[-1]
-    level = float(anchor)
-    up = level * (1 + RETEST_BUFFER_PCT)
-    down = level * (1 - RETEST_BUFFER_PCT)
-    if current["low"] < down and current["close"] > level:
+    lower, upper = _zone(anchor)
+    if current["low"] < lower and current["close"] > upper:
         return "sweep_reclaim_long"
-    if current["high"] > up and current["close"] < level:
+    if current["high"] > upper and current["close"] < lower:
         return "sweep_reject_short"
-    if previous["close"] > level and current["low"] <= up and current["close"] > level:
+    if previous["close"] > upper and current["low"] <= upper and current["close"] > upper:
         return "retest_hold_long"
-    if previous["close"] < level and current["high"] >= down and current["close"] < level:
+    if previous["close"] < lower and current["high"] >= lower and current["close"] < lower:
         return "retest_hold_short"
-    if previous["close"] <= level < current["close"]:
+    if previous["close"] <= upper and current["close"] > upper:
         return "cross_up"
-    if previous["close"] >= level > current["close"]:
+    if previous["close"] >= lower and current["close"] < lower:
         return "cross_down"
     return "none"
+
+
+def _strategic_direction(plan):
+    bias = (plan.get("strategic_bias") or {}).get("value")
+    if bias == "bullish":
+        return "long"
+    if bias == "bearish":
+        return "short"
+    return None
+
+
+def _is_countertrend(plan, direction):
+    strategic = _strategic_direction(plan)
+    return strategic is not None and direction in ("long", "short") and direction != strategic
+
+
+def countertrend_reversal_confirmed(plan, fast, anchor, direction):
+    """Require completed 15m acceptance and strong flow before counter-trend entry."""
+    if not _is_countertrend(plan, direction):
+        return True
+    candles_15m = fast.get("candles_15m") or []
+    if not candles_15m or not anchor:
+        return False
+    lower, upper = _zone(anchor["value"])
+    close15 = float(candles_15m[-1]["close"])
+    score = flow_score(fast)
+    cvd15 = _numeric_metric(fast, "binance_cvd", "15m", "quote_cvd")
+    cvd1h = _numeric_metric(fast, "binance_cvd", "1h", "quote_cvd")
+    fx = _numeric_metric(fast, "premium", "fx_adjusted", "bps")
+    if direction == "short":
+        accepted = close15 < lower
+        flow_ok = score <= -COUNTERTREND_MIN_FLOW_SCORE and (cvd15 or 0) < 0 and (cvd1h or 0) < 0
+        premium_ok = fx is None or fx <= 0.5
+        return accepted and flow_ok and premium_ok
+    accepted = close15 > upper
+    flow_ok = score >= COUNTERTREND_MIN_FLOW_SCORE and (cvd15 or 0) > 0 and (cvd1h or 0) > 0
+    premium_ok = fx is None or fx >= -0.5
+    return accepted and flow_ok and premium_ok
+
+
+def _parse_time(value):
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+
+
+def _opposite_cooldown_active(plan, fast, previous, anchor, direction):
+    """Prevent neutral/counter-trend whipsaws at the same anchor for 30 minutes."""
+    if not previous or not anchor or direction not in ("long", "short"):
+        return False
+    previous_direction = previous.get("direction")
+    previous_anchor = (previous.get("anchor") or {}).get("id")
+    if previous_direction not in ("long", "short") or previous_direction == direction:
+        return False
+    if previous_anchor != anchor.get("id"):
+        return False
+    if _strategic_direction(plan) == direction:
+        return False
+    if countertrend_reversal_confirmed(plan, fast, anchor, direction):
+        return False
+    changed = _parse_time(previous.get("state_changed_at") or previous.get("fast_timestamp"))
+    current = _parse_time(fast.get("timestamp"))
+    if not changed or not current:
+        return True
+    return 0 <= (current - changed).total_seconds() < OPPOSITE_COOLDOWN_SECONDS
+
+
+def _direction_gate(plan, fast, previous, anchor, direction):
+    if _is_countertrend(plan, direction) and not countertrend_reversal_confirmed(plan, fast, anchor, direction):
+        bias = (plan.get("strategic_bias") or {}).get("value", "neutral")
+        return False, f"5m {direction} move is counter-trend to {bias} strategic bias; need completed 15m acceptance + strong flow"
+    if _opposite_cooldown_active(plan, fast, previous, anchor, direction):
+        return False, "Opposite-direction setup at same anchor is inside 30m hysteresis cooldown"
+    return True, None
 
 
 def trade_geometry(plan, fast, anchor, direction):
@@ -317,16 +479,28 @@ def classify_state(plan, fast, previous=None):
             return _state("ARMED_SHORT", "short", anchor, event, score, plan, fast, "Awaiting short trigger at original anchor")
 
     if event in ("sweep_reclaim_long", "retest_hold_long") and score >= 0:
-        return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast, "Sweep/retest long at structural anchor")
+        allowed, reason = _direction_gate(plan, fast, previous, anchor, "long")
+        if not allowed:
+            return _state("NO_TRADE", None, anchor, event, score, plan, fast, reason)
+        return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast, "Sweep/retest long at structural zone")
     if event in ("sweep_reject_short", "retest_hold_short") and score <= 0:
-        return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast, "Sweep/retest short at structural anchor")
+        allowed, reason = _direction_gate(plan, fast, previous, anchor, "short")
+        if not allowed:
+            return _state("NO_TRADE", None, anchor, event, score, plan, fast, reason)
+        return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast, "Sweep/retest short at structural zone")
     if event == "cross_up":
+        allowed, reason = _direction_gate(plan, fast, previous, anchor, "long")
+        if not allowed:
+            return _state("NO_TRADE", None, anchor, event, score, plan, fast, reason)
         if gamma == "short_gamma" and score >= 2:
             return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast, "Controlled-aggressive short-gamma breakout probe")
         if score >= 1:
             return _state("ARMED_LONG", "long", anchor, event, score, plan, fast, "Breakout seen; waiting for retest")
         return _state("EARLY_SETUP", "long", anchor, event, score, plan, fast, "Breakout lacks fast-flow confirmation")
     if event == "cross_down":
+        allowed, reason = _direction_gate(plan, fast, previous, anchor, "short")
+        if not allowed:
+            return _state("NO_TRADE", None, anchor, event, score, plan, fast, reason)
         if gamma == "short_gamma" and score <= -2:
             return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast, "Controlled-aggressive short-gamma breakdown probe")
         if score <= -1:
@@ -334,9 +508,13 @@ def classify_state(plan, fast, previous=None):
         return _state("EARLY_SETUP", "short", anchor, event, score, plan, fast, "Breakdown lacks fast-flow confirmation")
     proximity = abs(spot - level) / spot
     if proximity <= EARLY_PROXIMITY_PCT and score >= 2:
-        return _state("EARLY_SETUP", "long", anchor, event, score, plan, fast, "Positive fast flow near structural level")
+        allowed, _ = _direction_gate(plan, fast, previous, anchor, "long")
+        if allowed:
+            return _state("EARLY_SETUP", "long", anchor, event, score, plan, fast, "Positive fast flow near structural zone")
     if proximity <= EARLY_PROXIMITY_PCT and score <= -2:
-        return _state("EARLY_SETUP", "short", anchor, event, score, plan, fast, "Negative fast flow near structural level")
+        allowed, _ = _direction_gate(plan, fast, previous, anchor, "short")
+        if allowed:
+            return _state("EARLY_SETUP", "short", anchor, event, score, plan, fast, "Negative fast flow near structural zone")
     return _state("NO_TRADE", None, anchor, event, score, plan, fast, "No executable trigger")
 
 
@@ -358,6 +536,16 @@ def _state(state, direction, anchor, event, score, plan, fast, reason):
         if rr is None or rr < minimum:
             state = "MISSED_DO_NOT_CHASE"
             reason = f"Trigger present but first-target R/R is below {minimum:.1f}"
+    bias = plan.get("strategic_bias") or {"value": "neutral", "score": 0.0}
+    strategic_direction = _strategic_direction(plan)
+    if direction is None:
+        alignment = "none"
+    elif strategic_direction is None:
+        alignment = "neutral"
+    elif direction == strategic_direction:
+        alignment = "aligned"
+    else:
+        alignment = "countertrend_confirmed"
     result = {
         "schema_version": SCHEMA_VERSION,
         "state": state,
@@ -366,6 +554,9 @@ def _state(state, direction, anchor, event, score, plan, fast, reason):
         "event": event,
         "anchor": anchor,
         "flow_score": score,
+        "strategic_bias": bias.get("value", "neutral"),
+        "strategic_bias_score": bias.get("score", 0.0),
+        "bias_alignment": alignment,
         "reason": reason,
         "context_timestamp": plan.get("context_timestamp"),
         "fast_timestamp": fast.get("timestamp"),
@@ -373,13 +564,18 @@ def _state(state, direction, anchor, event, score, plan, fast, reason):
         "execution": geometry,
     }
     anchor_id = anchor.get("id") if anchor else "none"
-    result["signature"] = "|".join([str(state), str(direction or "none"), anchor_id, str(result["setup_type"] or "none")])
+    result["signature"] = "|".join([
+        str(state), str(direction or "none"), anchor_id,
+        str(result["setup_type"] or "none"), str(result["strategic_bias"]),
+    ])
     return result
 
 
 def _fetch_binance_minutes(client, end, minutes=70):
-    rows, _, _ = client.get(BINANCE, "/api/v3/klines", symbol="BTCUSDT", interval="1m",
-                            startTime=(end - minutes * 60) * 1000, endTime=end * 1000 - 1, limit=1000)
+    rows, _, _ = client.get(
+        BINANCE, "/api/v3/klines", symbol="BTCUSDT", interval="1m",
+        startTime=(end - minutes * 60) * 1000, endTime=end * 1000 - 1, limit=1000,
+    )
     return rows
 
 
@@ -408,12 +604,13 @@ def collect_fast(client=None):
             premiums = premium(results["coinbase_spot"], results["binance_spot"], results["usdt_usd"])
         except Exception as exc:
             errors["premium"] = str(exc)
-    cvd, candles = {}, []
+    cvd, candles_5m, candles_15m = {}, [], []
     if "minutes" in results:
         try:
             all_cvd = binance_cvd(results["minutes"], end)
             cvd = {name: all_cvd[name] for name in ("15m", "1h")}
-            candles = aggregate_5m(results["minutes"])[-12:]
+            candles_5m = aggregate_5m(results["minutes"])[-12:]
+            candles_15m = aggregate_15m(results["minutes"])[-4:]
         except Exception as exc:
             errors["binance_fast_flow"] = str(exc)
     now = time.time()
@@ -424,11 +621,16 @@ def collect_fast(client=None):
         "collection_duration_seconds": round(now - started, 3),
         "status": "partial" if errors else "ok",
         "errors": errors,
-        "spot": {"binance": results.get("binance_spot"), "coinbase": results.get("coinbase_spot"), "usdt_usd": results.get("usdt_usd")},
+        "spot": {
+            "binance": results.get("binance_spot"),
+            "coinbase": results.get("coinbase_spot"),
+            "usdt_usd": results.get("usdt_usd"),
+        },
         "premium": premiums or {},
         "binance_cvd": cvd,
         "deribit": results.get("deribit") or {},
-        "candles_5m": candles,
+        "candles_5m": candles_5m,
+        "candles_15m": candles_15m,
     }
 
 
@@ -443,6 +645,9 @@ def _append_history(path, state):
         "context_timestamp": state.get("context_timestamp") or "",
         "state": state.get("state") or "",
         "direction": state.get("direction") or "",
+        "strategic_bias": state.get("strategic_bias") or "",
+        "strategic_bias_score": state.get("strategic_bias_score", ""),
+        "bias_alignment": state.get("bias_alignment") or "",
         "setup_type": state.get("setup_type") or "",
         "event": state.get("event") or "",
         "anchor_id": (state.get("anchor") or {}).get("id", ""),
@@ -468,7 +673,7 @@ def run(root, client=None):
         raise ValueError("latest.json is required before the execution watcher can run")
     old_plan = read_json(root / "execution_plan.json", {})
     plan = build_plan(context)
-    if old_plan.get("context_timestamp") != plan.get("context_timestamp"):
+    if old_plan.get("context_timestamp") != plan.get("context_timestamp") or old_plan.get("schema_version") != SCHEMA_VERSION:
         write_json(root / "execution_plan.json", plan)
     else:
         plan = old_plan
@@ -485,7 +690,12 @@ def run(root, client=None):
         state["previous_state"] = previous.get("previous_state")
         state["state_changed_at"] = previous.get("state_changed_at")
     write_json(root / "execution_state.json", state)
-    logging.info("BTC execution watcher: %s | %s | flow %+d | %s", fast['status'], state.get('state', 'NO_TRADE'), flow_score(fast), fast['timestamp'])
+    logging.info(
+        "BTC execution watcher: %s | bias %s %.2f | %s | flow %+d | %s",
+        fast["status"], state.get("strategic_bias", "neutral"),
+        state.get("strategic_bias_score", 0.0), state.get("state", "NO_TRADE"),
+        flow_score(fast), fast["timestamp"],
+    )
     return plan, fast, state
 
 
