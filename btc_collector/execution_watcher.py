@@ -24,11 +24,11 @@ from .sources import BINANCE, binance_spot, coinbase_spot, deribit_perpetual
 from .storage import atomic_write, read_json, write_json
 
 SCHEMA_VERSION = "1.0.0"
-LEVEL_CLUSTER_TOLERANCE_PCT = 0.0015  # 0.15%
-MAX_LEVEL_DISTANCE_PCT = 0.006        # 0.60%
-RETEST_BUFFER_PCT = 0.0008            # 0.08%
-INVALIDATION_BUFFER_PCT = 0.0015      # 0.15%
-EARLY_PROXIMITY_PCT = 0.0025          # 0.25%
+LEVEL_CLUSTER_TOLERANCE_PCT = 0.0015
+MAX_LEVEL_DISTANCE_PCT = 0.006
+RETEST_BUFFER_PCT = 0.0008
+INVALIDATION_BUFFER_PCT = 0.0015
+EARLY_PROXIMITY_PCT = 0.0025
 ACTIVE_STATES = {
     "ARMED_LONG", "ARMED_SHORT", "LONG_TRIGGERED", "SHORT_TRIGGERED",
     "ADD_ALLOWED", "HOLD_MANAGE",
@@ -61,7 +61,10 @@ def _metric_text(root, *path):
 
 def cluster_levels(levels, tolerance_pct=LEVEL_CLUSTER_TOLERANCE_PCT):
     """Merge nearby structural levels into stable confluence clusters."""
-    valid = sorted((str(name), float(value)) for name, value in levels if value and float(value) > 0)
+    valid = sorted(
+        ((str(name), float(value)) for name, value in levels if value and float(value) > 0),
+        key=lambda item: item[1],
+    )
     clusters = []
     for name, value in valid:
         if not clusters:
@@ -151,7 +154,6 @@ def aggregate_5m(klines):
         t = int(row[0]) // 1000
         bucket = t - t % 300
         buckets.setdefault(bucket, []).append(row)
-
     out = []
     for bucket in sorted(buckets):
         rows = sorted(buckets[bucket], key=lambda r: int(r[0]))
@@ -178,7 +180,6 @@ def flow_score(fast):
     cvd15 = _numeric_metric(fast, "binance_cvd", "15m", "quote_cvd")
     cvd1h = _numeric_metric(fast, "binance_cvd", "1h", "quote_cvd")
     fx = _numeric_metric(fast, "premium", "fx_adjusted", "bps")
-
     if cvd15 is not None:
         if cvd15 > 1_000_000:
             score += 2
@@ -206,8 +207,7 @@ def nearest_cluster(plan, spot):
     if not levels or spot is None:
         return None
     cluster = min(levels, key=lambda c: abs(float(c["value"]) - spot))
-    distance = abs(float(cluster["value"]) - spot) / spot
-    if distance > MAX_LEVEL_DISTANCE_PCT:
+    if abs(float(cluster["value"]) - spot) / spot > MAX_LEVEL_DISTANCE_PCT:
         return None
     return cluster
 
@@ -219,7 +219,6 @@ def price_event(candles, anchor):
     level = float(anchor)
     up = level * (1 + RETEST_BUFFER_PCT)
     down = level * (1 - RETEST_BUFFER_PCT)
-
     if current["low"] < down and current["close"] > level:
         return "sweep_reclaim_long"
     if current["high"] > up and current["close"] < level:
@@ -241,11 +240,9 @@ def trade_geometry(plan, fast, anchor, direction):
     candles = fast.get("candles_5m") or []
     if spot is None or not anchor or len(candles) < 2 or direction not in ("long", "short"):
         return None
-
     level = float(anchor["value"])
     recent = candles[-2:]
     levels = sorted(float(c["value"]) for c in plan.get("levels", []))
-
     if direction == "long":
         recent_extreme = min(float(c["low"]) for c in recent)
         stop = min(level * (1 - INVALIDATION_BUFFER_PCT), recent_extreme * 0.9995)
@@ -254,7 +251,6 @@ def trade_geometry(plan, fast, anchor, direction):
         recent_extreme = max(float(c["high"]) for c in recent)
         stop = max(level * (1 + INVALIDATION_BUFFER_PCT), recent_extreme * 1.0005)
         targets = sorted((v for v in levels if v < spot * 0.9995), reverse=True)
-
     risk = (spot - stop) if direction == "long" else (stop - spot)
     if risk <= 0:
         return None
@@ -264,7 +260,6 @@ def trade_geometry(plan, fast, anchor, direction):
     if target1 is not None:
         reward = (target1 - spot) if direction == "long" else (spot - target1)
     rr = reward / risk if reward is not None and reward > 0 else None
-
     return {
         "entry_reference": round(spot, 2),
         "hard_stop": round(stop, 2),
@@ -281,19 +276,13 @@ def classify_state(plan, fast, previous=None):
     candles = fast.get("candles_5m") or []
     if spot is None or len(candles) < 2:
         return _state("NO_TRADE", None, None, "none", 0, plan, fast, "Insufficient fast data")
-
     score = flow_score(fast)
     if previous and previous.get("state") in ACTIVE_STATES and previous.get("anchor"):
-        # Once armed/triggered, the setup remains tied to its original anchor.
-        # Do not silently hop to a lower/higher nearby level and turn a failed
-        # trade into an opposite fresh signal.
         anchor = previous["anchor"]
     else:
         anchor = nearest_cluster(plan, spot)
-
     if anchor is None:
         return _state("NO_TRADE", None, None, "none", score, plan, fast, "No structural level within 0.60%")
-
     event = price_event(candles, anchor["value"])
     level = float(anchor["value"])
     close = float(candles[-1]["close"])
@@ -304,73 +293,50 @@ def classify_state(plan, fast, previous=None):
     if previous and old in ACTIVE_STATES:
         if old in ("LONG_TRIGGERED", "ADD_ALLOWED", "HOLD_MANAGE") and direction == "long":
             if close < level * (1 - INVALIDATION_BUFFER_PCT) and score <= -1:
-                return _state("INVALIDATED", "long", anchor, event, score, plan, fast,
-                              "Anchor lost with opposing fast flow")
+                return _state("INVALIDATED", "long", anchor, event, score, plan, fast, "Anchor lost with opposing fast flow")
             if event == "retest_hold_long" and score >= 2:
-                return _state("ADD_ALLOWED", "long", anchor, event, score, plan, fast,
-                              "Retest held and fast flow strengthened")
-            return _state("HOLD_MANAGE", "long", anchor, event, score, plan, fast,
-                          "Triggered long thesis remains tied to original anchor")
+                return _state("ADD_ALLOWED", "long", anchor, event, score, plan, fast, "Retest held and fast flow strengthened")
+            return _state("HOLD_MANAGE", "long", anchor, event, score, plan, fast, "Triggered long thesis remains tied to original anchor")
         if old in ("SHORT_TRIGGERED", "ADD_ALLOWED", "HOLD_MANAGE") and direction == "short":
             if close > level * (1 + INVALIDATION_BUFFER_PCT) and score >= 1:
-                return _state("INVALIDATED", "short", anchor, event, score, plan, fast,
-                              "Anchor reclaimed with opposing fast flow")
+                return _state("INVALIDATED", "short", anchor, event, score, plan, fast, "Anchor reclaimed with opposing fast flow")
             if event == "retest_hold_short" and score <= -2:
-                return _state("ADD_ALLOWED", "short", anchor, event, score, plan, fast,
-                              "Retest held and fast flow strengthened")
-            return _state("HOLD_MANAGE", "short", anchor, event, score, plan, fast,
-                          "Triggered short thesis remains tied to original anchor")
+                return _state("ADD_ALLOWED", "short", anchor, event, score, plan, fast, "Retest held and fast flow strengthened")
+            return _state("HOLD_MANAGE", "short", anchor, event, score, plan, fast, "Triggered short thesis remains tied to original anchor")
         if old == "ARMED_LONG":
             if event in ("retest_hold_long", "sweep_reclaim_long") and score >= 1:
-                return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast,
-                              "Armed long received retest/reclaim confirmation")
+                return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast, "Armed long received retest/reclaim confirmation")
             if close < level * (1 - INVALIDATION_BUFFER_PCT) and score < 0:
-                return _state("INVALIDATED", "long", anchor, event, score, plan, fast,
-                              "Armed long lost original anchor")
-            return _state("ARMED_LONG", "long", anchor, event, score, plan, fast,
-                          "Awaiting long trigger at original anchor")
+                return _state("INVALIDATED", "long", anchor, event, score, plan, fast, "Armed long lost original anchor")
+            return _state("ARMED_LONG", "long", anchor, event, score, plan, fast, "Awaiting long trigger at original anchor")
         if old == "ARMED_SHORT":
             if event in ("retest_hold_short", "sweep_reject_short") and score <= -1:
-                return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast,
-                              "Armed short received retest/rejection confirmation")
+                return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast, "Armed short received retest/rejection confirmation")
             if close > level * (1 + INVALIDATION_BUFFER_PCT) and score > 0:
-                return _state("INVALIDATED", "short", anchor, event, score, plan, fast,
-                              "Armed short lost original anchor")
-            return _state("ARMED_SHORT", "short", anchor, event, score, plan, fast,
-                          "Awaiting short trigger at original anchor")
+                return _state("INVALIDATED", "short", anchor, event, score, plan, fast, "Armed short lost original anchor")
+            return _state("ARMED_SHORT", "short", anchor, event, score, plan, fast, "Awaiting short trigger at original anchor")
 
     if event in ("sweep_reclaim_long", "retest_hold_long") and score >= 0:
-        return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast,
-                      "Sweep/retest long at structural anchor")
+        return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast, "Sweep/retest long at structural anchor")
     if event in ("sweep_reject_short", "retest_hold_short") and score <= 0:
-        return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast,
-                      "Sweep/retest short at structural anchor")
+        return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast, "Sweep/retest short at structural anchor")
     if event == "cross_up":
         if gamma == "short_gamma" and score >= 2:
-            return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast,
-                          "Controlled-aggressive short-gamma breakout probe")
+            return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast, "Controlled-aggressive short-gamma breakout probe")
         if score >= 1:
-            return _state("ARMED_LONG", "long", anchor, event, score, plan, fast,
-                          "Breakout seen; waiting for retest")
-        return _state("EARLY_SETUP", "long", anchor, event, score, plan, fast,
-                      "Breakout lacks fast-flow confirmation")
+            return _state("ARMED_LONG", "long", anchor, event, score, plan, fast, "Breakout seen; waiting for retest")
+        return _state("EARLY_SETUP", "long", anchor, event, score, plan, fast, "Breakout lacks fast-flow confirmation")
     if event == "cross_down":
         if gamma == "short_gamma" and score <= -2:
-            return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast,
-                          "Controlled-aggressive short-gamma breakdown probe")
+            return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast, "Controlled-aggressive short-gamma breakdown probe")
         if score <= -1:
-            return _state("ARMED_SHORT", "short", anchor, event, score, plan, fast,
-                          "Breakdown seen; waiting for retest")
-        return _state("EARLY_SETUP", "short", anchor, event, score, plan, fast,
-                      "Breakdown lacks fast-flow confirmation")
-
+            return _state("ARMED_SHORT", "short", anchor, event, score, plan, fast, "Breakdown seen; waiting for retest")
+        return _state("EARLY_SETUP", "short", anchor, event, score, plan, fast, "Breakdown lacks fast-flow confirmation")
     proximity = abs(spot - level) / spot
     if proximity <= EARLY_PROXIMITY_PCT and score >= 2:
-        return _state("EARLY_SETUP", "long", anchor, event, score, plan, fast,
-                      "Positive fast flow near structural level")
+        return _state("EARLY_SETUP", "long", anchor, event, score, plan, fast, "Positive fast flow near structural level")
     if proximity <= EARLY_PROXIMITY_PCT and score <= -2:
-        return _state("EARLY_SETUP", "short", anchor, event, score, plan, fast,
-                      "Negative fast flow near structural level")
+        return _state("EARLY_SETUP", "short", anchor, event, score, plan, fast, "Negative fast flow near structural level")
     return _state("NO_TRADE", None, anchor, event, score, plan, fast, "No executable trigger")
 
 
@@ -385,9 +351,6 @@ def _state(state, direction, anchor, event, score, plan, fast, reason):
     }
     spot = _numeric_metric(fast, "spot", "binance")
     geometry = trade_geometry(plan, fast, anchor, direction) if direction else None
-
-    # Real triggers must still have acceptable geometry. A strong location is
-    # not permission to chase into a poor first-target R/R.
     if state in ("LONG_TRIGGERED", "SHORT_TRIGGERED"):
         rr = geometry.get("rr_to_target1") if geometry else None
         early_exception = plan.get("gamma_regime") == "short_gamma" and abs(score) >= 2 and event in ("cross_up", "cross_down")
@@ -395,7 +358,6 @@ def _state(state, direction, anchor, event, score, plan, fast, reason):
         if rr is None or rr < minimum:
             state = "MISSED_DO_NOT_CHASE"
             reason = f"Trigger present but first-target R/R is below {minimum:.1f}"
-
     result = {
         "schema_version": SCHEMA_VERSION,
         "state": state,
@@ -411,22 +373,13 @@ def _state(state, direction, anchor, event, score, plan, fast, reason):
         "execution": geometry,
     }
     anchor_id = anchor.get("id") if anchor else "none"
-    result["signature"] = "|".join([
-        str(state), str(direction or "none"), anchor_id, str(result["setup_type"] or "none")
-    ])
+    result["signature"] = "|".join([str(state), str(direction or "none"), anchor_id, str(result["setup_type"] or "none")])
     return result
 
 
 def _fetch_binance_minutes(client, end, minutes=70):
-    rows, _, _ = client.get(
-        BINANCE,
-        "/api/v3/klines",
-        symbol="BTCUSDT",
-        interval="1m",
-        startTime=(end - minutes * 60) * 1000,
-        endTime=end * 1000 - 1,
-        limit=1000,
-    )
+    rows, _, _ = client.get(BINANCE, "/api/v3/klines", symbol="BTCUSDT", interval="1m",
+                            startTime=(end - minutes * 60) * 1000, endTime=end * 1000 - 1, limit=1000)
     return rows
 
 
@@ -449,14 +402,12 @@ def collect_fast(client=None):
                 results[name] = job.result()
             except Exception as exc:
                 errors[name] = str(exc)
-
     premiums = None
     if all(k in results for k in ("coinbase_spot", "binance_spot", "usdt_usd")):
         try:
             premiums = premium(results["coinbase_spot"], results["binance_spot"], results["usdt_usd"])
         except Exception as exc:
             errors["premium"] = str(exc)
-
     cvd, candles = {}, []
     if "minutes" in results:
         try:
@@ -465,7 +416,6 @@ def collect_fast(client=None):
             candles = aggregate_5m(results["minutes"])[-12:]
         except Exception as exc:
             errors["binance_fast_flow"] = str(exc)
-
     now = time.time()
     return {
         "schema_version": SCHEMA_VERSION,
@@ -474,11 +424,7 @@ def collect_fast(client=None):
         "collection_duration_seconds": round(now - started, 3),
         "status": "partial" if errors else "ok",
         "errors": errors,
-        "spot": {
-            "binance": results.get("binance_spot"),
-            "coinbase": results.get("coinbase_spot"),
-            "usdt_usd": results.get("usdt_usd"),
-        },
+        "spot": {"binance": results.get("binance_spot"), "coinbase": results.get("coinbase_spot"), "usdt_usd": results.get("usdt_usd")},
         "premium": premiums or {},
         "binance_cvd": cvd,
         "deribit": results.get("deribit") or {},
@@ -508,9 +454,8 @@ def _append_history(path, state):
     }
     rows.append(row)
     rows = rows[-1000:]
-    fields = list(row)
     buffer = io.StringIO(newline="")
-    writer = csv.DictWriter(buffer, fieldnames=fields, lineterminator="\n")
+    writer = csv.DictWriter(buffer, fieldnames=list(row), lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
     atomic_write(path, buffer.getvalue())
@@ -521,17 +466,14 @@ def run(root, client=None):
     context = read_json(root / "latest.json", {})
     if not context:
         raise ValueError("latest.json is required before the execution watcher can run")
-
     old_plan = read_json(root / "execution_plan.json", {})
     plan = build_plan(context)
     if old_plan.get("context_timestamp") != plan.get("context_timestamp"):
         write_json(root / "execution_plan.json", plan)
     else:
         plan = old_plan
-
     fast = collect_fast(client)
     write_json(root / "execution_snapshot.json", fast)
-
     previous = read_json(root / "execution_state.json", {})
     state = classify_state(plan, fast, previous)
     changed = previous.get("signature") != state.get("signature")
@@ -543,12 +485,7 @@ def run(root, client=None):
         state["previous_state"] = previous.get("previous_state")
         state["state_changed_at"] = previous.get("state_changed_at")
     write_json(root / "execution_state.json", state)
-
-    summary = (
-        f"BTC execution watcher: {fast['status']} | {state.get('state','NO_TRADE')} | "
-        f"flow {flow_score(fast):+d} | {fast['timestamp']}"
-    )
-    logging.info(summary)
+    logging.info("BTC execution watcher: %s | %s | flow %+d | %s", fast['status'], state.get('state', 'NO_TRADE'), flow_score(fast), fast['timestamp'])
     return plan, fast, state
 
 
