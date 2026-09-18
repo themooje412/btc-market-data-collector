@@ -1,25 +1,24 @@
 """Five-minute execution watcher built on the hourly collector context.
 
 The watcher does not recompute the expensive option surface or 7-day market
-profile.  It reads ``latest.json`` as the slow context layer, samples a small
+profile. It reads ``latest.json`` as the slow context layer, samples a small
 set of fast public endpoints, and emits deterministic execution events around
 the already-computed structural levels.
 
-Repository state files are updated only when the plan/context or material
-execution state changes.  ``execution_snapshot.json`` is intentionally a
-per-run artifact and should not be committed every five minutes.
+``execution_snapshot.json`` and ``execution_state.json`` are refreshed on each
+run so downstream consumers can see the latest 5-minute state. History grows
+only when the material state signature changes.
 """
 
 import argparse
 import csv
 import io
-import json
 import logging
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from .core import binance_cvd, epoch, iso, premium
+from .core import binance_cvd, iso, premium
 from .http import Client
 from .sources import BINANCE, binance_spot, coinbase_spot, deribit_perpetual
 from .storage import atomic_write, read_json, write_json
@@ -30,6 +29,10 @@ MAX_LEVEL_DISTANCE_PCT = 0.006        # 0.60%
 RETEST_BUFFER_PCT = 0.0008            # 0.08%
 INVALIDATION_BUFFER_PCT = 0.0015      # 0.15%
 EARLY_PROXIMITY_PCT = 0.0025          # 0.25%
+ACTIVE_STATES = {
+    "ARMED_LONG", "ARMED_SHORT", "LONG_TRIGGERED", "SHORT_TRIGGERED",
+    "ADD_ALLOWED", "HOLD_MANAGE",
+}
 
 
 def _metric_value(root, *path):
@@ -113,13 +116,12 @@ def build_plan(snapshot):
     nearest_below = max(below, key=lambda c: c["value"], default=None)
     nearest_above = min(above, key=lambda c: c["value"], default=None)
 
-    gamma_regime = _metric_text(snapshot, "options", "gamma_regime")
     return {
         "schema_version": SCHEMA_VERSION,
         "profile": "controlled_aggressive",
         "context_timestamp": snapshot.get("timestamp"),
         "context_spot": round(spot, 2),
-        "gamma_regime": gamma_regime,
+        "gamma_regime": _metric_text(snapshot, "options", "gamma_regime"),
         "levels": clusters,
         "nearest_below": nearest_below,
         "nearest_above": nearest_above,
@@ -233,8 +235,45 @@ def price_event(candles, anchor):
     return "none"
 
 
-def _same_anchor(previous, anchor):
-    return bool(previous and anchor and previous.get("anchor", {}).get("id") == anchor.get("id"))
+def trade_geometry(plan, fast, anchor, direction):
+    """Derive stop/targets from current 5m structure and hourly level map."""
+    spot = _numeric_metric(fast, "spot", "binance")
+    candles = fast.get("candles_5m") or []
+    if spot is None or not anchor or len(candles) < 2 or direction not in ("long", "short"):
+        return None
+
+    level = float(anchor["value"])
+    recent = candles[-2:]
+    levels = sorted(float(c["value"]) for c in plan.get("levels", []))
+
+    if direction == "long":
+        recent_extreme = min(float(c["low"]) for c in recent)
+        stop = min(level * (1 - INVALIDATION_BUFFER_PCT), recent_extreme * 0.9995)
+        targets = [v for v in levels if v > spot * 1.0005]
+    else:
+        recent_extreme = max(float(c["high"]) for c in recent)
+        stop = max(level * (1 + INVALIDATION_BUFFER_PCT), recent_extreme * 1.0005)
+        targets = sorted((v for v in levels if v < spot * 0.9995), reverse=True)
+
+    risk = (spot - stop) if direction == "long" else (stop - spot)
+    if risk <= 0:
+        return None
+    target1 = targets[0] if targets else None
+    target2 = targets[1] if len(targets) > 1 else None
+    reward = None
+    if target1 is not None:
+        reward = (target1 - spot) if direction == "long" else (spot - target1)
+    rr = reward / risk if reward is not None and reward > 0 else None
+
+    return {
+        "entry_reference": round(spot, 2),
+        "hard_stop": round(stop, 2),
+        "target1": round(target1, 2) if target1 is not None else None,
+        "target2": round(target2, 2) if target2 is not None else None,
+        "risk_usd": round(risk, 2),
+        "risk_pct": round(risk / spot * 100, 4),
+        "rr_to_target1": round(rr, 3) if rr is not None else None,
+    }
 
 
 def classify_state(plan, fast, previous=None):
@@ -243,8 +282,15 @@ def classify_state(plan, fast, previous=None):
     if spot is None or len(candles) < 2:
         return _state("NO_TRADE", None, None, "none", 0, plan, fast, "Insufficient fast data")
 
-    anchor = nearest_cluster(plan, spot)
     score = flow_score(fast)
+    if previous and previous.get("state") in ACTIVE_STATES and previous.get("anchor"):
+        # Once armed/triggered, the setup remains tied to its original anchor.
+        # Do not silently hop to a lower/higher nearby level and turn a failed
+        # trade into an opposite fresh signal.
+        anchor = previous["anchor"]
+    else:
+        anchor = nearest_cluster(plan, spot)
+
     if anchor is None:
         return _state("NO_TRADE", None, None, "none", score, plan, fast, "No structural level within 0.60%")
 
@@ -252,10 +298,10 @@ def classify_state(plan, fast, previous=None):
     level = float(anchor["value"])
     close = float(candles[-1]["close"])
     gamma = plan.get("gamma_regime")
+    old = previous.get("state") if previous else None
+    direction = previous.get("direction") if previous else None
 
-    if _same_anchor(previous, anchor):
-        old = previous.get("state")
-        direction = previous.get("direction")
+    if previous and old in ACTIVE_STATES:
         if old in ("LONG_TRIGGERED", "ADD_ALLOWED", "HOLD_MANAGE") and direction == "long":
             if close < level * (1 - INVALIDATION_BUFFER_PCT) and score <= -1:
                 return _state("INVALIDATED", "long", anchor, event, score, plan, fast,
@@ -264,7 +310,7 @@ def classify_state(plan, fast, previous=None):
                 return _state("ADD_ALLOWED", "long", anchor, event, score, plan, fast,
                               "Retest held and fast flow strengthened")
             return _state("HOLD_MANAGE", "long", anchor, event, score, plan, fast,
-                          "Triggered long thesis remains above anchor")
+                          "Triggered long thesis remains tied to original anchor")
         if old in ("SHORT_TRIGGERED", "ADD_ALLOWED", "HOLD_MANAGE") and direction == "short":
             if close > level * (1 + INVALIDATION_BUFFER_PCT) and score >= 1:
                 return _state("INVALIDATED", "short", anchor, event, score, plan, fast,
@@ -273,25 +319,25 @@ def classify_state(plan, fast, previous=None):
                 return _state("ADD_ALLOWED", "short", anchor, event, score, plan, fast,
                               "Retest held and fast flow strengthened")
             return _state("HOLD_MANAGE", "short", anchor, event, score, plan, fast,
-                          "Triggered short thesis remains below anchor")
+                          "Triggered short thesis remains tied to original anchor")
         if old == "ARMED_LONG":
             if event in ("retest_hold_long", "sweep_reclaim_long") and score >= 1:
                 return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast,
                               "Armed long received retest/reclaim confirmation")
-            if event == "sweep_reject_short" and score < 0:
+            if close < level * (1 - INVALIDATION_BUFFER_PCT) and score < 0:
                 return _state("INVALIDATED", "long", anchor, event, score, plan, fast,
-                              "Armed long failed at anchor")
+                              "Armed long lost original anchor")
             return _state("ARMED_LONG", "long", anchor, event, score, plan, fast,
-                          "Awaiting long trigger")
+                          "Awaiting long trigger at original anchor")
         if old == "ARMED_SHORT":
             if event in ("retest_hold_short", "sweep_reject_short") and score <= -1:
                 return _state("SHORT_TRIGGERED", "short", anchor, event, score, plan, fast,
                               "Armed short received retest/rejection confirmation")
-            if event == "sweep_reclaim_long" and score > 0:
+            if close > level * (1 + INVALIDATION_BUFFER_PCT) and score > 0:
                 return _state("INVALIDATED", "short", anchor, event, score, plan, fast,
-                              "Armed short failed at anchor")
+                              "Armed short lost original anchor")
             return _state("ARMED_SHORT", "short", anchor, event, score, plan, fast,
-                          "Awaiting short trigger")
+                          "Awaiting short trigger at original anchor")
 
     if event in ("sweep_reclaim_long", "retest_hold_long") and score >= 0:
         return _state("LONG_TRIGGERED", "long", anchor, event, score, plan, fast,
@@ -338,6 +384,18 @@ def _state(state, direction, anchor, event, score, plan, fast, reason):
         "cross_down": "breakdown",
     }
     spot = _numeric_metric(fast, "spot", "binance")
+    geometry = trade_geometry(plan, fast, anchor, direction) if direction else None
+
+    # Real triggers must still have acceptable geometry. A strong location is
+    # not permission to chase into a poor first-target R/R.
+    if state in ("LONG_TRIGGERED", "SHORT_TRIGGERED"):
+        rr = geometry.get("rr_to_target1") if geometry else None
+        early_exception = plan.get("gamma_regime") == "short_gamma" and abs(score) >= 2 and event in ("cross_up", "cross_down")
+        minimum = 1.6 if early_exception else 1.8
+        if rr is None or rr < minimum:
+            state = "MISSED_DO_NOT_CHASE"
+            reason = f"Trigger present but first-target R/R is below {minimum:.1f}"
+
     result = {
         "schema_version": SCHEMA_VERSION,
         "state": state,
@@ -350,6 +408,7 @@ def _state(state, direction, anchor, event, score, plan, fast, reason):
         "context_timestamp": plan.get("context_timestamp"),
         "fast_timestamp": fast.get("timestamp"),
         "fast_spot": round(spot, 2) if spot is not None else None,
+        "execution": geometry,
     }
     anchor_id = anchor.get("id") if anchor else "none"
     result["signature"] = "|".join([
@@ -475,13 +534,15 @@ def run(root, client=None):
 
     previous = read_json(root / "execution_state.json", {})
     state = classify_state(plan, fast, previous)
-    if previous.get("signature") != state.get("signature"):
+    changed = previous.get("signature") != state.get("signature")
+    if changed:
         state["previous_state"] = previous.get("state")
         state["state_changed_at"] = state.get("fast_timestamp")
-        write_json(root / "execution_state.json", state)
         _append_history(root / "execution_history.csv", state)
     else:
-        state = previous
+        state["previous_state"] = previous.get("previous_state")
+        state["state_changed_at"] = previous.get("state_changed_at")
+    write_json(root / "execution_state.json", state)
 
     summary = (
         f"BTC execution watcher: {fast['status']} | {state.get('state','NO_TRADE')} | "
