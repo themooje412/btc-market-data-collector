@@ -67,10 +67,11 @@ class ExecutionWatcherTests(unittest.TestCase):
         anchor = min(plan['levels'], key=lambda c: abs(c['value'] - 101.0))
         level = anchor['value']
         candles = [
-            {'open': level-0.3, 'high': level, 'low': level-0.35, 'close': level-0.2, 'quote_cvd': 0},
-            {'open': level-0.2, 'high': level+0.3, 'low': level-0.22, 'close': level+0.08, 'quote_cvd': 0},
+            {'open': level-0.12, 'high': level-0.03, 'low': level-0.15, 'close': level-0.10, 'quote_cvd': 0},
+            {'open': level-0.05, 'high': level+0.20, 'low': level-0.05, 'close': level+0.08, 'quote_cvd': 0},
         ]
         state = classify_state(plan, fast(candles, spot=level+0.08), None)
+        self.assertEqual(state['event'], 'cross_up')
         self.assertEqual(state['state'], 'LONG_TRIGGERED')
         self.assertEqual(state['direction'], 'long')
         self.assertGreaterEqual(state['execution']['rr_to_target1'], 1.6)
