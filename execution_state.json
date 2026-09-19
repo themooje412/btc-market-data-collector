@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
-  "state": "NO_TRADE",
-  "direction": null,
+  "state": "EARLY_SETUP",
+  "direction": "short",
   "setup_type": null,
   "event": "none",
   "anchor": {
@@ -15,16 +15,24 @@
     "confluence_count": 1,
     "id": "session_val"
   },
-  "flow_score": 1,
+  "flow_score": -2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 0.5,
-  "bias_alignment": "none",
-  "reason": "No executable trigger",
+  "bias_alignment": "neutral",
+  "reason": "Negative fast flow near structural zone",
   "context_timestamp": "2026-09-19T03:34:16.745Z",
-  "fast_timestamp": "2026-09-19T04:12:01.562Z",
-  "fast_spot": 81206.0,
-  "execution": null,
-  "signature": "NO_TRADE|none|session_val|none|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-19T04:12:01.562Z"
+  "fast_timestamp": "2026-09-19T04:26:55.176Z",
+  "fast_spot": 81130.0,
+  "execution": {
+    "entry_reference": 81130.0,
+    "hard_stop": 81271.73,
+    "target1": 80925.0,
+    "target2": 80000.0,
+    "risk_usd": 141.73,
+    "risk_pct": 0.1747,
+    "rr_to_target1": 1.446
+  },
+  "signature": "EARLY_SETUP|short|session_val|none|neutral",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-19T04:26:55.176Z"
 }
