@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1.0",
   "profile": "controlled_aggressive_day_trend",
-  "context_timestamp": "2026-09-19T06:39:15.324Z",
-  "context_spot": 80993.98,
+  "context_timestamp": "2026-09-19T07:33:02.750Z",
+  "context_spot": 81118.6,
   "strategic_bias": {
     "value": "neutral",
-    "score": 0.0,
+    "score": 2.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,32 +17,32 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 77535.56743056848,
+        "value": 77543.3455310384,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 80027.41281221985,
+        "value": 80106.70430732648,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": -27253232.2377362,
+        "value": -15479232.1019003,
         "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": -7088056.0054968,
-        "score": -0.5
+        "value": 276821.21049650013,
+        "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": -3952204.9763821852,
+        "value": -1694805.7043104318,
         "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": -5461564.748435579,
+        "value": -4544050.415421608,
         "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": -0.9710253533749732,
-        "score": -0.5
+        "value": 0.5988945418169023,
+        "score": 0.5
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -50,110 +50,110 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 79503.85,
+      "value": 79508.0,
       "labels": [
         "cumulative_gamma_flip"
       ],
       "values": [
-        79503.85
+        79508.0
       ],
       "confluence_count": 1,
       "id": "cumulative_gamma_flip"
     },
     {
-      "value": 79700.0,
+      "value": 79950.0,
       "labels": [
-        "24h_val"
+        "24h_val",
+        "call_wall"
       ],
       "values": [
-        79700.0
+        79900.0,
+        80000.0
       ],
-      "confluence_count": 1,
-      "id": "24h_val"
+      "confluence_count": 2,
+      "id": "24h_val+call_wall"
     },
     {
-      "value": 80013.71,
+      "value": 80106.7,
       "labels": [
-        "call_wall",
         "24h_vwap"
       ],
       "values": [
-        80000.0,
-        80027.41
+        80106.7
       ],
-      "confluence_count": 2,
-      "id": "call_wall+24h_vwap"
+      "confluence_count": 1,
+      "id": "24h_vwap"
     },
     {
-      "value": 80962.5,
+      "value": 80937.5,
       "labels": [
         "24h_poc",
         "session_val"
       ],
       "values": [
         80925.0,
-        81000.0
+        80950.0
       ],
       "confluence_count": 2,
       "id": "24h_poc+session_val"
     },
     {
-      "value": 81278.27,
+      "value": 81273.57,
       "labels": [
         "session_vwap",
         "session_poc"
       ],
       "values": [
-        81231.53,
+        81222.15,
         81325.0
       ],
       "confluence_count": 2,
       "id": "session_vwap+session_poc"
     },
     {
-      "value": 81450.0,
+      "value": 81400.0,
       "labels": [
         "session_vah"
       ],
       "values": [
-        81450.0
+        81400.0
       ],
       "confluence_count": 1,
       "id": "session_vah"
     },
     {
-      "value": 81700.0,
+      "value": 81550.0,
       "labels": [
         "24h_vah"
       ],
       "values": [
-        81700.0
+        81550.0
       ],
       "confluence_count": 1,
       "id": "24h_vah"
     }
   ],
   "nearest_below": {
-    "value": 80962.5,
+    "value": 80937.5,
     "labels": [
       "24h_poc",
       "session_val"
     ],
     "values": [
       80925.0,
-      81000.0
+      80950.0
     ],
     "confluence_count": 2,
     "id": "24h_poc+session_val"
   },
   "nearest_above": {
-    "value": 81278.27,
+    "value": 81273.57,
     "labels": [
       "session_vwap",
       "session_poc"
     ],
     "values": [
-      81231.53,
+      81222.15,
       81325.0
     ],
     "confluence_count": 2,
