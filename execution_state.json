@@ -1,40 +1,32 @@
 {
   "schema_version": "1.1.0",
-  "state": "EARLY_SETUP",
-  "direction": "long",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "state": "NO_TRADE",
+  "direction": null,
+  "setup_type": null,
+  "event": "none",
   "anchor": {
-    "value": 81400.0,
+    "value": 81278.36,
     "labels": [
-      "session_vah",
-      "24h_vah"
+      "session_vwap",
+      "session_poc"
     ],
     "values": [
-      81400.0,
-      81400.0
+      81231.72,
+      81325.0
     ],
     "confluence_count": 2,
-    "id": "session_vah+24h_vah"
+    "id": "session_vwap+session_poc"
   },
-  "flow_score": 0,
-  "strategic_bias": "neutral",
-  "strategic_bias_score": 2.5,
-  "bias_alignment": "neutral",
-  "reason": "Breakout lacks fast-flow confirmation",
-  "context_timestamp": "2026-09-19T08:35:04.856Z",
-  "fast_timestamp": "2026-09-19T09:26:48.472Z",
-  "fast_spot": 81441.75,
-  "execution": {
-    "entry_reference": 81441.75,
-    "hard_stop": 81277.9,
-    "target1": null,
-    "target2": null,
-    "risk_usd": 163.85,
-    "risk_pct": 0.2012,
-    "rr_to_target1": null
-  },
-  "signature": "EARLY_SETUP|long|session_vah+24h_vah|breakout|neutral",
+  "flow_score": -1,
+  "strategic_bias": "bullish",
+  "strategic_bias_score": 5.0,
+  "bias_alignment": "none",
+  "reason": "No executable trigger",
+  "context_timestamp": "2026-09-19T09:33:56.956Z",
+  "fast_timestamp": "2026-09-19T09:39:44.819Z",
+  "fast_spot": 81305.29,
+  "execution": null,
+  "signature": "NO_TRADE|none|session_vwap+session_poc|none|bullish",
   "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-19T09:26:48.472Z"
+  "state_changed_at": "2026-09-19T09:39:44.819Z"
 }
