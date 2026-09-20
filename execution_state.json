@@ -1,30 +1,40 @@
 {
   "schema_version": "1.1.0",
-  "state": "NO_TRADE",
-  "direction": null,
+  "state": "EARLY_SETUP",
+  "direction": "long",
   "setup_type": null,
   "event": "none",
   "anchor": {
-    "value": 81150.0,
+    "value": 81275.0,
     "labels": [
-      "24h_vah"
+      "24h_poc",
+      "7d_poc"
     ],
     "values": [
-      81150.0
+      81275.0,
+      81275.0
     ],
-    "confluence_count": 1,
-    "id": "24h_vah"
+    "confluence_count": 2,
+    "id": "24h_poc+7d_poc"
   },
-  "flow_score": -1,
+  "flow_score": 3,
   "strategic_bias": "bullish",
-  "strategic_bias_score": 5.0,
-  "bias_alignment": "none",
-  "reason": "No executable trigger",
-  "context_timestamp": "2026-09-20T16:34:33.028Z",
-  "fast_timestamp": "2026-09-20T17:32:28.351Z",
-  "fast_spot": 81190.01,
-  "execution": null,
-  "signature": "NO_TRADE|none|24h_vah|none|bullish",
-  "previous_state": "MISSED_DO_NOT_CHASE",
-  "state_changed_at": "2026-09-20T17:32:28.351Z"
+  "strategic_bias_score": 3.5,
+  "bias_alignment": "aligned",
+  "reason": "Positive fast flow near structural zone",
+  "context_timestamp": "2026-09-20T17:32:29.639Z",
+  "fast_timestamp": "2026-09-20T17:43:31.070Z",
+  "fast_spot": 81370.22,
+  "execution": {
+    "entry_reference": 81370.22,
+    "hard_stop": 81120.72,
+    "target1": 81550.0,
+    "target2": 81950.0,
+    "risk_usd": 249.5,
+    "risk_pct": 0.3066,
+    "rr_to_target1": 0.721
+  },
+  "signature": "EARLY_SETUP|long|24h_poc+7d_poc|none|bullish",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-20T17:43:31.070Z"
 }
