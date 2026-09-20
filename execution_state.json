@@ -2,29 +2,31 @@
   "schema_version": "1.1.0",
   "state": "NO_TRADE",
   "direction": null,
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
-    "value": 81100.0,
+    "value": 81275.0,
     "labels": [
-      "session_vah"
+      "24h_poc",
+      "7d_poc"
     ],
     "values": [
-      81100.0
+      81275.0,
+      81275.0
     ],
-    "confluence_count": 1,
-    "id": "session_vah"
+    "confluence_count": 2,
+    "id": "24h_poc+7d_poc"
   },
-  "flow_score": -1,
+  "flow_score": 1,
   "strategic_bias": "bullish",
   "strategic_bias_score": 3.0,
   "bias_alignment": "none",
-  "reason": "No executable trigger",
+  "reason": "5m short move is counter-trend to bullish strategic bias; need completed 15m acceptance + strong flow",
   "context_timestamp": "2026-09-20T22:32:58.910Z",
-  "fast_timestamp": "2026-09-20T23:05:57.961Z",
-  "fast_spot": 81148.0,
+  "fast_timestamp": "2026-09-20T23:19:46.107Z",
+  "fast_spot": 81250.35,
   "execution": null,
-  "signature": "NO_TRADE|none|session_vah|none|bullish",
+  "signature": "NO_TRADE|none|24h_poc+7d_poc|breakdown|bullish",
   "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-20T23:05:57.961Z"
+  "state_changed_at": "2026-09-20T23:19:46.107Z"
 }
