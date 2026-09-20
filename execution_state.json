@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
-  "state": "EARLY_SETUP",
+  "state": "MISSED_DO_NOT_CHASE",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakout",
+  "event": "cross_up",
   "anchor": {
     "value": 80575.84,
     "labels": [
@@ -21,20 +21,20 @@
   "strategic_bias": "neutral",
   "strategic_bias_score": 1.5,
   "bias_alignment": "neutral",
-  "reason": "Positive fast flow near structural zone",
+  "reason": "Trigger present but first-target R/R is below 1.6",
   "context_timestamp": "2026-09-20T13:33:38.571Z",
-  "fast_timestamp": "2026-09-20T13:54:02.880Z",
-  "fast_spot": 80562.0,
+  "fast_timestamp": "2026-09-20T14:06:35.753Z",
+  "fast_spot": 80660.0,
   "execution": {
-    "entry_reference": 80562.0,
-    "hard_stop": 80428.13,
+    "entry_reference": 80660.0,
+    "hard_stop": 80454.98,
     "target1": 80967.31,
     "target2": 81350.0,
-    "risk_usd": 133.87,
-    "risk_pct": 0.1662,
-    "rr_to_target1": 3.028
+    "risk_usd": 205.02,
+    "risk_pct": 0.2542,
+    "rr_to_target1": 1.499
   },
-  "signature": "EARLY_SETUP|long|session_vwap+session_vah|none|neutral",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-20T13:54:02.880Z"
+  "signature": "MISSED_DO_NOT_CHASE|long|session_vwap+session_vah|breakout|neutral",
+  "previous_state": "EARLY_SETUP",
+  "state_changed_at": "2026-09-20T14:06:35.753Z"
 }
