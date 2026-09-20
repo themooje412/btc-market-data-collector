@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1.0",
   "profile": "controlled_aggressive_day_trend",
-  "context_timestamp": "2026-09-20T22:32:58.910Z",
-  "context_spot": 81124.89,
+  "context_timestamp": "2026-09-20T23:32:37.211Z",
+  "context_spot": 81266.0,
   "strategic_bias": {
-    "value": "bullish",
-    "score": 3.0,
+    "value": "neutral",
+    "score": 0.5,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,32 +17,32 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 78174.30822675522,
+        "value": 78186.99405491479,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 80774.40798974373,
+        "value": 80773.92265782398,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": -7732286.9447206,
+        "value": -8608131.315183999,
         "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": 2810801.8663052,
-        "score": 0.5
+        "value": -778815.2801746998,
+        "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": 2383277.332371327,
+        "value": 803585.9735530615,
         "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": 809174.1121375702,
-        "score": 0.5
+        "value": -964665.598331178,
+        "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": -0.11267158249765959,
-        "score": 0.0
+        "value": -0.6829028638279313,
+        "score": -0.5
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -50,12 +50,12 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 79560.99,
+      "value": 79547.96,
       "labels": [
         "cumulative_gamma_flip"
       ],
       "values": [
-        79560.99
+        79547.96
       ],
       "confluence_count": 1,
       "id": "cumulative_gamma_flip"
@@ -96,14 +96,14 @@
       "id": "session_poc+24h_val"
     },
     {
-      "value": 80755.37,
+      "value": 80760.22,
       "labels": [
         "session_vwap",
         "24h_vwap"
       ],
       "values": [
-        80736.33,
-        80774.41
+        80746.52,
+        80773.92
       ],
       "confluence_count": 2,
       "id": "session_vwap+24h_vwap"
