@@ -1,38 +1,38 @@
 {
   "schema_version": "1.1.0",
-  "state": "MISSED_DO_NOT_CHASE",
+  "state": "EARLY_SETUP",
   "direction": "long",
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
-    "value": 80250.0,
+    "value": 80475.0,
     "labels": [
-      "session_val"
+      "session_poc"
     ],
     "values": [
-      80250.0
+      80475.0
     ],
     "confluence_count": 1,
-    "id": "session_val"
+    "id": "session_poc"
   },
-  "flow_score": 2,
+  "flow_score": 4,
   "strategic_bias": "neutral",
   "strategic_bias_score": 0.5,
   "bias_alignment": "neutral",
-  "reason": "Trigger present but first-target R/R is below 1.8",
+  "reason": "Positive fast flow near structural zone",
   "context_timestamp": "2026-09-20T07:35:57.729Z",
-  "fast_timestamp": "2026-09-20T07:52:17.501Z",
-  "fast_spot": 80358.01,
+  "fast_timestamp": "2026-09-20T08:03:39.731Z",
+  "fast_spot": 80426.01,
   "execution": {
-    "entry_reference": 80358.01,
-    "hard_stop": 80129.62,
+    "entry_reference": 80426.01,
+    "hard_stop": 80265.11,
     "target1": 80475.0,
     "target2": 80628.68,
-    "risk_usd": 228.38,
-    "risk_pct": 0.2842,
-    "rr_to_target1": 0.512
+    "risk_usd": 160.9,
+    "risk_pct": 0.2001,
+    "rr_to_target1": 0.304
   },
-  "signature": "MISSED_DO_NOT_CHASE|long|session_val|breakout-retest/trend-pullback|neutral",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-20T07:52:17.501Z"
+  "signature": "EARLY_SETUP|long|session_poc|none|neutral",
+  "previous_state": "MISSED_DO_NOT_CHASE",
+  "state_changed_at": "2026-09-20T08:03:39.731Z"
 }
