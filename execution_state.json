@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": null,
-  "event": "none",
+  "state": "MISSED_DO_NOT_CHASE",
+  "direction": "long",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 80400.0,
     "labels": [
@@ -15,16 +15,24 @@
     "confluence_count": 1,
     "id": "session_val"
   },
-  "flow_score": 1,
+  "flow_score": 4,
   "strategic_bias": "bearish",
   "strategic_bias_score": -3.0,
-  "bias_alignment": "none",
-  "reason": "No executable trigger",
+  "bias_alignment": "countertrend_confirmed",
+  "reason": "Trigger present but first-target R/R is below 1.8",
   "context_timestamp": "2026-09-20T03:35:14.742Z",
-  "fast_timestamp": "2026-09-20T03:51:41.939Z",
-  "fast_spot": 80476.86,
-  "execution": null,
-  "signature": "NO_TRADE|none|session_val|none|bearish",
+  "fast_timestamp": "2026-09-20T04:02:14.333Z",
+  "fast_spot": 80439.78,
+  "execution": {
+    "entry_reference": 80439.78,
+    "hard_stop": 80279.4,
+    "target1": 80723.81,
+    "target2": 80950.0,
+    "risk_usd": 160.38,
+    "risk_pct": 0.1994,
+    "rr_to_target1": 1.771
+  },
+  "signature": "MISSED_DO_NOT_CHASE|long|session_val|breakout-retest/trend-pullback|bearish",
   "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-20T03:39:30.503Z"
+  "state_changed_at": "2026-09-20T04:02:14.333Z"
 }
