@@ -1,0 +1,89 @@
+name: Collect ETH SOL ZEC market data
+on:
+  schedule:
+    - cron: '37 * * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'btc_collector/asset_*.py'
+      - 'tests/test_assets.py'
+      - 'scripts/check_asset_output.py'
+      - '.github/workflows/collect-assets.yml'
+permissions:
+  contents: write
+concurrency:
+  group: multi-asset-hourly-collector-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Set UTC cache date
+        id: cache-date
+        run: echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+      - name: Restore verified Binance aggregate-trade archives
+        uses: actions/cache@v5
+        with:
+          path: .cache/binance-aggtrades-assets
+          key: binance-alt-aggtrades-${{ runner.os }}-${{ steps.cache-date.outputs.date }}
+          restore-keys: |
+            binance-alt-aggtrades-${{ runner.os }}-
+      - name: Test multi-asset calculations
+        run: |
+          python -m py_compile btc_collector/asset_config.py btc_collector/asset_sources.py btc_collector/asset_market_structure.py btc_collector/asset_options.py btc_collector/asset_storage.py btc_collector/asset_main.py
+          python -m unittest discover -s tests -p 'test_assets.py' -v
+      - name: Collect ETH
+        run: python -u -m btc_collector.asset_main --asset ETH
+      - name: Validate ETH
+        run: python scripts/check_asset_output.py ETH
+      - name: Collect SOL
+        run: python -u -m btc_collector.asset_main --asset SOL
+      - name: Validate SOL
+        run: python scripts/check_asset_output.py SOL
+      - name: Collect ZEC
+        run: python -u -m btc_collector.asset_main --asset ZEC
+      - name: Validate ZEC
+        run: python scripts/check_asset_output.py ZEC
+      - name: Commit and push asset data
+        if: github.ref == 'refs/heads/main'
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/eth assets/sol assets/zec
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "data: update ETH SOL ZEC snapshots $(date -u +%Y-%m-%dT%H:%MZ)"
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:$DEFAULT_BRANCH"; then
+              exit 0
+            fi
+            git fetch origin "$DEFAULT_BRANCH"
+            git rebase "origin/$DEFAULT_BRANCH" || { git rebase --abort; exit 1; }
+          done
+          exit 1
+      - name: Preserve diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: multi-asset-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            assets/eth/latest.json
+            assets/sol/latest.json
+            assets/zec/latest.json
+            assets/eth/docs/latest-endpoint-check.json
+            assets/sol/docs/latest-endpoint-check.json
+            assets/zec/docs/latest-endpoint-check.json
+          retention-days: 1
+          if-no-files-found: warn

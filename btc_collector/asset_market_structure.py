@@ -1,0 +1,379 @@
+"""Exact Binance spot VWAP and aggregate-trade volume profiles for alt assets.
+
+This mirrors the audited BTC market-structure semantics while allowing a
+symbol-specific profile bin width and cache namespace.  It uses exact Binance
+quote/base kline totals for VWAP and exact aggregate-trade quantity for POC,
+VAH and VAL; no candle-volume proxy is substituted.
+"""
+
+import csv
+from datetime import datetime, timezone, timedelta
+import hashlib
+import io
+import logging
+import math
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+import time
+import zipfile
+from concurrent.futures import ThreadPoolExecutor
+
+from .core import iso, metric, missing, number
+from .sources import BINANCE
+
+VALUE_AREA_TARGET = 0.70
+DAY = 86400
+
+
+def exact_vwap(candles, start, end):
+    expected = set(range(int(start), int(end), 60))
+    found = {}
+    for row in candles:
+        minute = int(row[0]) // 1000
+        if minute in found:
+            raise ValueError("Duplicate kline minute")
+        found[minute] = (number(row[5], 0), number(row[7], 0))
+    missing_minutes = expected - set(found)
+    if missing_minutes:
+        raise ValueError(f"Incomplete kline coverage: {len(expected)-len(missing_minutes)}/{len(expected)} minutes")
+    base = sum(found[t][0] for t in expected)
+    quote = sum(found[t][1] for t in expected)
+    if base <= 0:
+        raise ValueError("Zero base volume")
+    return quote / base, base, quote
+
+
+def price_bin(price, width):
+    return math.floor(number(price, 1e-12) / number(width, 1e-12))
+
+
+def contiguous_value_area(bins, width, target=VALUE_AREA_TARGET):
+    clean = {int(k): number(v, 0) for k, v in bins.items() if number(v, 0) > 0}
+    if not clean:
+        raise ValueError("No positive profile volume")
+    total = sum(clean.values())
+    poc = min(clean, key=lambda k: (-clean[k], k))
+    included = {poc}
+    volume = clean[poc]
+    low = high = poc
+    while volume / total < target:
+        lower = clean.get(low - 1, 0.0)
+        upper = clean.get(high + 1, 0.0)
+        if lower == upper == 0:
+            remaining = [k for k in clean if k < low or k > high]
+            if not remaining:
+                break
+            nearest = min(remaining, key=lambda k: (min(abs(k-low), abs(k-high)), k))
+            while low > nearest:
+                low -= 1
+                included.add(low)
+                volume += clean.get(low, 0.0)
+            while high < nearest:
+                high += 1
+                included.add(high)
+                volume += clean.get(high, 0.0)
+            continue
+        if lower >= upper:
+            low -= 1
+            included.add(low)
+            volume += lower
+        else:
+            high += 1
+            included.add(high)
+            volume += upper
+    return {
+        "poc": (poc + 0.5) * width,
+        "val": low * width,
+        "vah": (high + 1) * width,
+        "value_area_volume_pct": volume / total * 100,
+        "total_volume_base": total,
+        "included_bin_count": len(included),
+        "profile_bin_width": width,
+        "tie_rule": "Lowest-price POC; on equal adjacent volume expand lower first",
+    }
+
+
+def rolling_profile(minutes, start, end, width):
+    bins = {}
+    for minute, minute_bins in minutes.items():
+        timestamp = int(minute)
+        if start <= timestamp < end:
+            for key, value in minute_bins.items():
+                idx = int(key)
+                bins[idx] = bins.get(idx, 0.0) + number(value, 0)
+    return contiguous_value_area(bins, width)
+
+
+def _timestamp_seconds(raw):
+    value = number(raw, 0)
+    if value >= 1e15:
+        return value / 1_000_000
+    if value >= 1e12:
+        return value / 1000
+    return value
+
+
+def _ingest(state, trade_id, timestamp, price, quantity, width):
+    trade_id = int(trade_id)
+    timestamp = _timestamp_seconds(timestamp)
+    if state.get("last_agg_id") is not None and trade_id <= int(state["last_agg_id"]):
+        return
+    minute = str(int(timestamp) // 60 * 60)
+    idx = str(price_bin(price, width))
+    state.setdefault("minutes", {}).setdefault(minute, {})
+    state["minutes"][minute][idx] = state["minutes"][minute].get(idx, 0.0) + number(quantity, 0)
+    state["last_agg_id"] = trade_id
+    state["last_trade_timestamp"] = timestamp
+    if state.get("coverage_started_at") is None:
+        state["coverage_started_at"] = timestamp
+
+
+def _download(url, path, max_time=300):
+    error = ""
+    for attempt in range(3):
+        result = subprocess.run(
+            [
+                "curl", "--silent", "--show-error", "--fail", "--proto", "=https",
+                "--connect-timeout", "20", "--max-time", str(max_time),
+                "--max-filesize", "500000000", "--user-agent", "multi-asset-market-collector/1.0",
+                "--output", str(path), url,
+            ],
+            capture_output=True, text=True, timeout=max_time + 15,
+        )
+        if result.returncode == 0:
+            return
+        error = result.stderr.strip()[:300]
+        if attempt < 2:
+            time.sleep(2 ** (attempt + 1))
+    raise RuntimeError(f"Official Binance archive download failed ({url}): {error}")
+
+
+def _backfill_archives(state, end, symbol, width, cache_dir=None):
+    first = datetime.fromtimestamp(end - 7 * DAY, timezone.utc).date()
+    last = datetime.fromtimestamp(end, timezone.utc).date() - timedelta(days=1)
+    day = first
+    expected_next = None
+    archives = []
+    required_names = {
+        f"{symbol}-aggTrades-{(first + timedelta(days=i)).isoformat()}.zip"
+        for i in range((last-first).days + 1)
+    }
+    cache_root = Path(cache_dir or os.environ.get("BINANCE_ALT_ARCHIVE_CACHE", ".cache/binance-aggtrades-assets"))
+    cache = cache_root / symbol
+    cache.mkdir(parents=True, exist_ok=True)
+
+    with tempfile.TemporaryDirectory() as folder:
+        while day <= last:
+            stamp = day.isoformat()
+            name = f"{symbol}-aggTrades-{stamp}.zip"
+            base = f"https://data.binance.vision/data/spot/daily/aggTrades/{symbol}/"
+            archive = cache / name
+            checksum = cache / (name + ".CHECKSUM")
+            logging.info("%s archive bootstrap %s: %s", symbol, stamp, "cache check" if archive.exists() else "download")
+            if not archive.exists():
+                partial = Path(folder) / (name + ".partial")
+                _download(base + name, partial)
+                partial.replace(archive)
+            if not checksum.exists():
+                time.sleep(0.25)
+                partial_sum = Path(folder) / (name + ".CHECKSUM.partial")
+                _download(base + name + ".CHECKSUM", partial_sum, 90)
+                partial_sum.replace(checksum)
+            wanted = checksum.read_text(encoding="utf-8").split()[0].lower()
+            actual = hashlib.sha256(archive.read_bytes()).hexdigest()
+            if actual != wanted:
+                raise ValueError("Binance archive checksum mismatch for " + stamp)
+            with zipfile.ZipFile(archive) as zipped:
+                members = [m for m in zipped.namelist() if m.endswith(".csv")]
+                if len(members) != 1:
+                    raise ValueError("Unexpected Binance archive members")
+                first_id = last_id = None
+                count = 0
+                with zipped.open(members[0]) as raw:
+                    text = io.TextIOWrapper(raw, encoding="utf-8", newline="")
+                    for row in csv.reader(text):
+                        if len(row) < 6:
+                            raise ValueError("Malformed Binance aggTrades archive row")
+                        agg_id = int(row[0])
+                        first_id = agg_id if first_id is None else first_id
+                        last_id = agg_id
+                        if expected_next is not None and count == 0 and agg_id != expected_next:
+                            raise ValueError(f"Archive aggregate-trade ID gap before {stamp}")
+                        _ingest(state, agg_id, row[5], row[1], row[2], width)
+                        count += 1
+            expected_next = last_id + 1 if last_id is not None else expected_next
+            archives.append({
+                "date": stamp, "rows": count, "first_agg_id": first_id,
+                "last_agg_id": last_id, "sha256_verified": True,
+            })
+            logging.info("%s archive bootstrap %s: verified and ingested %d aggregate trades", symbol, stamp, count)
+            day += timedelta(days=1)
+
+    for old in cache.glob(f"{symbol}-aggTrades-*.zip*"):
+        stem = old.name.removesuffix(".CHECKSUM")
+        if stem not in required_names:
+            old.unlink()
+    state["archive_backfill"] = archives
+
+
+def _fetch_incremental(client, state, end, symbol, width, max_pages=5000):
+    latest, _, received = client.get(BINANCE, "/api/v3/aggTrades", symbol=symbol, limit=1)
+    if not isinstance(latest, list) or not latest:
+        raise ValueError("Malformed latest aggregate-trade response")
+    latest_id = int(latest[-1]["a"])
+    pages = 1
+    if state.get("last_agg_id") is None:
+        _ingest(state, latest[-1]["a"], latest[-1]["T"], latest[-1]["p"], latest[-1]["q"], width)
+    start = int(state["last_agg_id"]) + 1
+    page_starts = list(range(start, latest_id + 1, 1000))
+    if len(page_starts) + pages > max_pages:
+        raise ValueError("Aggregate-trade pagination budget exhausted")
+    previous = int(state["last_agg_id"])
+    batch_size = 12
+    for offset in range(0, len(page_starts), batch_size):
+        batch = page_starts[offset:offset + batch_size]
+
+        def fetch(from_id):
+            data, _, recv = client.get(BINANCE, "/api/v3/aggTrades", symbol=symbol, fromId=from_id, limit=1000)
+            return from_id, data, recv
+
+        with ThreadPoolExecutor(max_workers=batch_size) as pool:
+            results = list(pool.map(fetch, batch))
+        for requested, data, recv in results:
+            pages += 1
+            received = max(received, recv)
+            if not isinstance(data, list) or not data:
+                raise ValueError(f"Empty aggregate-trade page at {requested}")
+            if int(data[0]["a"]) != previous + 1 or int(data[0]["a"]) != requested:
+                raise ValueError(f"Aggregate-trade ID gap before {requested}")
+            for row in data:
+                agg_id = int(row["a"])
+                if agg_id != previous + 1:
+                    raise ValueError(f"Aggregate-trade ID gap at {agg_id}")
+                _ingest(state, agg_id, row["T"], row["p"], row["q"], width)
+                previous = agg_id
+            if previous >= latest_id:
+                break
+        logging.info("%s aggregate-trade API catch-up: %d/%d pages complete", symbol, min(offset + len(batch), len(page_starts)), len(page_starts))
+        if previous >= latest_id:
+            break
+    if previous < latest_id:
+        raise ValueError("Aggregate-trade catch-up did not reach captured latest ID")
+    state["synced_through"] = min(number(state.get("last_trade_timestamp"), 0), received)
+    return pages
+
+
+def _klines(client, end, symbol):
+    rows = []
+    cursor = end - 7 * DAY
+    while cursor < end:
+        data, _, _ = client.get(
+            BINANCE, "/api/v3/klines", symbol=symbol, interval="1m",
+            startTime=cursor * 1000, endTime=end * 1000 - 1, limit=1000,
+        )
+        if not data:
+            break
+        rows.extend(data)
+        following = int(data[-1][0]) // 1000 + 60
+        if following <= cursor:
+            raise ValueError("Kline pagination did not advance")
+        cursor = following
+    return rows
+
+
+def _window_output(name, start, end, candles, state, spot, width, symbol, asset):
+    profile_source = f"Binance {symbol} aggregate trades (official API/archive)"
+    vwap_source = f"Binance {symbol} /api/v3/klines exact quote volume / base volume"
+    try:
+        vwap, base, quote = exact_vwap(candles, start, end)
+        vwap_metric = metric(
+            vwap, vwap_source, end, "USDT", base_volume=base, quote_volume_usdt=quote,
+            base_asset=asset, window_start=iso(start), window_end=iso(end),
+        )
+    except ValueError as exc:
+        vwap_metric = missing(vwap_source, str(exc), status="warming_up", unit="USDT")
+
+    coverage_start = state.get("coverage_started_at")
+    synced = state.get("synced_through")
+    complete = coverage_start is not None and coverage_start <= start and synced is not None and synced >= end - 60
+    if complete:
+        try:
+            profile = rolling_profile(state.get("minutes", {}), start, end, width)
+        except ValueError as exc:
+            complete = False
+            reason = str(exc)
+    else:
+        reason = "Exact aggregate-trade profile is warming up to full window coverage"
+
+    out = {
+        "status": "ok" if complete and vwap_metric["status"] == "ok" else "warming_up",
+        "window_start": iso(start), "window_end": iso(end), "vwap": vwap_metric,
+        "profile_bin_width": width,
+        "profile_method": "Exact aggregate-trade quantity binned by price",
+        "profile_coverage_started_at": iso(coverage_start) if coverage_start is not None else None,
+        "profile_synced_through": iso(synced) if synced is not None else None,
+    }
+    if complete:
+        for key, unit in (("poc", "USDT"), ("vah", "USDT"), ("val", "USDT"), ("value_area_volume_pct", "%")):
+            out[key] = metric(profile[key], profile_source, end, unit, definition="Contiguous POC-centered 70% value area")
+        location = "above_value" if spot > profile["vah"] else ("below_value" if spot < profile["val"] else "inside_value")
+        out["spot_location"] = metric(location, profile_source, end)
+        for key, value in (("vwap", vwap_metric.get("value")), ("poc", profile["poc"]), ("vah", profile["vah"]), ("val", profile["val"])):
+            out["distance_to_" + key + "_pct"] = metric((spot / value - 1) * 100, profile_source, end, "%", spot_reference=spot) if value else missing(profile_source, "Reference unavailable", unit="%")
+        out["profile_diagnostics"] = {
+            "total_volume_base": profile["total_volume_base"],
+            "base_asset": asset,
+            "included_bin_count": profile["included_bin_count"],
+            "tie_rule": profile["tie_rule"],
+        }
+    else:
+        for key, unit in (
+            ("poc", "USDT"), ("vah", "USDT"), ("val", "USDT"), ("value_area_volume_pct", "%"),
+            ("spot_location", None), ("distance_to_vwap_pct", "%"), ("distance_to_poc_pct", "%"),
+            ("distance_to_vah_pct", "%"), ("distance_to_val_pct", "%"),
+        ):
+            out[key] = missing(profile_source, reason, status="warming_up", unit=unit)
+    return out
+
+
+def collect_market_structure(client, end, state, symbol, asset, bin_width, allow_archive=True, archive_cache=None):
+    state = dict(state or {})
+    state.setdefault("schema_version", 1)
+    state.setdefault("symbol", symbol)
+    state.setdefault("profile_bin_width", bin_width)
+    if state["symbol"] != symbol:
+        raise ValueError("Persisted market-structure symbol mismatch")
+    if float(state["profile_bin_width"]) != float(bin_width):
+        raise ValueError("Persisted profile bin width mismatch")
+    state["minutes"] = {str(k): dict(v) for k, v in state.get("minutes", {}).items()}
+    if state.get("last_agg_id") is None and allow_archive:
+        _backfill_archives(state, end, symbol, bin_width, archive_cache)
+    pages = _fetch_incremental(client, state, end, symbol, bin_width)
+    cutoff = end - 8 * DAY
+    state["minutes"] = {k: v for k, v in state["minutes"].items() if int(k) >= cutoff}
+    candles = _klines(client, end, symbol)
+    if not candles:
+        raise ValueError("No Binance klines for market structure")
+    spot = number(candles[-1][4], 1e-12)
+    session = end // DAY * DAY
+    windows = {"utc_session": session, "rolling_24h": end - DAY, "rolling_7d": end - 7 * DAY}
+    result = {
+        name: _window_output(name, start, end, candles, state, spot, bin_width, symbol, asset)
+        for name, start in windows.items()
+    }
+    profile_source = f"Binance {symbol} aggregate trades (official API/archive)"
+    vwap_source = f"Binance {symbol} /api/v3/klines exact quote volume / base volume"
+    result.update(
+        status="ok" if all(v["status"] == "ok" for v in result.values() if isinstance(v, dict)) else "warming_up",
+        source=profile_source,
+        spot_reference=metric(spot, vwap_source, end, "USDT"),
+        profile_bin_width=bin_width,
+        value_area_target_pct=VALUE_AREA_TARGET * 100,
+        incremental_pages=pages,
+        state_method="Persisted per-minute exact aggregate-trade price bins",
+        symbol=symbol,
+        asset=asset,
+    )
+    return result, state

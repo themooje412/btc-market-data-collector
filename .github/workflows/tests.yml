@@ -27,3 +27,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_dealer_gex.py' -v
           python -m unittest discover -s tests -p 'test_market_structure.py' -v
           python -m unittest discover -s tests -p 'test_execution_watcher.py' -v
+      - name: Run multi-asset collector tests
+        run: |
+          python -m py_compile btc_collector/asset_config.py btc_collector/asset_sources.py btc_collector/asset_market_structure.py btc_collector/asset_options.py btc_collector/asset_storage.py btc_collector/asset_main.py
+          python -m unittest discover -s tests -p 'test_assets.py' -v
