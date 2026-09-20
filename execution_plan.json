@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1.0",
   "profile": "controlled_aggressive_day_trend",
-  "context_timestamp": "2026-09-20T02:34:31.851Z",
-  "context_spot": 80994.02,
+  "context_timestamp": "2026-09-20T03:35:14.742Z",
+  "context_spot": 80373.44,
   "strategic_bias": {
-    "value": "bullish",
-    "score": 3.0,
+    "value": "bearish",
+    "score": -3.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,31 +17,31 @@
         "score": -1.5
       },
       "7d_vwap": {
-        "value": 77878.63317539406,
+        "value": 77924.44998574603,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 81356.80522429022,
+        "value": 81222.46688237505,
         "score": -1.0
       },
       "binance_4h_cvd": {
-        "value": 666169.8172593964,
-        "score": 1.25
+        "value": -29252116.321323708,
+        "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": -4028797.7643561005,
+        "value": -28263700.132566303,
         "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": 662886.9238738609,
-        "score": 1.25
+        "value": -6393702.554325752,
+        "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": 1468878.7001696706,
-        "score": 0.5
+        "value": -6952406.915486031,
+        "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": -0.09662903861311924,
+        "value": 0.4921852928663365,
         "score": 0.0
       }
     },
@@ -50,23 +50,23 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 78600.0,
+      "value": 78700.0,
       "labels": [
         "7d_vah"
       ],
       "values": [
-        78600.0
+        78700.0
       ],
       "confluence_count": 1,
       "id": "7d_vah"
     },
     {
-      "value": 79517.77,
+      "value": 79539.38,
       "labels": [
         "cumulative_gamma_flip"
       ],
       "values": [
-        79517.77
+        79539.38
       ],
       "confluence_count": 1,
       "id": "cumulative_gamma_flip"
@@ -83,44 +83,62 @@
       "id": "call_wall"
     },
     {
-      "value": 81050.0,
+      "value": 80400.0,
       "labels": [
-        "24h_val",
         "session_val"
       ],
       "values": [
-        81000.0,
-        81100.0
+        80400.0
       ],
-      "confluence_count": 2,
-      "id": "24h_val+session_val"
+      "confluence_count": 1,
+      "id": "session_val"
     },
     {
-      "value": 81290.53,
+      "value": 80723.81,
       "labels": [
-        "session_vwap",
-        "session_poc",
-        "24h_poc",
-        "session_vah",
-        "24h_vwap"
+        "session_vwap"
       ],
       "values": [
-        81195.84,
-        81275.0,
-        81275.0,
-        81350.0,
-        81356.81
+        80723.81
       ],
-      "confluence_count": 5,
-      "id": "session_vwap+session_poc+24h_poc+session_vah+24h_vwap"
+      "confluence_count": 1,
+      "id": "session_vwap"
     },
     {
-      "value": 81550.0,
+      "value": 80950.0,
+      "labels": [
+        "24h_val"
+      ],
+      "values": [
+        80950.0
+      ],
+      "confluence_count": 1,
+      "id": "24h_val"
+    },
+    {
+      "value": 81280.62,
+      "labels": [
+        "24h_vwap",
+        "session_poc",
+        "24h_poc",
+        "session_vah"
+      ],
+      "values": [
+        81222.47,
+        81275.0,
+        81275.0,
+        81350.0
+      ],
+      "confluence_count": 4,
+      "id": "24h_vwap+session_poc+24h_poc+session_vah"
+    },
+    {
+      "value": 81700.0,
       "labels": [
         "24h_vah"
       ],
       "values": [
-        81550.0
+        81700.0
       ],
       "confluence_count": 1,
       "id": "24h_vah"
@@ -138,17 +156,15 @@
     "id": "call_wall"
   },
   "nearest_above": {
-    "value": 81050.0,
+    "value": 80400.0,
     "labels": [
-      "24h_val",
       "session_val"
     ],
     "values": [
-      81000.0,
-      81100.0
+      80400.0
     ],
-    "confluence_count": 2,
-    "id": "24h_val+session_val"
+    "confluence_count": 1,
+    "id": "session_val"
   },
   "rules": {
     "early_probe_r": [
