@@ -2,20 +2,18 @@
   "schema_version": "1.1.0",
   "state": "EARLY_SETUP",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakdown-retest/trend-pullback",
+  "event": "retest_hold_short",
   "anchor": {
-    "value": 80576.62,
+    "value": 80940.62,
     "labels": [
-      "session_vwap",
-      "session_vah"
+      "24h_vwap"
     ],
     "values": [
-      80553.24,
-      80600.0
+      80940.62
     ],
-    "confluence_count": 2,
-    "id": "session_vwap+session_vah"
+    "confluence_count": 1,
+    "id": "24h_vwap"
   },
   "flow_score": 3,
   "strategic_bias": "neutral",
@@ -23,18 +21,18 @@
   "bias_alignment": "neutral",
   "reason": "Positive fast flow near structural zone",
   "context_timestamp": "2026-09-20T14:33:14.822Z",
-  "fast_timestamp": "2026-09-20T14:54:18.871Z",
-  "fast_spot": 80700.3,
+  "fast_timestamp": "2026-09-20T15:06:57.261Z",
+  "fast_spot": 80826.38,
   "execution": {
-    "entry_reference": 80700.3,
-    "hard_stop": 80455.76,
+    "entry_reference": 80826.38,
+    "hard_stop": 80623.67,
     "target1": 80940.62,
     "target2": 81300.0,
-    "risk_usd": 244.54,
-    "risk_pct": 0.303,
-    "rr_to_target1": 0.983
+    "risk_usd": 202.71,
+    "risk_pct": 0.2508,
+    "rr_to_target1": 0.564
   },
-  "signature": "EARLY_SETUP|long|session_vwap+session_vah|none|neutral",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-20T14:54:18.871Z"
+  "signature": "EARLY_SETUP|long|24h_vwap|breakdown-retest/trend-pullback|neutral",
+  "previous_state": "EARLY_SETUP",
+  "state_changed_at": "2026-09-20T15:06:57.261Z"
 }
