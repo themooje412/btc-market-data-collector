@@ -1,31 +1,31 @@
 {
   "schema_version": "1.1.0",
-  "timestamp": "2026-09-21T13:19:47.082Z",
-  "window_end": "2026-09-21T13:19:00.000Z",
-  "collection_duration_seconds": 0.619,
+  "timestamp": "2026-09-21T13:33:46.836Z",
+  "window_end": "2026-09-21T13:33:00.000Z",
+  "collection_duration_seconds": 1.027,
   "status": "ok",
   "errors": {},
   "spot": {
     "binance": {
-      "value": 85190.97,
+      "value": 85035.15,
       "source": "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=BTCUSDT",
-      "timestamp": "2026-09-21T13:19:46.010Z",
+      "timestamp": "2026-09-21T13:33:46.001Z",
       "unit": "USDT",
       "status": "ok",
       "timestamp_kind": "exchange_rolling_ticker_close"
     },
     "coinbase": {
-      "value": 85165.1,
+      "value": 85004.95,
       "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
-      "timestamp": "2026-09-21T13:19:46.224Z",
+      "timestamp": "2026-09-21T13:33:45.126Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade"
     },
     "usdt_usd": {
-      "value": 0.99971,
+      "value": 0.99965,
       "source": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
-      "timestamp": "2026-09-21T13:19:41.801Z",
+      "timestamp": "2026-09-21T13:33:40.508Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade"
@@ -33,95 +33,95 @@
   },
   "premium": {
     "usd": {
-      "value": -25.869999999995343,
+      "value": -30.19999999999709,
       "source": "Coinbase BTC-USD minus Binance BTCUSDT (unadjusted)",
-      "timestamp": "2026-09-21T13:19:46.010Z",
+      "timestamp": "2026-09-21T13:33:45.126Z",
       "unit": "USD",
       "status": "ok",
       "assumption": "1 USDT = 1 USD"
     },
     "bps": {
-      "value": -3.036706824678172,
+      "value": -3.5514725381206587,
       "source": "Coinbase BTC-USD minus Binance BTCUSDT (unadjusted)",
-      "timestamp": "2026-09-21T13:19:46.010Z",
+      "timestamp": "2026-09-21T13:33:45.126Z",
       "unit": "bp",
       "status": "ok"
     },
     "pct": {
-      "value": -0.03036706824678172,
+      "value": -0.035514725381206584,
       "source": "Coinbase BTC-USD minus Binance BTCUSDT (unadjusted)",
-      "timestamp": "2026-09-21T13:19:46.010Z",
+      "timestamp": "2026-09-21T13:33:45.126Z",
       "unit": "%",
       "status": "ok"
     },
     "fx_adjusted": {
       "usd": {
-        "value": -1.1646187000005739,
+        "value": -0.43769750000501517,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-21T13:19:41.801Z",
+        "timestamp": "2026-09-21T13:33:40.508Z",
         "unit": "USD",
         "status": "ok",
         "assumption": null
       },
       "bps": {
-        "value": -0.13674648115832216,
+        "value": -0.05149055981752646,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-21T13:19:41.801Z",
+        "timestamp": "2026-09-21T13:33:40.508Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.0013674648115832215,
+        "value": -0.0005149055981752646,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-21T13:19:41.801Z",
+        "timestamp": "2026-09-21T13:33:40.508Z",
         "unit": "%",
         "status": "ok"
       }
     },
     "raw_coinbase_premium": {
       "usd": {
-        "value": -25.869999999995343,
+        "value": -30.19999999999709,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT (unadjusted)",
-        "timestamp": "2026-09-21T13:19:46.010Z",
+        "timestamp": "2026-09-21T13:33:45.126Z",
         "unit": "USD",
         "status": "ok",
         "assumption": "1 USDT = 1 USD"
       },
       "bps": {
-        "value": -3.036706824678172,
+        "value": -3.5514725381206587,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT (unadjusted)",
-        "timestamp": "2026-09-21T13:19:46.010Z",
+        "timestamp": "2026-09-21T13:33:45.126Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.03036706824678172,
+        "value": -0.035514725381206584,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT (unadjusted)",
-        "timestamp": "2026-09-21T13:19:46.010Z",
+        "timestamp": "2026-09-21T13:33:45.126Z",
         "unit": "%",
         "status": "ok"
       }
     },
     "fx_adjusted_coinbase_premium": {
       "usd": {
-        "value": -1.1646187000005739,
+        "value": -0.43769750000501517,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-21T13:19:41.801Z",
+        "timestamp": "2026-09-21T13:33:40.508Z",
         "unit": "USD",
         "status": "ok",
         "assumption": null
       },
       "bps": {
-        "value": -0.13674648115832216,
+        "value": -0.05149055981752646,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-21T13:19:41.801Z",
+        "timestamp": "2026-09-21T13:33:40.508Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.0013674648115832215,
+        "value": -0.0005149055981752646,
         "source": "Coinbase BTC-USD minus Binance BTCUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-21T13:19:41.801Z",
+        "timestamp": "2026-09-21T13:33:40.508Z",
         "unit": "%",
         "status": "ok"
       }
@@ -130,84 +130,84 @@
   },
   "binance_cvd": {
     "15m": {
-      "value": -87.93162999999998,
+      "value": -180.65874,
       "source": "Binance BTCUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-21T13:19:00.000Z",
+      "timestamp": "2026-09-21T13:33:00.000Z",
       "unit": "BTC",
       "status": "ok",
       "quote_cvd": {
-        "value": -7490377.2417854,
+        "value": -15351415.6261814,
         "source": "Binance BTCUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-21T13:19:00.000Z",
+        "timestamp": "2026-09-21T13:33:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-21T13:04:00.000Z",
-      "window_end": "2026-09-21T13:19:00.000Z",
+      "window_start": "2026-09-21T13:18:00.000Z",
+      "window_end": "2026-09-21T13:33:00.000Z",
       "coverage_minutes": 15,
       "expected_minutes": 15
     },
     "1h": {
-      "value": -242.62767,
+      "value": -373.62827,
       "source": "Binance BTCUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-21T13:19:00.000Z",
+      "timestamp": "2026-09-21T13:33:00.000Z",
       "unit": "BTC",
       "status": "ok",
       "quote_cvd": {
-        "value": -20673317.6163384,
+        "value": -31800623.5024319,
         "source": "Binance BTCUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-21T13:19:00.000Z",
+        "timestamp": "2026-09-21T13:33:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-21T12:19:00.000Z",
-      "window_end": "2026-09-21T13:19:00.000Z",
+      "window_start": "2026-09-21T12:33:00.000Z",
+      "window_end": "2026-09-21T13:33:00.000Z",
       "coverage_minutes": 60,
       "expected_minutes": 60
     }
   },
   "deribit": {
     "mark_price": {
-      "value": 85225.53,
+      "value": 85052.35,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL",
-      "timestamp": "2026-09-21T13:19:46.648Z",
+      "timestamp": "2026-09-21T13:33:46.057Z",
       "unit": "USD",
       "status": "ok"
     },
     "index_price": {
-      "value": 85168.54,
+      "value": 85004.38,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL",
-      "timestamp": "2026-09-21T13:19:46.648Z",
+      "timestamp": "2026-09-21T13:33:46.057Z",
       "unit": "USD",
       "status": "ok"
     },
     "oi": {
-      "value": 828417740.0,
+      "value": 828836660.0,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL",
-      "timestamp": "2026-09-21T13:19:46.648Z",
+      "timestamp": "2026-09-21T13:33:46.057Z",
       "unit": "USD",
       "status": "ok"
     },
     "funding": {
-      "value": 0.0002673,
+      "value": 0.00027572,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL",
-      "timestamp": "2026-09-21T13:19:46.648Z",
+      "timestamp": "2026-09-21T13:33:46.057Z",
       "unit": "fraction",
       "status": "ok",
       "kind": "Deribit funding_8h; not interchangeable with Binance settlement rate"
     },
     "basis": {
       "absolute": {
-        "value": 56.99000000000524,
+        "value": 47.970000000001164,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL",
-        "timestamp": "2026-09-21T13:19:46.648Z",
+        "timestamp": "2026-09-21T13:33:46.057Z",
         "unit": "quote currency",
         "status": "ok"
       },
       "bps": {
-        "value": 6.6914379417570835,
+        "value": 5.643238618997515,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL",
-        "timestamp": "2026-09-21T13:19:46.648Z",
+        "timestamp": "2026-09-21T13:33:46.057Z",
         "unit": "bp",
         "status": "ok"
       },
@@ -222,36 +222,6 @@
     }
   },
   "candles_5m": [
-    {
-      "start": "2026-09-21T12:15:00.000Z",
-      "end": "2026-09-21T12:20:00.000Z",
-      "open": 85000.49,
-      "high": 85261.57,
-      "low": 84980.69,
-      "close": 85250.53,
-      "quote_volume": 14121605.948060699,
-      "quote_cvd": 2063653.1592777006
-    },
-    {
-      "start": "2026-09-21T12:20:00.000Z",
-      "end": "2026-09-21T12:25:00.000Z",
-      "open": 85250.53,
-      "high": 85473.68,
-      "low": 85038.65,
-      "close": 85233.1,
-      "quote_volume": 22642610.8289584,
-      "quote_cvd": 100358.33941259934
-    },
-    {
-      "start": "2026-09-21T12:25:00.000Z",
-      "end": "2026-09-21T12:30:00.000Z",
-      "open": 85233.02,
-      "high": 85233.03,
-      "low": 85025.29,
-      "close": 85084.49,
-      "quote_volume": 12012102.9071617,
-      "quote_cvd": -3076634.2290066998
-    },
     {
       "start": "2026-09-21T12:30:00.000Z",
       "end": "2026-09-21T12:35:00.000Z",
@@ -341,19 +311,39 @@
       "close": 85169.14,
       "quote_volume": 10698313.7534359,
       "quote_cvd": -4619362.074535901
+    },
+    {
+      "start": "2026-09-21T13:15:00.000Z",
+      "end": "2026-09-21T13:20:00.000Z",
+      "open": 85169.15,
+      "high": 85200.0,
+      "low": 85100.18,
+      "close": 85170.68,
+      "quote_volume": 9181638.9826554,
+      "quote_cvd": -1409363.4908808
+    },
+    {
+      "start": "2026-09-21T13:20:00.000Z",
+      "end": "2026-09-21T13:25:00.000Z",
+      "open": 85170.68,
+      "high": 85219.44,
+      "low": 85069.6,
+      "close": 85073.41,
+      "quote_volume": 7786717.7247315,
+      "quote_cvd": 821922.7619522995
+    },
+    {
+      "start": "2026-09-21T13:25:00.000Z",
+      "end": "2026-09-21T13:30:00.000Z",
+      "open": 85073.41,
+      "high": 85148.3,
+      "low": 84926.0,
+      "close": 84946.89,
+      "quote_volume": 28784514.544595,
+      "quote_cvd": -14706528.253106399
     }
   ],
   "candles_15m": [
-    {
-      "start": "2026-09-21T12:15:00.000Z",
-      "end": "2026-09-21T12:30:00.000Z",
-      "open": 85000.49,
-      "high": 85473.68,
-      "low": 84980.69,
-      "close": 85084.49,
-      "quote_volume": 48776319.684180796,
-      "quote_cvd": -912622.7303163998
-    },
     {
       "start": "2026-09-21T12:30:00.000Z",
       "end": "2026-09-21T12:45:00.000Z",
@@ -383,6 +373,16 @@
       "close": 85169.14,
       "quote_volume": 36991485.268772304,
       "quote_cvd": -8751981.481639901
+    },
+    {
+      "start": "2026-09-21T13:15:00.000Z",
+      "end": "2026-09-21T13:30:00.000Z",
+      "open": 85169.15,
+      "high": 85219.44,
+      "low": 84926.0,
+      "close": 84946.89,
+      "quote_volume": 45752871.2519819,
+      "quote_cvd": -15293968.9820349
     }
   ]
 }
