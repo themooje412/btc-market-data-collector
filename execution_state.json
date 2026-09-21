@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": null,
-  "event": "none",
+  "state": "MISSED_DO_NOT_CHASE",
+  "direction": "short",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
     "value": 81532.78,
     "labels": [
@@ -15,16 +15,24 @@
     "confluence_count": 1,
     "id": "session_vwap"
   },
-  "flow_score": 1,
+  "flow_score": -2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 0.0,
-  "bias_alignment": "none",
-  "reason": "No executable trigger",
+  "bias_alignment": "neutral",
+  "reason": "Trigger present but first-target R/R is below 1.6",
   "context_timestamp": "2026-09-21T03:36:26.609Z",
-  "fast_timestamp": "2026-09-21T03:45:04.451Z",
-  "fast_spot": 81484.01,
-  "execution": null,
-  "signature": "NO_TRADE|none|session_vwap|none|neutral",
+  "fast_timestamp": "2026-09-21T03:57:27.078Z",
+  "fast_spot": 81414.49,
+  "execution": {
+    "entry_reference": 81414.49,
+    "hard_stop": 81655.08,
+    "target1": 81275.0,
+    "target2": 80953.52,
+    "risk_usd": 240.59,
+    "risk_pct": 0.2955,
+    "rr_to_target1": 0.58
+  },
+  "signature": "MISSED_DO_NOT_CHASE|short|session_vwap|breakdown|neutral",
   "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-21T03:45:04.451Z"
+  "state_changed_at": "2026-09-21T03:57:27.078Z"
 }
