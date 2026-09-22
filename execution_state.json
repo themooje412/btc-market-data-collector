@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
-  "state": "HOLD_MANAGE",
+  "state": "INVALIDATED",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "sweep-reclaim",
+  "event": "sweep_reclaim_long",
   "anchor": {
     "value": 85975.0,
     "labels": [
@@ -15,24 +15,16 @@
     "confluence_count": 1,
     "id": "24h_poc"
   },
-  "flow_score": 1,
-  "strategic_bias": "bullish",
-  "strategic_bias_score": 5.0,
-  "bias_alignment": "countertrend_confirmed",
-  "reason": "Triggered short thesis remains tied to original anchor",
-  "context_timestamp": "2026-09-22T07:35:26.764Z",
-  "fast_timestamp": "2026-09-22T08:33:00.242Z",
-  "fast_spot": 85436.01,
-  "execution": {
-    "entry_reference": 85436.01,
-    "hard_stop": 86103.96,
-    "target1": 85203.57,
-    "target2": 84400.0,
-    "risk_usd": 667.95,
-    "risk_pct": 0.7818,
-    "rr_to_target1": 0.348
-  },
-  "signature": "HOLD_MANAGE|short|24h_poc|none|bullish",
+  "flow_score": 3,
+  "strategic_bias": "neutral",
+  "strategic_bias_score": -1.0,
+  "bias_alignment": "neutral",
+  "reason": "Anchor reclaimed with opposing fast flow",
+  "context_timestamp": "2026-09-22T08:36:27.769Z",
+  "fast_timestamp": "2026-09-22T08:47:28.083Z",
+  "fast_spot": 86211.0,
+  "execution": null,
+  "signature": "INVALIDATED|short|24h_poc|sweep-reclaim|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-22T07:48:08.518Z"
+  "state_changed_at": "2026-09-22T08:47:28.083Z"
 }
