@@ -1,40 +1,42 @@
 {
   "schema_version": "1.1.0",
-  "state": "INVALIDATED",
-  "direction": "long",
-  "setup_type": "breakdown",
-  "event": "cross_down",
+  "state": "EARLY_SETUP",
+  "direction": "short",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
-    "value": 86300.0,
+    "value": 86003.92,
     "labels": [
-      "session_vah",
-      "24h_vah"
+      "session_vwap",
+      "session_poc",
+      "24h_vwap"
     ],
     "values": [
-      86250.0,
-      86350.0
+      85949.62,
+      85975.0,
+      86087.13
     ],
-    "confluence_count": 2,
-    "id": "session_vah+24h_vah"
+    "confluence_count": 3,
+    "id": "session_vwap+session_poc+24h_vwap"
   },
   "flow_score": -2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 2.5,
   "bias_alignment": "neutral",
-  "reason": "Anchor lost with opposing fast flow",
+  "reason": "Negative fast flow near structural zone",
   "context_timestamp": "2026-09-22T19:32:49.802Z",
-  "fast_timestamp": "2026-09-22T19:59:53.570Z",
-  "fast_spot": 86208.01,
+  "fast_timestamp": "2026-09-22T20:17:01.764Z",
+  "fast_spot": 86202.79,
   "execution": {
-    "entry_reference": 86208.01,
-    "hard_stop": 86123.87,
-    "target1": 86575.0,
-    "target2": 87400.0,
-    "risk_usd": 84.14,
-    "risk_pct": 0.0976,
-    "rr_to_target1": 4.361
+    "entry_reference": 86202.79,
+    "hard_stop": 86317.15,
+    "target1": 86003.92,
+    "target2": 85625.0,
+    "risk_usd": 114.36,
+    "risk_pct": 0.1327,
+    "rr_to_target1": 1.739
   },
-  "signature": "INVALIDATED|long|session_vah+24h_vah|breakdown|neutral",
-  "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-22T19:59:53.570Z"
+  "signature": "EARLY_SETUP|short|session_vwap+session_poc+24h_vwap|none|neutral",
+  "previous_state": "INVALIDATED",
+  "state_changed_at": "2026-09-22T20:17:01.764Z"
 }
