@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1.0",
   "profile": "controlled_aggressive_day_trend",
-  "context_timestamp": "2026-09-22T00:41:11.242Z",
-  "context_spot": 86473.71,
+  "context_timestamp": "2026-09-22T01:33:46.798Z",
+  "context_spot": 85604.13,
   "strategic_bias": {
     "value": "neutral",
-    "score": 1.0,
+    "score": -1.5,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,31 +17,31 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 79855.26740961063,
+        "value": 79922.74744520122,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 84632.64355820398,
+        "value": 84764.08981649697,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": -15598000.623242201,
+        "value": -28470260.081940502,
         "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": -9677670.033556903,
+        "value": -20258715.754009303,
         "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": 11143838.171263063,
-        "score": 1.25
+        "value": -8832108.432718895,
+        "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": -3424245.430899087,
+        "value": -12751099.659454936,
         "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 0.46888973761317193,
+        "value": 0.23452090160933137,
         "score": 0.0
       }
     },
@@ -50,54 +50,72 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 83950.0,
+      "value": 84150.0,
       "labels": [
         "24h_val"
       ],
       "values": [
-        83950.0
+        84150.0
       ],
       "confluence_count": 1,
       "id": "24h_val"
     },
     {
-      "value": 84632.64,
+      "value": 84764.09,
       "labels": [
         "24h_vwap"
       ],
       "values": [
-        84632.64
+        84764.09
       ],
       "confluence_count": 1,
       "id": "24h_vwap"
     },
     {
-      "value": 85975.0,
+      "value": 85912.5,
       "labels": [
+        "session_val",
         "24h_poc"
       ],
       "values": [
+        85850.0,
         85975.0
       ],
-      "confluence_count": 1,
-      "id": "24h_poc"
+      "confluence_count": 2,
+      "id": "session_val+24h_poc"
     },
     {
-      "value": 86414.44,
+      "value": 86084.18,
       "labels": [
-        "session_val",
-        "session_poc",
-        "session_vwap",
+        "session_vwap"
+      ],
+      "values": [
+        86084.18
+      ],
+      "confluence_count": 1,
+      "id": "session_vwap"
+    },
+    {
+      "value": 86375.0,
+      "labels": [
+        "session_poc"
+      ],
+      "values": [
+        86375.0
+      ],
+      "confluence_count": 1,
+      "id": "session_poc"
+    },
+    {
+      "value": 86650.0,
+      "labels": [
         "session_vah"
       ],
       "values": [
-        86350.0,
-        86375.0,
-        86432.75,
-        86500.0
+        86650.0
       ],
-      "confluence_count": 4,
-      "id": "session_val+session_poc+session_vwap+session_vah"
+      "confluence_count": 1,
+      "id": "session_vah"
     },
     {
       "value": 87050.0,
@@ -123,32 +141,28 @@
     }
   ],
   "nearest_below": {
-    "value": 86414.44,
+    "value": 84764.09,
     "labels": [
-      "session_val",
-      "session_poc",
-      "session_vwap",
-      "session_vah"
+      "24h_vwap"
     ],
     "values": [
-      86350.0,
-      86375.0,
-      86432.75,
-      86500.0
-    ],
-    "confluence_count": 4,
-    "id": "session_val+session_poc+session_vwap+session_vah"
-  },
-  "nearest_above": {
-    "value": 87050.0,
-    "labels": [
-      "24h_vah"
-    ],
-    "values": [
-      87050.0
+      84764.09
     ],
     "confluence_count": 1,
-    "id": "24h_vah"
+    "id": "24h_vwap"
+  },
+  "nearest_above": {
+    "value": 85912.5,
+    "labels": [
+      "session_val",
+      "24h_poc"
+    ],
+    "values": [
+      85850.0,
+      85975.0
+    ],
+    "confluence_count": 2,
+    "id": "session_val+24h_poc"
   },
   "rules": {
     "early_probe_r": [
