@@ -1,34 +1,40 @@
 {
   "schema_version": "1.1.0",
-  "state": "INVALIDATED",
-  "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "state": "EARLY_SETUP",
+  "direction": "long",
+  "setup_type": "breakout",
+  "event": "cross_up",
   "anchor": {
-    "value": 85950.96,
+    "value": 86175.0,
     "labels": [
-      "24h_vwap",
-      "24h_poc",
-      "session_vah"
+      "session_vah",
+      "24h_vah"
     ],
     "values": [
-      85877.87,
-      85975.0,
-      86000.0
+      86150.0,
+      86200.0
     ],
-    "confluence_count": 3,
-    "id": "24h_vwap+24h_poc+session_vah"
+    "confluence_count": 2,
+    "id": "session_vah+24h_vah"
   },
-  "flow_score": 3,
+  "flow_score": -3,
   "strategic_bias": "neutral",
   "strategic_bias_score": -1.0,
   "bias_alignment": "neutral",
-  "reason": "Anchor reclaimed with opposing fast flow",
+  "reason": "Breakout lacks fast-flow confirmation",
   "context_timestamp": "2026-09-22T13:36:40.551Z",
-  "fast_timestamp": "2026-09-22T13:59:29.716Z",
-  "fast_spot": 86334.59,
-  "execution": null,
-  "signature": "INVALIDATED|short|24h_vwap+24h_poc+session_vah|none|neutral",
-  "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-22T13:59:29.716Z"
+  "fast_timestamp": "2026-09-22T14:17:57.378Z",
+  "fast_spot": 86220.63,
+  "execution": {
+    "entry_reference": 86220.63,
+    "hard_stop": 86038.19,
+    "target1": 87400.0,
+    "target2": null,
+    "risk_usd": 182.44,
+    "risk_pct": 0.2116,
+    "rr_to_target1": 6.464
+  },
+  "signature": "EARLY_SETUP|long|session_vah+24h_vah|breakout|neutral",
+  "previous_state": "INVALIDATED",
+  "state_changed_at": "2026-09-22T14:17:57.378Z"
 }
