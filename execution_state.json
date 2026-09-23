@@ -1,40 +1,30 @@
 {
   "schema_version": "1.1.0",
-  "state": "MISSED_DO_NOT_CHASE",
-  "direction": "long",
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "state": "NO_TRADE",
+  "direction": null,
+  "setup_type": null,
+  "event": "none",
   "anchor": {
-    "value": 86525.0,
+    "value": 86225.0,
     "labels": [
-      "session_vah",
-      "24h_vah"
+      "24h_poc"
     ],
     "values": [
-      86500.0,
-      86550.0
+      86225.0
     ],
-    "confluence_count": 2,
-    "id": "session_vah+24h_vah"
+    "confluence_count": 1,
+    "id": "24h_poc"
   },
-  "flow_score": 4,
+  "flow_score": -2,
   "strategic_bias": "bullish",
-  "strategic_bias_score": 3.5,
-  "bias_alignment": "aligned",
-  "reason": "Trigger present but first-target R/R is below 1.8",
-  "context_timestamp": "2026-09-23T00:40:29.845Z",
-  "fast_timestamp": "2026-09-23T01:33:53.625Z",
-  "fast_spot": 86630.0,
-  "execution": {
-    "entry_reference": 86630.0,
-    "hard_stop": 86395.21,
-    "target1": 86900.0,
-    "target2": null,
-    "risk_usd": 234.79,
-    "risk_pct": 0.271,
-    "rr_to_target1": 1.15
-  },
-  "signature": "MISSED_DO_NOT_CHASE|long|session_vah+24h_vah|breakout-retest/trend-pullback|bullish",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-23T01:33:53.625Z"
+  "strategic_bias_score": 5.0,
+  "bias_alignment": "none",
+  "reason": "No executable trigger",
+  "context_timestamp": "2026-09-23T01:34:40.427Z",
+  "fast_timestamp": "2026-09-23T01:45:12.714Z",
+  "fast_spot": 86280.61,
+  "execution": null,
+  "signature": "NO_TRADE|none|24h_poc|none|bullish",
+  "previous_state": "MISSED_DO_NOT_CHASE",
+  "state_changed_at": "2026-09-23T01:45:12.714Z"
 }
