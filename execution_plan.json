@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1.0",
   "profile": "controlled_aggressive_day_trend",
-  "context_timestamp": "2026-09-23T03:35:46.644Z",
-  "context_spot": 86664.22,
+  "context_timestamp": "2026-09-23T04:35:53.592Z",
+  "context_spot": 87108.01,
   "strategic_bias": {
     "value": "bullish",
     "score": 9.5,
@@ -17,31 +17,31 @@
         "score": 1.5
       },
       "7d_vwap": {
-        "value": 81611.21981376133,
+        "value": 81656.88230027287,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 86066.29978497524,
+        "value": 86111.2221372575,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": 42076358.7841024,
+        "value": 57027745.551648304,
         "score": 1.25
       },
       "binance_1h_cvd": {
-        "value": 11379558.7838504,
+        "value": 17635780.6269768,
         "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": 11903709.869259546,
+        "value": 12686925.917358391,
         "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": 3142851.953591782,
+        "value": 3308244.500362813,
         "score": 0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 0.9155181025410036,
+        "value": 1.2121699296523964,
         "score": 0.5
       }
     },
@@ -50,99 +50,81 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 85850.0,
+      "value": 85800.0,
       "labels": [
         "24h_val"
       ],
       "values": [
-        85850.0
+        85800.0
       ],
       "confluence_count": 1,
       "id": "24h_val"
     },
     {
-      "value": 86066.3,
+      "value": 86168.11,
       "labels": [
-        "24h_vwap"
-      ],
-      "values": [
-        86066.3
-      ],
-      "confluence_count": 1,
-      "id": "24h_vwap"
-    },
-    {
-      "value": 86225.0,
-      "labels": [
+        "24h_vwap",
         "24h_poc"
       ],
       "values": [
+        86111.22,
         86225.0
       ],
-      "confluence_count": 1,
-      "id": "24h_poc"
+      "confluence_count": 2,
+      "id": "24h_vwap+24h_poc"
     },
     {
-      "value": 86460.78,
+      "value": 86412.5,
       "labels": [
         "session_val",
-        "session_poc",
-        "session_vwap"
+        "session_poc"
       ],
       "values": [
-        86400.0,
-        86475.0,
-        86507.35
+        86350.0,
+        86475.0
       ],
-      "confluence_count": 3,
-      "id": "session_val+session_poc+session_vwap"
+      "confluence_count": 2,
+      "id": "session_val+session_poc"
     },
     {
-      "value": 86666.67,
+      "value": 86635.17,
       "labels": [
         "24h_vah",
-        "7d_vah",
-        "session_vah"
+        "session_vwap",
+        "7d_vah"
       ],
       "values": [
         86600.0,
-        86650.0,
-        86750.0
+        86605.52,
+        86700.0
       ],
       "confluence_count": 3,
-      "id": "24h_vah+7d_vah+session_vah"
+      "id": "24h_vah+session_vwap+7d_vah"
+    },
+    {
+      "value": 86850.0,
+      "labels": [
+        "session_vah"
+      ],
+      "values": [
+        86850.0
+      ],
+      "confluence_count": 1,
+      "id": "session_vah"
     }
   ],
   "nearest_below": {
-    "value": 86460.78,
+    "value": 86850.0,
     "labels": [
-      "session_val",
-      "session_poc",
-      "session_vwap"
-    ],
-    "values": [
-      86400.0,
-      86475.0,
-      86507.35
-    ],
-    "confluence_count": 3,
-    "id": "session_val+session_poc+session_vwap"
-  },
-  "nearest_above": {
-    "value": 86666.67,
-    "labels": [
-      "24h_vah",
-      "7d_vah",
       "session_vah"
     ],
     "values": [
-      86600.0,
-      86650.0,
-      86750.0
+      86850.0
     ],
-    "confluence_count": 3,
-    "id": "24h_vah+7d_vah+session_vah"
+    "confluence_count": 1,
+    "id": "session_vah"
   },
+  "nearest_above": null,
   "rules": {
     "early_probe_r": [
       0.4,
