@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1.0",
   "profile": "controlled_aggressive_day_trend",
-  "context_timestamp": "2026-09-23T07:36:03.681Z",
-  "context_spot": 86376.01,
+  "context_timestamp": "2026-09-23T08:36:30.209Z",
+  "context_spot": 86148.9,
   "strategic_bias": {
-    "value": "bullish",
-    "score": 6.0,
+    "value": "neutral",
+    "score": -1.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,32 +17,32 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 81801.81374320292,
+        "value": 81875.38373286773,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 86251.6588589049,
-        "score": 1.0
+        "value": 86290.17894457246,
+        "score": -1.0
       },
       "binance_4h_cvd": {
-        "value": 9420045.778653799,
-        "score": 1.25
+        "value": -26529231.228008404,
+        "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": 9016313.623265099,
-        "score": 0.5
+        "value": -17348307.827407703,
+        "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": 5539011.371217388,
+        "value": 2422582.0536059015,
         "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": 1514951.7013624646,
-        "score": 0.5
+        "value": -269515.2311082266,
+        "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 1.7049207519871643,
-        "score": 0.5
+        "value": 0.08316505612539489,
+        "score": 0.0
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -50,91 +50,85 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 85900.0,
+      "value": 85950.0,
       "labels": [
         "24h_val"
       ],
       "values": [
-        85900.0
+        85950.0
       ],
       "confluence_count": 1,
       "id": "24h_val"
     },
     {
-      "value": 86275.83,
+      "value": 86271.73,
       "labels": [
+        "24h_poc",
         "24h_vwap",
         "session_val"
       ],
       "values": [
-        86251.66,
+        86225.0,
+        86290.18,
         86300.0
       ],
-      "confluence_count": 2,
-      "id": "24h_vwap+session_val"
+      "confluence_count": 3,
+      "id": "24h_poc+24h_vwap+session_val"
     },
     {
-      "value": 86588.81,
+      "value": 86577.45,
       "labels": [
         "session_poc",
-        "24h_poc",
-        "24h_vah",
         "session_vwap",
+        "24h_vah",
         "7d_vah"
       ],
       "values": [
         86525.0,
-        86525.0,
+        86584.79,
         86600.0,
-        86644.06,
-        86650.0
+        86600.0
       ],
-      "confluence_count": 5,
-      "id": "session_poc+24h_poc+24h_vah+session_vwap+7d_vah"
+      "confluence_count": 4,
+      "id": "session_poc+session_vwap+24h_vah+7d_vah"
     },
     {
-      "value": 86850.0,
+      "value": 86950.0,
       "labels": [
         "session_vah"
       ],
       "values": [
-        86850.0
+        86950.0
       ],
       "confluence_count": 1,
       "id": "session_vah"
     }
   ],
   "nearest_below": {
-    "value": 86275.83,
+    "value": 85950.0,
     "labels": [
+      "24h_val"
+    ],
+    "values": [
+      85950.0
+    ],
+    "confluence_count": 1,
+    "id": "24h_val"
+  },
+  "nearest_above": {
+    "value": 86271.73,
+    "labels": [
+      "24h_poc",
       "24h_vwap",
       "session_val"
     ],
     "values": [
-      86251.66,
+      86225.0,
+      86290.18,
       86300.0
     ],
-    "confluence_count": 2,
-    "id": "24h_vwap+session_val"
-  },
-  "nearest_above": {
-    "value": 86588.81,
-    "labels": [
-      "session_poc",
-      "24h_poc",
-      "24h_vah",
-      "session_vwap",
-      "7d_vah"
-    ],
-    "values": [
-      86525.0,
-      86525.0,
-      86600.0,
-      86644.06,
-      86650.0
-    ],
-    "confluence_count": 5,
-    "id": "session_poc+24h_poc+24h_vah+session_vwap+7d_vah"
+    "confluence_count": 3,
+    "id": "24h_poc+24h_vwap+session_val"
   },
   "rules": {
     "early_probe_r": [
