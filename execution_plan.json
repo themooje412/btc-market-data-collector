@@ -1,47 +1,47 @@
 {
   "schema_version": "1.1.0",
   "profile": "controlled_aggressive_day_trend",
-  "context_timestamp": "2026-09-23T05:34:20.850Z",
-  "context_spot": 86812.39,
+  "context_timestamp": "2026-09-23T06:41:37.316Z",
+  "context_spot": 86444.02,
   "strategic_bias": {
     "value": "bullish",
-    "score": 8.5,
+    "score": 5.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
-        "value": "above_value",
-        "score": 2.0
+        "value": "inside_value",
+        "score": 0.0
       },
       "24h_location": {
-        "value": "above_value",
-        "score": 1.5
+        "value": "inside_value",
+        "score": 0.0
       },
       "7d_vwap": {
-        "value": 81704.45655149063,
+        "value": 81753.5976289316,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 86166.39357454388,
+        "value": 86216.95053333619,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": 42233390.4122793,
+        "value": 8535566.877436899,
         "score": 1.25
       },
       "binance_1h_cvd": {
-        "value": -5342006.9406012,
+        "value": -13356810.477737602,
         "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": 8544742.22603867,
+        "value": 6254804.100029211,
         "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": 733796.9431407581,
+        "value": 334714.8415138904,
         "score": 0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 1.7774800951815148,
+        "value": 1.7546687405956307,
         "score": 0.5
       }
     },
@@ -50,56 +50,56 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 85800.0,
+      "value": 85850.0,
       "labels": [
         "24h_val"
       ],
       "values": [
-        85800.0
+        85850.0
       ],
       "confluence_count": 1,
       "id": "24h_val"
     },
     {
-      "value": 86230.46,
+      "value": 86216.95,
       "labels": [
-        "24h_vwap",
-        "24h_poc",
-        "session_val"
+        "24h_vwap"
       ],
       "values": [
-        86166.39,
-        86225.0,
-        86300.0
+        86216.95
+      ],
+      "confluence_count": 1,
+      "id": "24h_vwap"
+    },
+    {
+      "value": 86466.67,
+      "labels": [
+        "session_val",
+        "24h_poc",
+        "session_poc"
+      ],
+      "values": [
+        86400.0,
+        86475.0,
+        86525.0
       ],
       "confluence_count": 3,
-      "id": "24h_vwap+24h_poc+session_val"
+      "id": "session_val+24h_poc+session_poc"
     },
     {
-      "value": 86537.5,
+      "value": 86659.37,
       "labels": [
-        "session_poc",
-        "24h_vah"
-      ],
-      "values": [
-        86475.0,
-        86600.0
-      ],
-      "confluence_count": 2,
-      "id": "session_poc+24h_vah"
-    },
-    {
-      "value": 86697.58,
-      "labels": [
+        "24h_vah",
         "session_vwap",
         "7d_vah"
       ],
       "values": [
-        86695.16,
+        86600.0,
+        86678.11,
         86700.0
       ],
-      "confluence_count": 2,
-      "id": "session_vwap+7d_vah"
+      "confluence_count": 3,
+      "id": "24h_vah+session_vwap+7d_vah"
     },
     {
       "value": 86950.0,
@@ -114,28 +114,30 @@
     }
   ],
   "nearest_below": {
-    "value": 86697.58,
+    "value": 86216.95,
     "labels": [
-      "session_vwap",
-      "7d_vah"
+      "24h_vwap"
     ],
     "values": [
-      86695.16,
-      86700.0
-    ],
-    "confluence_count": 2,
-    "id": "session_vwap+7d_vah"
-  },
-  "nearest_above": {
-    "value": 86950.0,
-    "labels": [
-      "session_vah"
-    ],
-    "values": [
-      86950.0
+      86216.95
     ],
     "confluence_count": 1,
-    "id": "session_vah"
+    "id": "24h_vwap"
+  },
+  "nearest_above": {
+    "value": 86466.67,
+    "labels": [
+      "session_val",
+      "24h_poc",
+      "session_poc"
+    ],
+    "values": [
+      86400.0,
+      86475.0,
+      86525.0
+    ],
+    "confluence_count": 3,
+    "id": "session_val+24h_poc+session_poc"
   },
   "rules": {
     "early_probe_r": [
