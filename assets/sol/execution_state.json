@@ -1,25 +1,25 @@
 {
   "schema_version": "1.3.0",
   "asset": "SOL",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": null,
-  "event": "none",
+  "state": "LONG_TRIGGERED",
+  "direction": "long",
+  "setup_type": "breakout",
+  "event": "cross_up",
   "anchor": {
-    "value": 115.6,
+    "value": 116.1,
     "labels": [
-      "24h_vah"
+      "session_vah"
     ],
     "values": [
-      115.6
+      116.1
     ],
     "confluence_count": 1,
-    "id": "24h_vah"
+    "id": "session_vah"
   },
-  "flow_score": 0,
+  "flow_score": 3,
   "strategic_bias": "bullish",
   "strategic_bias_score": 5.5,
-  "bias_alignment": "none",
+  "bias_alignment": "aligned",
   "core_swing": {
     "status": "EARLY_ENTRY_CANDIDATE",
     "direction": "long",
@@ -32,12 +32,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No executable trigger",
+  "reason": "Plus30 short-gamma breakout probe",
   "context_timestamp": "2026-09-24T14:51:11.501Z",
-  "fast_timestamp": "2026-09-24T15:31:42.789Z",
-  "fast_spot": 115.79,
-  "execution": null,
-  "signature": "SOL|NO_TRADE|none|24h_vah|none|bullish",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T15:31:42.789Z"
+  "fast_timestamp": "2026-09-24T15:47:01.747Z",
+  "fast_spot": 116.05,
+  "execution": {
+    "entry_reference": 116.05,
+    "hard_stop": 114.13,
+    "hard_stop_type": "core_swing_structure_volatility",
+    "stop_basis": {
+      "asset_floor_pct": 1.0,
+      "adaptive_stop_pct": 1.6545,
+      "recent_1h_range_pct": 2.2059,
+      "note": "Position size must adapt to this stop; total trade risk cap does not increase."
+    },
+    "checkpoint1": 118.05,
+    "checkpoint2": null,
+    "target1": 119.89,
+    "target1_type": "open_path_2r_projection",
+    "target2": 121.81,
+    "target2_type": "open_path_3r_projection",
+    "risk_usd": 1.92,
+    "risk_pct": 1.6545,
+    "rr_to_target1": 2.0,
+    "horizon": "2-5d_or_longer_if_structure_holds",
+    "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
+  },
+  "signature": "SOL|LONG_TRIGGERED|long|session_vah|breakout|bullish",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-24T15:47:01.747Z"
 }
