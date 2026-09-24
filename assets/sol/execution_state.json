@@ -1,8 +1,8 @@
 {
   "schema_version": "1.2.0",
   "asset": "SOL",
-  "state": "NO_TRADE",
-  "direction": null,
+  "state": "EARLY_SETUP",
+  "direction": "short",
   "setup_type": null,
   "event": "none",
   "anchor": {
@@ -18,10 +18,10 @@
     "confluence_count": 2,
     "id": "24h_poc+session_val"
   },
-  "flow_score": 0,
+  "flow_score": -2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 2.5,
-  "bias_alignment": "none",
+  "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
@@ -31,12 +31,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No executable trigger",
+  "reason": "Negative fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-24T07:48:45.641Z",
-  "fast_timestamp": "2026-09-24T08:24:09.377Z",
-  "fast_spot": 114.77,
-  "execution": null,
-  "signature": "SOL|NO_TRADE|none|24h_poc+session_val|none|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T08:24:09.377Z"
+  "fast_timestamp": "2026-09-24T08:40:09.293Z",
+  "fast_spot": 114.32,
+  "execution": {
+    "entry_reference": 114.32,
+    "hard_stop": 114.79,
+    "target1": 113.0,
+    "target2": 112.47,
+    "risk_usd": 0.47,
+    "risk_pct": 0.4128,
+    "rr_to_target1": 2.797
+  },
+  "signature": "SOL|EARLY_SETUP|short|24h_poc+session_val|none|neutral",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-24T08:40:09.293Z"
 }

@@ -1,22 +1,22 @@
 {
   "schema_version": "1.2.0",
   "asset": "ZEC",
-  "state": "EARLY_SETUP",
+  "state": "MISSED_DO_NOT_CHASE",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "sweep-reclaim",
+  "event": "sweep_reclaim_long",
   "anchor": {
-    "value": 1520.03,
+    "value": 1513.71,
     "labels": [
-      "session_poc"
+      "session_vwap"
     ],
     "values": [
-      1520.03
+      1513.71
     ],
     "confluence_count": 1,
-    "id": "session_poc"
+    "id": "session_vwap"
   },
-  "flow_score": 2,
+  "flow_score": 1,
   "strategic_bias": "neutral",
   "strategic_bias_score": 1.5,
   "bias_alignment": "neutral",
@@ -29,20 +29,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Positive fast flow near structural zone under plus30 profile",
+  "reason": "Trigger present but first-target R/R is below 1.60",
   "context_timestamp": "2026-09-24T07:49:01.970Z",
-  "fast_timestamp": "2026-09-24T08:24:10.645Z",
-  "fast_spot": 1521.37,
+  "fast_timestamp": "2026-09-24T08:40:10.583Z",
+  "fast_spot": 1516.87,
   "execution": {
-    "entry_reference": 1521.37,
-    "hard_stop": 1514.45,
-    "target1": 1527.15,
-    "target2": 1530.0,
-    "risk_usd": 6.92,
-    "risk_pct": 0.4547,
-    "rr_to_target1": 0.836
+    "entry_reference": 1516.87,
+    "hard_stop": 1508.21,
+    "target1": 1520.03,
+    "target2": 1527.15,
+    "risk_usd": 8.66,
+    "risk_pct": 0.5712,
+    "rr_to_target1": 0.365
   },
-  "signature": "ZEC|EARLY_SETUP|long|session_poc|none|neutral",
+  "signature": "ZEC|MISSED_DO_NOT_CHASE|long|session_vwap|sweep-reclaim|neutral",
   "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T08:24:10.645Z"
+  "state_changed_at": "2026-09-24T08:40:10.583Z"
 }
