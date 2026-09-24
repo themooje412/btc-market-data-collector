@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "asset": "BTC",
-  "state": "HOLD_MANAGE",
+  "state": "INVALIDATED",
   "direction": "short",
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 84326.86,
     "labels": [
@@ -24,7 +24,7 @@
     "confluence_count": 5,
     "id": "session_val+session_poc+24h_poc+session_vwap+session_vah"
   },
-  "flow_score": 3,
+  "flow_score": 4,
   "strategic_bias": "neutral",
   "strategic_bias_score": -2.5,
   "bias_alignment": "neutral",
@@ -37,12 +37,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Triggered short thesis remains tied to original anchor",
+  "reason": "Anchor reclaimed with opposing fast flow",
   "context_timestamp": "2026-09-24T07:43:37.902Z",
-  "fast_timestamp": "2026-09-24T07:52:51.472Z",
-  "fast_spot": 84522.68,
-  "execution": null,
-  "signature": "BTC|HOLD_MANAGE|short|session_val+session_poc+24h_poc+session_vwap+session_vah|breakout-retest/trend-pullback|neutral",
+  "fast_timestamp": "2026-09-24T08:04:29.498Z",
+  "fast_spot": 84564.01,
+  "execution": {
+    "entry_reference": 84564.01,
+    "hard_stop": 84654.32,
+    "target1": 84387.5,
+    "target2": 84172.21,
+    "risk_usd": 90.31,
+    "risk_pct": 0.1068,
+    "rr_to_target1": 1.955
+  },
+  "signature": "BTC|INVALIDATED|short|session_val+session_poc+24h_poc+session_vwap+session_vah|none|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-24T07:52:51.472Z"
+  "state_changed_at": "2026-09-24T08:04:29.498Z"
 }
