@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "ARMED_LONG",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 84325.0,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "24h_poc"
   },
-  "flow_score": 1,
+  "flow_score": 0,
   "strategic_bias": "bullish",
   "strategic_bias_score": 4.5,
   "bias_alignment": "aligned",
@@ -31,31 +31,31 @@
   },
   "reason": "Awaiting long trigger at original anchor",
   "context_timestamp": "2026-09-24T16:38:25.921Z",
-  "fast_timestamp": "2026-09-24T16:58:28.115Z",
-  "fast_spot": 84550.0,
+  "fast_timestamp": "2026-09-24T17:15:04.262Z",
+  "fast_spot": 84478.0,
   "execution": {
-    "entry_reference": 84550.0,
-    "hard_stop": 83890.0075,
+    "entry_reference": 84478.0,
+    "hard_stop": 83928.893,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
-      "adaptive_stop_pct": 0.7806,
-      "recent_1h_range_pct": 1.0408,
+      "adaptive_stop_pct": 0.65,
+      "recent_1h_range_pct": 0.7836,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 84625.0,
     "checkpoint2": 85900.0,
     "target1": 85900.0,
     "target1_type": "structural",
-    "target2": 86529.9775,
+    "target2": 86125.321,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 659.9925,
-    "risk_pct": 0.7806,
-    "rr_to_target1": 2.045,
+    "risk_usd": 549.107,
+    "risk_pct": 0.65,
+    "rr_to_target1": 2.59,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|ARMED_LONG|long|24h_poc|none|bullish",
+  "signature": "BTC|ARMED_LONG|long|24h_poc|breakout-retest/trend-pullback|bullish",
   "previous_state": "ARMED_LONG",
-  "state_changed_at": "2026-09-24T16:47:11.306Z"
+  "state_changed_at": "2026-09-24T17:15:04.262Z"
 }
