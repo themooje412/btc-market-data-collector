@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2.0",
   "asset": "ZEC",
-  "state": "SHORT_TRIGGERED",
+  "state": "HOLD_MANAGE",
   "direction": "short",
   "setup_type": "breakdown-retest/trend-pullback",
   "event": "retest_hold_short",
@@ -17,32 +17,32 @@
     "id": "session_val"
   },
   "flow_score": 0,
-  "strategic_bias": "neutral",
-  "strategic_bias_score": -1.5,
-  "bias_alignment": "neutral",
+  "strategic_bias": "bearish",
+  "strategic_bias_score": -3.0,
+  "bias_alignment": "aligned",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -1.5,
+    "score": -3.0,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Sweep/retest short at structural zone",
-  "context_timestamp": "2026-09-24T10:48:46.166Z",
-  "fast_timestamp": "2026-09-24T11:46:15.715Z",
-  "fast_spot": 1481.12,
+  "reason": "Triggered short thesis remains tied to original anchor",
+  "context_timestamp": "2026-09-24T11:48:17.290Z",
+  "fast_timestamp": "2026-09-24T11:56:38.798Z",
+  "fast_spot": 1483.44,
   "execution": {
-    "entry_reference": 1481.12,
+    "entry_reference": 1483.44,
     "hard_stop": 1490.93,
-    "target1": 1438.9,
+    "target1": 1480.5,
     "target2": null,
-    "risk_usd": 9.81,
-    "risk_pct": 0.6625,
-    "rr_to_target1": 4.302
+    "risk_usd": 7.49,
+    "risk_pct": 0.5051,
+    "rr_to_target1": 0.392
   },
-  "signature": "ZEC|SHORT_TRIGGERED|short|session_val|breakdown-retest/trend-pullback|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T11:46:15.715Z"
+  "signature": "ZEC|HOLD_MANAGE|short|session_val|breakdown-retest/trend-pullback|bearish",
+  "previous_state": "SHORT_TRIGGERED",
+  "state_changed_at": "2026-09-24T11:56:38.798Z"
 }
