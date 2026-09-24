@@ -1,10 +1,10 @@
 {
   "schema_version": "1.3.0",
   "asset": "BTC",
-  "state": "ADD_ALLOWED",
+  "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakdown-retest/trend-pullback",
-  "event": "retest_hold_short",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_poc+24h_poc"
   },
-  "flow_score": -2,
+  "flow_score": 2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 2.5,
   "bias_alignment": "neutral",
@@ -31,33 +31,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Retest held and fast flow strengthened",
-  "context_timestamp": "2026-09-24T19:34:45.236Z",
-  "fast_timestamp": "2026-09-24T20:34:05.379Z",
-  "fast_spot": 84216.99,
+  "reason": "Triggered short thesis remains tied to original anchor",
+  "context_timestamp": "2026-09-24T20:37:49.215Z",
+  "fast_timestamp": "2026-09-24T20:48:13.373Z",
+  "fast_spot": 84376.91,
   "execution": {
-    "entry_reference": 84216.99,
-    "hard_stop": 84852.0875,
+    "entry_reference": 84376.91,
+    "hard_stop": 84925.359915,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.5627,
+      "recent_1h_range_pct": 0.4822,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 84031.19,
-    "checkpoint2": 83657.12,
-    "target1": 82946.795,
-    "target1_type": "open_path_2r_projection",
-    "target2": 82311.6975,
+    "checkpoint1": 84038.83,
+    "checkpoint2": 83668.42,
+    "target1": 83330.12,
+    "target1_type": "structural",
+    "target2": 82731.560255,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 635.0975,
-    "risk_pct": 0.7541,
-    "rr_to_target1": 2.0,
+    "risk_usd": 548.449915,
+    "risk_pct": 0.65,
+    "rr_to_target1": 1.909,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|ADD_ALLOWED|short|session_poc+24h_poc|breakdown-retest/trend-pullback|neutral",
-  "previous_state": "SHORT_TRIGGERED",
-  "state_changed_at": "2026-09-24T20:34:05.379Z"
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|neutral",
+  "previous_state": "ADD_ALLOWED",
+  "state_changed_at": "2026-09-24T20:48:13.373Z"
 }
