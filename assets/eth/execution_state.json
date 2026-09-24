@@ -1,48 +1,48 @@
 {
   "schema_version": "1.2.0",
   "asset": "ETH",
-  "state": "EARLY_SETUP",
+  "state": "MISSED_DO_NOT_CHASE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "failed-break/sweep-reject",
+  "event": "sweep_reject_short",
   "anchor": {
-    "value": 2674.0,
+    "value": 2667.0,
     "labels": [
-      "session_val"
+      "24h_poc"
     ],
     "values": [
-      2674.0
+      2667.0
     ],
     "confluence_count": 1,
-    "id": "session_val"
+    "id": "24h_poc"
   },
   "flow_score": -3,
   "strategic_bias": "neutral",
-  "strategic_bias_score": -1.0,
+  "strategic_bias_score": -0.5,
   "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -1.0,
+    "score": -0.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Negative fast flow near structural zone under plus30 profile",
-  "context_timestamp": "2026-09-24T07:48:30.506Z",
-  "fast_timestamp": "2026-09-24T08:40:08.043Z",
-  "fast_spot": 2672.74,
+  "reason": "Trigger present but first-target R/R is below 1.60",
+  "context_timestamp": "2026-09-24T08:49:20.621Z",
+  "fast_timestamp": "2026-09-24T08:53:42.090Z",
+  "fast_spot": 2662.54,
   "execution": {
-    "entry_reference": 2672.74,
-    "hard_stop": 2678.41,
-    "target1": 2667.0,
-    "target2": 2648.78,
-    "risk_usd": 5.67,
-    "risk_pct": 0.2121,
-    "rr_to_target1": 1.013
+    "entry_reference": 2662.54,
+    "hard_stop": 2675.34,
+    "target1": 2648.79,
+    "target2": 2604.0,
+    "risk_usd": 12.8,
+    "risk_pct": 0.4806,
+    "rr_to_target1": 1.074
   },
-  "signature": "ETH|EARLY_SETUP|short|session_val|none|neutral",
+  "signature": "ETH|MISSED_DO_NOT_CHASE|short|24h_poc|failed-break/sweep-reject|neutral",
   "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T08:40:08.043Z"
+  "state_changed_at": "2026-09-24T08:53:42.090Z"
 }

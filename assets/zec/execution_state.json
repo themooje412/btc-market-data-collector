@@ -1,48 +1,48 @@
 {
   "schema_version": "1.2.0",
   "asset": "ZEC",
-  "state": "MISSED_DO_NOT_CHASE",
+  "state": "EARLY_SETUP",
   "direction": "long",
-  "setup_type": "sweep-reclaim",
-  "event": "sweep_reclaim_long",
+  "setup_type": "failed-break/sweep-reject",
+  "event": "sweep_reject_short",
   "anchor": {
-    "value": 1513.71,
+    "value": 1510.35,
     "labels": [
-      "session_vwap"
+      "7d_vwap"
     ],
     "values": [
-      1513.71
+      1510.35
     ],
     "confluence_count": 1,
-    "id": "session_vwap"
+    "id": "7d_vwap"
   },
-  "flow_score": 1,
+  "flow_score": 3,
   "strategic_bias": "neutral",
-  "strategic_bias_score": 1.5,
+  "strategic_bias_score": -0.5,
   "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": 1.5,
+    "score": -0.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Trigger present but first-target R/R is below 1.60",
-  "context_timestamp": "2026-09-24T07:49:01.970Z",
-  "fast_timestamp": "2026-09-24T08:40:10.583Z",
-  "fast_spot": 1516.87,
+  "reason": "Positive fast flow near structural zone under plus30 profile",
+  "context_timestamp": "2026-09-24T08:49:45.623Z",
+  "fast_timestamp": "2026-09-24T08:53:44.561Z",
+  "fast_spot": 1509.11,
   "execution": {
-    "entry_reference": 1516.87,
-    "hard_stop": 1508.21,
-    "target1": 1520.03,
-    "target2": 1527.15,
-    "risk_usd": 8.66,
-    "risk_pct": 0.5712,
-    "rr_to_target1": 0.365
+    "entry_reference": 1509.11,
+    "hard_stop": 1500.59,
+    "target1": 1510.35,
+    "target2": 1514.49,
+    "risk_usd": 8.52,
+    "risk_pct": 0.5646,
+    "rr_to_target1": 0.146
   },
-  "signature": "ZEC|MISSED_DO_NOT_CHASE|long|session_vwap|sweep-reclaim|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T08:40:10.583Z"
+  "signature": "ZEC|EARLY_SETUP|long|7d_vwap|failed-break/sweep-reject|neutral",
+  "previous_state": "MISSED_DO_NOT_CHASE",
+  "state_changed_at": "2026-09-24T08:53:44.561Z"
 }
