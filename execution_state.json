@@ -1,40 +1,50 @@
 {
   "schema_version": "1.2.0",
   "asset": "BTC",
-  "state": "NO_TRADE",
-  "direction": null,
+  "state": "EARLY_SETUP",
+  "direction": "long",
   "setup_type": null,
   "event": "none",
   "anchor": {
-    "value": 83828.46,
+    "value": 84181.82,
     "labels": [
-      "session_vwap"
+      "24h_vwap",
+      "session_vah"
     ],
     "values": [
-      83828.46
+      84163.63,
+      84200.0
     ],
-    "confluence_count": 1,
-    "id": "session_vwap"
+    "confluence_count": 2,
+    "id": "24h_vwap+session_vah"
   },
   "flow_score": 4,
-  "strategic_bias": "bearish",
-  "strategic_bias_score": -3.5,
-  "bias_alignment": "none",
+  "strategic_bias": "neutral",
+  "strategic_bias_score": -1.5,
+  "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -3.5,
+    "score": -1.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No executable trigger",
-  "context_timestamp": "2026-09-24T12:42:31.522Z",
-  "fast_timestamp": "2026-09-24T13:25:10.653Z",
-  "fast_spot": 83789.0,
-  "execution": null,
-  "signature": "BTC|NO_TRADE|none|session_vwap|none|bearish",
-  "previous_state": "INVALIDATED",
-  "state_changed_at": "2026-09-24T13:25:10.653Z"
+  "reason": "Positive fast flow near structural zone under plus30 profile",
+  "context_timestamp": "2026-09-24T13:38:21.518Z",
+  "fast_timestamp": "2026-09-24T13:40:45.659Z",
+  "fast_spot": 84130.0,
+  "execution": {
+    "entry_reference": 84130.0,
+    "hard_stop": 83717.33,
+    "target1": 84181.82,
+    "target2": 84325.0,
+    "risk_usd": 412.67,
+    "risk_pct": 0.4905,
+    "rr_to_target1": 0.126
+  },
+  "signature": "BTC|EARLY_SETUP|long|24h_vwap+session_vah|none|neutral",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-24T13:40:45.659Z"
 }
