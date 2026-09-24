@@ -3,43 +3,42 @@
   "asset": "ETH",
   "state": "NO_TRADE",
   "direction": null,
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
-    "value": 2666.25,
+    "value": 2666.49,
     "labels": [
       "session_vwap",
-      "24h_poc"
+      "24h_poc",
+      "24h_vwap"
     ],
     "values": [
-      2665.49,
-      2667.0
+      2664.67,
+      2667.0,
+      2667.8
     ],
-    "confluence_count": 2,
-    "id": "session_vwap+24h_poc"
+    "confluence_count": 3,
+    "id": "session_vwap+24h_poc+24h_vwap"
   },
-  "flow_score": 4,
-  "strategic_bias": "bearish",
-  "strategic_bias_score": -7.0,
+  "flow_score": -2,
+  "strategic_bias": "bullish",
+  "strategic_bias_score": 3.5,
   "bias_alignment": "none",
   "core_swing": {
-    "status": "TREND_ACTIVE",
-    "direction": "short",
-    "score": -7.0,
+    "status": "NONE",
+    "direction": null,
+    "score": 3.5,
     "entry_bias_threshold": 5.5,
-    "starter_r": [
-      0.5,
-      0.65
-    ],
+    "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "5m long move is counter-trend to bearish strategic bias; need completed 15m acceptance + strong flow",
-  "context_timestamp": "2026-09-24T12:52:32.393Z",
-  "fast_timestamp": "2026-09-24T13:40:46.936Z",
-  "fast_spot": 2668.38,
+  "reason": "5m short move is counter-trend to bullish strategic bias; need completed 15m acceptance + strong flow",
+  "context_timestamp": "2026-09-24T13:50:09.246Z",
+  "fast_timestamp": "2026-09-24T13:54:48.294Z",
+  "fast_spot": 2663.57,
   "execution": null,
-  "signature": "ETH|NO_TRADE|none|session_vwap+24h_poc|breakout-retest/trend-pullback|bearish",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T13:40:46.936Z"
+  "signature": "ETH|NO_TRADE|none|session_vwap+24h_poc+24h_vwap|breakdown|bullish",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-24T13:54:48.294Z"
 }

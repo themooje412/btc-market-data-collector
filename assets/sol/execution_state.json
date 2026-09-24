@@ -1,48 +1,43 @@
 {
   "schema_version": "1.2.0",
   "asset": "SOL",
-  "state": "MISSED_DO_NOT_CHASE",
-  "direction": "long",
-  "setup_type": "sweep-reclaim",
-  "event": "sweep_reclaim_long",
+  "state": "NO_TRADE",
+  "direction": null,
+  "setup_type": null,
+  "event": "none",
   "anchor": {
-    "value": 115.1,
+    "value": 114.55,
     "labels": [
-      "session_vah"
+      "24h_poc"
     ],
     "values": [
-      115.1
+      114.55
     ],
     "confluence_count": 1,
-    "id": "session_vah"
+    "id": "24h_poc"
   },
-  "flow_score": 1,
-  "strategic_bias": "neutral",
-  "strategic_bias_score": 1.5,
-  "bias_alignment": "neutral",
+  "flow_score": -2,
+  "strategic_bias": "bullish",
+  "strategic_bias_score": 5.5,
+  "bias_alignment": "none",
   "core_swing": {
-    "status": "NONE",
-    "direction": null,
-    "score": 1.5,
+    "status": "EARLY_ENTRY_CANDIDATE",
+    "direction": "long",
+    "score": 5.5,
     "entry_bias_threshold": 5.5,
-    "starter_r": null,
+    "starter_r": [
+      0.35,
+      0.45
+    ],
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Trigger present but first-target R/R is below 1.60",
-  "context_timestamp": "2026-09-24T12:52:44.249Z",
-  "fast_timestamp": "2026-09-24T13:40:48.245Z",
-  "fast_spot": 115.12,
-  "execution": {
-    "entry_reference": 115.12,
-    "hard_stop": 114.4,
-    "target1": 115.6,
-    "target2": null,
-    "risk_usd": 0.72,
-    "risk_pct": 0.623,
-    "rr_to_target1": 0.669
-  },
-  "signature": "SOL|MISSED_DO_NOT_CHASE|long|session_vah|sweep-reclaim|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T13:40:48.245Z"
+  "reason": "No executable trigger",
+  "context_timestamp": "2026-09-24T13:50:20.572Z",
+  "fast_timestamp": "2026-09-24T13:54:50.066Z",
+  "fast_spot": 114.67,
+  "execution": null,
+  "signature": "SOL|NO_TRADE|none|24h_poc|none|bullish",
+  "previous_state": "MISSED_DO_NOT_CHASE",
+  "state_changed_at": "2026-09-24T13:54:50.066Z"
 }
