@@ -1,15 +1,25 @@
 {
   "schema_version": "1.2.0",
   "asset": "ZEC",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": null,
-  "event": "none",
-  "anchor": null,
-  "flow_score": 3,
+  "state": "EARLY_SETUP",
+  "direction": "long",
+  "setup_type": "breakdown-retest/trend-pullback",
+  "event": "retest_hold_short",
+  "anchor": {
+    "value": 1488.7,
+    "labels": [
+      "session_val"
+    ],
+    "values": [
+      1488.7
+    ],
+    "confluence_count": 1,
+    "id": "session_val"
+  },
+  "flow_score": 4,
   "strategic_bias": "neutral",
   "strategic_bias_score": -1.5,
-  "bias_alignment": "none",
+  "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
@@ -19,12 +29,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No structural level within 0.78%",
+  "reason": "Positive fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-24T10:48:46.166Z",
-  "fast_timestamp": "2026-09-24T10:59:12.369Z",
-  "fast_spot": 1468.29,
-  "execution": null,
-  "signature": "ZEC|NO_TRADE|none|none|none|neutral",
+  "fast_timestamp": "2026-09-24T11:17:05.660Z",
+  "fast_spot": 1493.44,
+  "execution": {
+    "entry_reference": 1493.44,
+    "hard_stop": 1474.79,
+    "target1": 1500.62,
+    "target2": null,
+    "risk_usd": 18.65,
+    "risk_pct": 1.2486,
+    "rr_to_target1": 0.385
+  },
+  "signature": "ZEC|EARLY_SETUP|long|session_val|breakdown-retest/trend-pullback|neutral",
   "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-24T10:49:41.332Z"
+  "state_changed_at": "2026-09-24T11:17:05.660Z"
 }
