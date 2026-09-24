@@ -3,8 +3,8 @@
   "asset": "ETH",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakdown",
-  "event": "cross_down",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 2648.79,
     "labels": [
@@ -18,33 +18,36 @@
     "confluence_count": 2,
     "id": "24h_val+7d_vwap"
   },
-  "flow_score": -3,
+  "flow_score": 1,
   "strategic_bias": "bearish",
-  "strategic_bias_score": -5.0,
+  "strategic_bias_score": -7.0,
   "bias_alignment": "aligned",
   "core_swing": {
-    "status": "NONE",
-    "direction": null,
-    "score": -5.0,
+    "status": "TREND_ACTIVE",
+    "direction": "short",
+    "score": -7.0,
     "entry_bias_threshold": 5.5,
-    "starter_r": null,
+    "starter_r": [
+      0.5,
+      0.65
+    ],
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
   "reason": "Triggered short thesis remains tied to original anchor",
-  "context_timestamp": "2026-09-24T11:47:43.317Z",
-  "fast_timestamp": "2026-09-24T12:37:32.983Z",
-  "fast_spot": 2642.87,
+  "context_timestamp": "2026-09-24T12:52:32.393Z",
+  "fast_timestamp": "2026-09-24T12:53:29.179Z",
+  "fast_spot": 2642.38,
   "execution": {
-    "entry_reference": 2642.87,
-    "hard_stop": 2655.27,
-    "target1": 2610.0,
+    "entry_reference": 2642.38,
+    "hard_stop": 2652.76,
+    "target1": 2612.0,
     "target2": null,
-    "risk_usd": 12.4,
-    "risk_pct": 0.4691,
-    "rr_to_target1": 2.651
+    "risk_usd": 10.38,
+    "risk_pct": 0.3929,
+    "rr_to_target1": 2.926
   },
-  "signature": "ETH|HOLD_MANAGE|short|24h_val+7d_vwap|breakdown|bearish",
+  "signature": "ETH|HOLD_MANAGE|short|24h_val+7d_vwap|none|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-24T12:37:32.983Z"
+  "state_changed_at": "2026-09-24T12:53:29.179Z"
 }
