@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-24T22:45:14.039Z",
-  "context_spot": 2681.57,
+  "context_timestamp": "2026-09-24T23:45:24.375Z",
+  "context_spot": 2690.1,
   "strategic_bias": {
     "value": "bullish",
-    "score": 6.0,
+    "score": 3.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,32 +17,32 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 2663.7187685342096,
+        "value": 2664.218312828192,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 2673.7669108327545,
+        "value": 2673.8406398850934,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": 13239063.877974002,
+        "value": 4720443.948083001,
         "score": 1.25
       },
       "binance_1h_cvd": {
-        "value": 1928069.3608910004,
-        "score": 0.5
+        "value": -1818325.9674930002,
+        "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": 2311104.674739877,
+        "value": 1136289.953941205,
         "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": 853891.0009307832,
-        "score": 0.5
+        "value": -257268.24128270018,
+        "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 1.9327045195110693,
-        "score": 0.5
+        "value": -0.8636990201557236,
+        "score": -0.5
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -50,18 +50,18 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 2626.0,
+      "value": 2628.0,
       "labels": [
         "7d_val"
       ],
       "values": [
-        2626.0
+        2628.0
       ],
       "confluence_count": 1,
       "id": "7d_val"
     },
     {
-      "value": 2662.57,
+      "value": 2662.74,
       "labels": [
         "session_val",
         "24h_val",
@@ -70,33 +70,33 @@
       "values": [
         2662.0,
         2662.0,
-        2663.72
+        2664.22
       ],
       "confluence_count": 3,
       "id": "session_val+24h_val+7d_vwap"
     },
     {
-      "value": 2673.64,
+      "value": 2673.82,
       "labels": [
         "session_vwap",
         "24h_vwap"
       ],
       "values": [
-        2673.51,
-        2673.77
+        2673.8,
+        2673.84
       ],
       "confluence_count": 2,
       "id": "session_vwap+24h_vwap"
     },
     {
-      "value": 2686.42,
+      "value": 2685.77,
       "labels": [
         "cumulative_gamma_flip",
         "session_poc",
         "24h_poc"
       ],
       "values": [
-        2685.25,
+        2683.3,
         2687.0,
         2687.0
       ],
@@ -129,32 +129,32 @@
     }
   ],
   "nearest_below": {
-    "value": 2673.64,
-    "labels": [
-      "session_vwap",
-      "24h_vwap"
-    ],
-    "values": [
-      2673.51,
-      2673.77
-    ],
-    "confluence_count": 2,
-    "id": "session_vwap+24h_vwap"
-  },
-  "nearest_above": {
-    "value": 2686.42,
+    "value": 2685.77,
     "labels": [
       "cumulative_gamma_flip",
       "session_poc",
       "24h_poc"
     ],
     "values": [
-      2685.25,
+      2683.3,
       2687.0,
       2687.0
     ],
     "confluence_count": 3,
     "id": "cumulative_gamma_flip+session_poc+24h_poc"
+  },
+  "nearest_above": {
+    "value": 2698.0,
+    "labels": [
+      "session_vah",
+      "24h_vah"
+    ],
+    "values": [
+      2698.0,
+      2698.0
+    ],
+    "confluence_count": 2,
+    "id": "session_vah+24h_vah"
   },
   "rules": {
     "early_probe_r": [
@@ -206,14 +206,11 @@
   },
   "asset": "ETH",
   "core_swing": {
-    "status": "EARLY_ENTRY_CANDIDATE",
-    "direction": "long",
-    "score": 6.0,
+    "status": "NONE",
+    "direction": null,
+    "score": 3.0,
     "entry_bias_threshold": 5.5,
-    "starter_r": [
-      0.35,
-      0.45
-    ],
+    "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   }
