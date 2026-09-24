@@ -1,10 +1,10 @@
 {
   "schema_version": "1.3.0",
   "asset": "ETH",
-  "state": "EARLY_SETUP",
+  "state": "LONG_TRIGGERED",
   "direction": "long",
-  "setup_type": "breakdown-retest/trend-pullback",
-  "event": "retest_hold_short",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 2667.15,
     "labels": [
@@ -31,33 +31,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Positive fast flow near structural zone under plus30 profile",
+  "reason": "Sweep/retest long at structural zone",
   "context_timestamp": "2026-09-24T14:50:54.100Z",
-  "fast_timestamp": "2026-09-24T15:15:02.263Z",
-  "fast_spot": 2663.78,
+  "fast_timestamp": "2026-09-24T15:31:41.061Z",
+  "fast_spot": 2671.41,
   "execution": {
-    "entry_reference": 2663.78,
-    "hard_stop": 2622.6875,
+    "entry_reference": 2671.41,
+    "hard_stop": 2630.3175,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.85,
-      "adaptive_stop_pct": 1.5426,
-      "recent_1h_range_pct": 2.0569,
+      "adaptive_stop_pct": 1.5382,
+      "recent_1h_range_pct": 2.051,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 2667.15,
-    "checkpoint2": 2677.0,
-    "target1": 2745.965,
+    "checkpoint1": 2677.0,
+    "checkpoint2": 2685.87,
+    "target1": 2753.595,
     "target1_type": "open_path_2r_projection",
-    "target2": 2787.0575,
+    "target2": 2794.6875,
     "target2_type": "open_path_3r_projection",
     "risk_usd": 41.0925,
-    "risk_pct": 1.5426,
+    "risk_pct": 1.5382,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ETH|EARLY_SETUP|long|session_vwap+24h_vwap|breakdown-retest/trend-pullback|bullish",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-24T15:15:02.263Z"
+  "signature": "ETH|LONG_TRIGGERED|long|session_vwap+24h_vwap|breakout-retest/trend-pullback|bullish",
+  "previous_state": "EARLY_SETUP",
+  "state_changed_at": "2026-09-24T15:31:41.061Z"
 }

@@ -1,10 +1,10 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "LONG_TRIGGERED",
+  "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": "sweep-reclaim",
-  "event": "sweep_reclaim_long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1500.28,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "7d_poc+session_vwap"
   },
-  "flow_score": 4,
+  "flow_score": 2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 0.0,
   "bias_alignment": "neutral",
@@ -31,33 +31,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Sweep/retest long at structural zone",
+  "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-24T14:51:32.044Z",
-  "fast_timestamp": "2026-09-24T15:15:04.910Z",
-  "fast_spot": 1503.09,
+  "fast_timestamp": "2026-09-24T15:31:44.469Z",
+  "fast_spot": 1516.17,
   "execution": {
-    "entry_reference": 1503.09,
-    "hard_stop": 1468.605,
+    "entry_reference": 1516.17,
+    "hard_stop": 1481.685,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
-      "adaptive_stop_pct": 2.2943,
-      "recent_1h_range_pct": 3.059,
+      "adaptive_stop_pct": 2.2745,
+      "recent_1h_range_pct": 3.0326,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 1516.24,
-    "checkpoint2": 1520.58,
-    "target1": 1572.06,
+    "checkpoint1": 1520.58,
+    "checkpoint2": 1534.4,
+    "target1": 1585.14,
     "target1_type": "open_path_2r_projection",
-    "target2": 1606.545,
+    "target2": 1619.625,
     "target2_type": "open_path_3r_projection",
     "risk_usd": 34.485,
-    "risk_pct": 2.2943,
+    "risk_pct": 2.2745,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|LONG_TRIGGERED|long|7d_poc+session_vwap|sweep-reclaim|neutral",
-  "previous_state": "INVALIDATED",
-  "state_changed_at": "2026-09-24T15:15:04.910Z"
+  "signature": "ZEC|HOLD_MANAGE|long|7d_poc+session_vwap|none|neutral",
+  "previous_state": "LONG_TRIGGERED",
+  "state_changed_at": "2026-09-24T15:31:44.469Z"
 }
