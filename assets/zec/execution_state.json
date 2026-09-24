@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "asset": "ZEC",
-  "state": "LONG_TRIGGERED",
+  "state": "INVALIDATED",
   "direction": "long",
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1519.51,
     "labels": [
@@ -18,33 +18,33 @@
     "confluence_count": 2,
     "id": "7d_vwap+session_poc"
   },
-  "flow_score": 2,
+  "flow_score": -2,
   "strategic_bias": "neutral",
-  "strategic_bias_score": 2.0,
+  "strategic_bias_score": 0.0,
   "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": 2.0,
+    "score": 0.0,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Sweep/retest long at structural zone",
-  "context_timestamp": "2026-09-24T13:50:35.307Z",
-  "fast_timestamp": "2026-09-24T14:43:34.784Z",
-  "fast_spot": 1518.97,
+  "reason": "Anchor lost with opposing fast flow",
+  "context_timestamp": "2026-09-24T14:51:32.044Z",
+  "fast_timestamp": "2026-09-24T14:57:42.275Z",
+  "fast_spot": 1492.14,
   "execution": {
-    "entry_reference": 1518.97,
-    "hard_stop": 1517.23,
-    "target1": 1528.02,
-    "target2": 1549.6,
-    "risk_usd": 1.74,
-    "risk_pct": 0.1145,
-    "rr_to_target1": 5.203
+    "entry_reference": 1492.14,
+    "hard_stop": 1488.47,
+    "target1": 1495.75,
+    "target2": 1500.28,
+    "risk_usd": 3.67,
+    "risk_pct": 0.2463,
+    "rr_to_target1": 0.982
   },
-  "signature": "ZEC|LONG_TRIGGERED|long|7d_vwap+session_poc|breakout-retest/trend-pullback|neutral",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-24T14:43:34.784Z"
+  "signature": "ZEC|INVALIDATED|long|7d_vwap+session_poc|none|neutral",
+  "previous_state": "LONG_TRIGGERED",
+  "state_changed_at": "2026-09-24T14:57:42.275Z"
 }

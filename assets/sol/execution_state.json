@@ -3,20 +3,22 @@
   "asset": "SOL",
   "state": "NO_TRADE",
   "direction": null,
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "sweep-reclaim",
+  "event": "sweep_reclaim_long",
   "anchor": {
-    "value": 115.5,
+    "value": 114.52,
     "labels": [
-      "24h_vah"
+      "session_vwap",
+      "24h_vwap"
     ],
     "values": [
-      115.5
+      114.49,
+      114.54
     ],
-    "confluence_count": 1,
-    "id": "24h_vah"
+    "confluence_count": 2,
+    "id": "session_vwap+24h_vwap"
   },
-  "flow_score": 4,
+  "flow_score": -2,
   "strategic_bias": "bullish",
   "strategic_bias_score": 5.5,
   "bias_alignment": "none",
@@ -33,11 +35,11 @@
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
   "reason": "No executable trigger",
-  "context_timestamp": "2026-09-24T13:50:20.572Z",
-  "fast_timestamp": "2026-09-24T14:43:33.545Z",
-  "fast_spot": 115.96,
+  "context_timestamp": "2026-09-24T14:51:11.501Z",
+  "fast_timestamp": "2026-09-24T14:57:40.962Z",
+  "fast_spot": 114.61,
   "execution": null,
-  "signature": "SOL|NO_TRADE|none|24h_vah|none|bullish",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T14:43:33.545Z"
+  "signature": "SOL|NO_TRADE|none|session_vwap+24h_vwap|sweep-reclaim|bullish",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-24T14:57:40.962Z"
 }

@@ -1,50 +1,42 @@
 {
   "schema_version": "1.2.0",
   "asset": "ETH",
-  "state": "EARLY_SETUP",
-  "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "state": "NO_TRADE",
+  "direction": null,
+  "setup_type": "sweep-reclaim",
+  "event": "sweep_reclaim_long",
   "anchor": {
-    "value": 2685.67,
+    "value": 2656.56,
     "labels": [
-      "session_vah",
-      "cumulative_gamma_flip"
+      "24h_val",
+      "7d_vwap"
     ],
     "values": [
-      2684.0,
-      2687.34
+      2656.0,
+      2657.12
     ],
     "confluence_count": 2,
-    "id": "session_vah+cumulative_gamma_flip"
+    "id": "24h_val+7d_vwap"
   },
-  "flow_score": 2,
+  "flow_score": -2,
   "strategic_bias": "bullish",
-  "strategic_bias_score": 3.5,
-  "bias_alignment": "aligned",
+  "strategic_bias_score": 4.0,
+  "bias_alignment": "none",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": 3.5,
+    "score": 4.0,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Positive fast flow near structural zone under plus30 profile",
-  "context_timestamp": "2026-09-24T13:50:09.246Z",
-  "fast_timestamp": "2026-09-24T14:43:32.272Z",
-  "fast_spot": 2682.12,
-  "execution": {
-    "entry_reference": 2682.12,
-    "hard_stop": 2681.17,
-    "target1": 2685.67,
-    "target2": 2692.0,
-    "risk_usd": 0.95,
-    "risk_pct": 0.0355,
-    "rr_to_target1": 3.732
-  },
-  "signature": "ETH|EARLY_SETUP|long|session_vah+cumulative_gamma_flip|none|bullish",
+  "reason": "No executable trigger",
+  "context_timestamp": "2026-09-24T14:50:54.100Z",
+  "fast_timestamp": "2026-09-24T14:57:39.628Z",
+  "fast_spot": 2654.85,
+  "execution": null,
+  "signature": "ETH|NO_TRADE|none|24h_val+7d_vwap|sweep-reclaim|bullish",
   "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T14:26:39.520Z"
+  "state_changed_at": "2026-09-24T14:57:39.628Z"
 }
