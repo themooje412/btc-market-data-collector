@@ -30,13 +30,14 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_execution_watcher.py' -v
           python -m unittest discover -s tests -p 'test_multi_asset_execution.py' -v
+          python -m unittest discover -s tests -p 'test_swing_execution.py' -v
 
-      - name: Collect fast execution state for four assets
+      - name: Collect swing-aware execution state for four assets
         run: |
-          python -u -m btc_collector.multi_asset_execution --asset BTC
-          python -u -m btc_collector.multi_asset_execution --asset ETH
-          python -u -m btc_collector.multi_asset_execution --asset SOL
-          python -u -m btc_collector.multi_asset_execution --asset ZEC
+          python -u -m btc_collector.swing_execution --asset BTC
+          python -u -m btc_collector.swing_execution --asset ETH
+          python -u -m btc_collector.swing_execution --asset SOL
+          python -u -m btc_collector.swing_execution --asset ZEC
 
       - name: Commit latest execution state
         env:
@@ -54,7 +55,7 @@ jobs:
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "data: update multi-asset execution state $(date -u +%Y-%m-%dT%H:%MZ)"
+          git commit -m "data: update multi-asset swing execution state $(date -u +%Y-%m-%dT%H:%MZ)"
           for attempt in 1 2 3; do
             if git push origin "HEAD:$DEFAULT_BRANCH"; then
               exit 0
