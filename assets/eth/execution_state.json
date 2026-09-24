@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "asset": "ETH",
-  "state": "EARLY_SETUP",
+  "state": "SHORT_TRIGGERED",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "failed-break/sweep-reject",
+  "event": "sweep_reject_short",
   "anchor": {
     "value": 2648.79,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "24h_val+7d_vwap"
   },
-  "flow_score": -4,
+  "flow_score": -3,
   "strategic_bias": "neutral",
   "strategic_bias_score": -0.5,
   "bias_alignment": "neutral",
@@ -31,20 +31,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Negative fast flow near structural zone under plus30 profile",
+  "reason": "Sweep/retest short at structural zone",
   "context_timestamp": "2026-09-24T08:49:20.621Z",
-  "fast_timestamp": "2026-09-24T09:24:36.445Z",
-  "fast_spot": 2656.26,
+  "fast_timestamp": "2026-09-24T09:39:24.518Z",
+  "fast_spot": 2643.99,
   "execution": {
-    "entry_reference": 2656.26,
-    "hard_stop": 2668.79,
-    "target1": 2648.79,
-    "target2": 2604.0,
-    "risk_usd": 12.53,
-    "risk_pct": 0.4719,
-    "rr_to_target1": 0.596
+    "entry_reference": 2643.99,
+    "hard_stop": 2658.76,
+    "target1": 2604.0,
+    "target2": null,
+    "risk_usd": 14.77,
+    "risk_pct": 0.5586,
+    "rr_to_target1": 2.708
   },
-  "signature": "ETH|EARLY_SETUP|short|24h_val+7d_vwap|none|neutral",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-24T09:24:36.445Z"
+  "signature": "ETH|SHORT_TRIGGERED|short|24h_val+7d_vwap|failed-break/sweep-reject|neutral",
+  "previous_state": "EARLY_SETUP",
+  "state_changed_at": "2026-09-24T09:39:24.518Z"
 }
