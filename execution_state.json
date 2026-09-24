@@ -2,9 +2,9 @@
   "schema_version": "1.3.0",
   "asset": "BTC",
   "state": "EARLY_SETUP",
-  "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "direction": "long",
+  "setup_type": "breakout",
+  "event": "cross_up",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -29,33 +29,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Negative fast flow near structural zone under plus30 profile",
+  "reason": "Breakout lacks fast-flow confirmation",
   "context_timestamp": "2026-09-24T18:40:05.483Z",
-  "fast_timestamp": "2026-09-24T18:56:15.264Z",
-  "fast_spot": 84488.01,
+  "fast_timestamp": "2026-09-24T19:11:09.589Z",
+  "fast_spot": 84498.92,
   "execution": {
-    "entry_reference": 84488.01,
-    "hard_stop": 85037.182065,
+    "entry_reference": 84498.92,
+    "hard_stop": 83949.67702,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.7883,
+      "recent_1h_range_pct": 0.4639,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 84375.0,
-    "checkpoint2": 84175.0,
-    "target1": 83291.89,
+    "checkpoint1": 84725.0,
+    "checkpoint2": 85900.0,
+    "target1": 85900.0,
     "target1_type": "structural",
-    "target2": 82840.493805,
+    "target2": 86146.64894,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 549.172065,
+    "risk_usd": 549.24298,
     "risk_pct": 0.65,
-    "rr_to_target1": 2.178,
+    "rr_to_target1": 2.551,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|EARLY_SETUP|short|24h_poc|none|neutral",
+  "signature": "BTC|EARLY_SETUP|long|24h_poc|breakout|neutral",
   "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T18:42:54.898Z"
+  "state_changed_at": "2026-09-24T19:11:09.589Z"
 }
