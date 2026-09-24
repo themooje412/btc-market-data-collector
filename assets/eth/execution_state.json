@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "asset": "ETH",
-  "state": "MISSED_DO_NOT_CHASE",
-  "direction": "short",
-  "setup_type": "failed-break/sweep-reject",
-  "event": "sweep_reject_short",
+  "state": "NO_TRADE",
+  "direction": null,
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 2667.0,
     "labels": [
@@ -16,10 +16,10 @@
     "confluence_count": 1,
     "id": "24h_poc"
   },
-  "flow_score": -3,
+  "flow_score": 1,
   "strategic_bias": "neutral",
   "strategic_bias_score": -0.5,
-  "bias_alignment": "neutral",
+  "bias_alignment": "none",
   "core_swing": {
     "status": "NONE",
     "direction": null,
@@ -29,20 +29,12 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Trigger present but first-target R/R is below 1.60",
+  "reason": "No executable trigger",
   "context_timestamp": "2026-09-24T08:49:20.621Z",
-  "fast_timestamp": "2026-09-24T08:53:42.090Z",
-  "fast_spot": 2662.54,
-  "execution": {
-    "entry_reference": 2662.54,
-    "hard_stop": 2675.34,
-    "target1": 2648.79,
-    "target2": 2604.0,
-    "risk_usd": 12.8,
-    "risk_pct": 0.4806,
-    "rr_to_target1": 1.074
-  },
-  "signature": "ETH|MISSED_DO_NOT_CHASE|short|24h_poc|failed-break/sweep-reject|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T08:53:42.090Z"
+  "fast_timestamp": "2026-09-24T09:06:50.952Z",
+  "fast_spot": 2665.56,
+  "execution": null,
+  "signature": "ETH|NO_TRADE|none|24h_poc|none|neutral",
+  "previous_state": "MISSED_DO_NOT_CHASE",
+  "state_changed_at": "2026-09-24T09:06:50.952Z"
 }
