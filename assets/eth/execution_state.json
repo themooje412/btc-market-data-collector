@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "asset": "ETH",
-  "state": "SHORT_TRIGGERED",
+  "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "failed-break/sweep-reject",
-  "event": "sweep_reject_short",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 2648.79,
     "labels": [
@@ -19,32 +19,35 @@
     "id": "24h_val+7d_vwap"
   },
   "flow_score": -3,
-  "strategic_bias": "neutral",
-  "strategic_bias_score": -0.5,
-  "bias_alignment": "neutral",
+  "strategic_bias": "bearish",
+  "strategic_bias_score": -7.5,
+  "bias_alignment": "aligned",
   "core_swing": {
-    "status": "NONE",
-    "direction": null,
-    "score": -0.5,
+    "status": "TREND_ACTIVE",
+    "direction": "short",
+    "score": -7.5,
     "entry_bias_threshold": 5.5,
-    "starter_r": null,
+    "starter_r": [
+      0.5,
+      0.65
+    ],
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Sweep/retest short at structural zone",
-  "context_timestamp": "2026-09-24T08:49:20.621Z",
-  "fast_timestamp": "2026-09-24T09:39:24.518Z",
-  "fast_spot": 2643.99,
+  "reason": "Triggered short thesis remains tied to original anchor",
+  "context_timestamp": "2026-09-24T09:48:32.791Z",
+  "fast_timestamp": "2026-09-24T09:52:40.623Z",
+  "fast_spot": 2645.75,
   "execution": {
-    "entry_reference": 2643.99,
-    "hard_stop": 2658.76,
-    "target1": 2604.0,
+    "entry_reference": 2645.75,
+    "hard_stop": 2652.76,
+    "target1": 2606.0,
     "target2": null,
-    "risk_usd": 14.77,
-    "risk_pct": 0.5586,
-    "rr_to_target1": 2.708
+    "risk_usd": 7.01,
+    "risk_pct": 0.2651,
+    "rr_to_target1": 5.668
   },
-  "signature": "ETH|SHORT_TRIGGERED|short|24h_val+7d_vwap|failed-break/sweep-reject|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T09:39:24.518Z"
+  "signature": "ETH|HOLD_MANAGE|short|24h_val+7d_vwap|none|bearish",
+  "previous_state": "SHORT_TRIGGERED",
+  "state_changed_at": "2026-09-24T09:52:40.623Z"
 }
