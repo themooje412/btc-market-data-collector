@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "ARMED_LONG",
   "direction": "long",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 84325.0,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "24h_poc"
   },
-  "flow_score": 4,
+  "flow_score": 0,
   "strategic_bias": "neutral",
   "strategic_bias_score": 2.0,
   "bias_alignment": "neutral",
@@ -31,31 +31,31 @@
   },
   "reason": "Awaiting long trigger at original anchor",
   "context_timestamp": "2026-09-24T15:37:49.115Z",
-  "fast_timestamp": "2026-09-24T15:57:33.806Z",
-  "fast_spot": 84416.37,
+  "fast_timestamp": "2026-09-24T16:16:04.578Z",
+  "fast_spot": 84489.95,
   "execution": {
-    "entry_reference": 84416.37,
-    "hard_stop": 83704.3275,
+    "entry_reference": 84489.95,
+    "hard_stop": 83940.765325,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
-      "adaptive_stop_pct": 0.8435,
-      "recent_1h_range_pct": 1.1247,
+      "adaptive_stop_pct": 0.65,
+      "recent_1h_range_pct": 0.6896,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 84600.0,
     "checkpoint2": 85950.0,
     "target1": 85950.0,
     "target1_type": "structural",
-    "target2": 86552.4975,
+    "target2": 86137.504025,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 712.0425,
-    "risk_pct": 0.8435,
-    "rr_to_target1": 2.154,
+    "risk_usd": 549.184675,
+    "risk_pct": 0.65,
+    "rr_to_target1": 2.659,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|ARMED_LONG|long|24h_poc|breakout|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T15:46:58.595Z"
+  "signature": "BTC|ARMED_LONG|long|24h_poc|none|neutral",
+  "previous_state": "ARMED_LONG",
+  "state_changed_at": "2026-09-24T16:16:04.578Z"
 }
