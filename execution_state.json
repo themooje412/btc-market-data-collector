@@ -1,5 +1,6 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
+  "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
   "setup_type": null,
@@ -23,24 +24,33 @@
     "confluence_count": 5,
     "id": "session_val+session_poc+24h_poc+session_vwap+session_vah"
   },
-  "flow_score": 1,
+  "flow_score": 0,
   "strategic_bias": "bearish",
-  "strategic_bias_score": -3.5,
+  "strategic_bias_score": -3.0,
   "bias_alignment": "aligned",
-  "reason": "Triggered short thesis remains tied to original anchor",
-  "context_timestamp": "2026-09-24T06:41:17.210Z",
-  "fast_timestamp": "2026-09-24T07:25:42.456Z",
-  "fast_spot": 84223.91,
-  "execution": {
-    "entry_reference": 84223.91,
-    "hard_stop": 84453.35,
-    "target1": 84147.0,
-    "target2": 84000.0,
-    "risk_usd": 229.44,
-    "risk_pct": 0.2724,
-    "rr_to_target1": 0.335
+  "core_swing": {
+    "status": "NONE",
+    "direction": null,
+    "score": -3.0,
+    "entry_bias_threshold": 5.5,
+    "starter_r": null,
+    "horizon": "2-5d_or_longer_if_structure_holds",
+    "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "signature": "HOLD_MANAGE|short|session_val+session_poc+24h_poc+session_vwap+session_vah|none|bearish",
+  "reason": "Triggered short thesis remains tied to original anchor",
+  "context_timestamp": "2026-09-24T07:36:09.068Z",
+  "fast_timestamp": "2026-09-24T07:40:27.925Z",
+  "fast_spot": 84437.01,
+  "execution": {
+    "entry_reference": 84437.01,
+    "hard_stop": 84620.3,
+    "target1": 84362.5,
+    "target2": 84160.95,
+    "risk_usd": 183.29,
+    "risk_pct": 0.2171,
+    "rr_to_target1": 0.407
+  },
+  "signature": "BTC|HOLD_MANAGE|short|session_val+session_poc+24h_poc+session_vwap+session_vah|none|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-24T06:54:24.899Z"
+  "state_changed_at": "2026-09-24T07:40:27.925Z"
 }
