@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3.0",
   "asset": "BTC",
-  "state": "ARMED_LONG",
+  "state": "INVALIDATED",
   "direction": "long",
   "setup_type": null,
   "event": "none",
@@ -29,33 +29,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Awaiting long trigger at original anchor",
+  "reason": "Armed long lost original anchor",
   "context_timestamp": "2026-09-24T17:35:12.506Z",
-  "fast_timestamp": "2026-09-24T17:43:06.070Z",
-  "fast_spot": 84244.01,
+  "fast_timestamp": "2026-09-24T17:53:25.788Z",
+  "fast_spot": 84141.22,
   "execution": {
-    "entry_reference": 84244.01,
-    "hard_stop": 83669.6375,
+    "entry_reference": 84141.22,
+    "hard_stop": 83594.30207,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
-      "adaptive_stop_pct": 0.6818,
-      "recent_1h_range_pct": 0.9091,
+      "adaptive_stop_pct": 0.65,
+      "recent_1h_range_pct": 0.6228,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 84325.0,
     "checkpoint2": 84725.0,
     "target1": 85900.0,
     "target1_type": "structural",
-    "target2": 85967.1275,
+    "target2": 85781.97379,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 574.3725,
-    "risk_pct": 0.6818,
-    "rr_to_target1": 2.883,
+    "risk_usd": 546.91793,
+    "risk_pct": 0.65,
+    "rr_to_target1": 3.216,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|ARMED_LONG|long|24h_poc|none|neutral",
+  "signature": "BTC|INVALIDATED|long|24h_poc|none|neutral",
   "previous_state": "ARMED_LONG",
-  "state_changed_at": "2026-09-24T17:43:06.070Z"
+  "state_changed_at": "2026-09-24T17:53:25.788Z"
 }
