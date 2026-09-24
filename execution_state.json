@@ -2,23 +2,23 @@
   "schema_version": "1.3.0",
   "asset": "BTC",
   "state": "EARLY_SETUP",
-  "direction": "short",
+  "direction": "long",
   "setup_type": null,
   "event": "none",
   "anchor": {
-    "value": 84019.19,
+    "value": 84325.0,
     "labels": [
-      "session_vwap",
-      "24h_vwap"
+      "session_poc",
+      "24h_poc"
     ],
     "values": [
-      83986.76,
-      84051.61
+      84325.0,
+      84325.0
     ],
     "confluence_count": 2,
-    "id": "session_vwap+24h_vwap"
+    "id": "session_poc+24h_poc"
   },
-  "flow_score": -3,
+  "flow_score": 2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 2.0,
   "bias_alignment": "neutral",
@@ -31,33 +31,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Negative fast flow near structural zone under plus30 profile",
+  "reason": "Positive fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-24T17:35:12.506Z",
-  "fast_timestamp": "2026-09-24T18:06:45.746Z",
-  "fast_spot": 84090.0,
+  "fast_timestamp": "2026-09-24T18:26:16.913Z",
+  "fast_spot": 84442.0,
   "execution": {
-    "entry_reference": 84090.0,
-    "hard_stop": 84636.585,
+    "entry_reference": 84442.0,
+    "hard_stop": 83893.127,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.7778,
+      "recent_1h_range_pct": 0.6533,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 84019.19,
-    "checkpoint2": 83620.27,
-    "target1": 82996.83,
-    "target1_type": "open_path_2r_projection",
-    "target2": 82450.245,
+    "checkpoint1": 84725.0,
+    "checkpoint2": 85900.0,
+    "target1": 85900.0,
+    "target1_type": "structural",
+    "target2": 86088.619,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 546.585,
+    "risk_usd": 548.873,
     "risk_pct": 0.65,
-    "rr_to_target1": 2.0,
+    "rr_to_target1": 2.656,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|EARLY_SETUP|short|session_vwap+24h_vwap|none|neutral",
-  "previous_state": "INVALIDATED",
-  "state_changed_at": "2026-09-24T18:06:45.746Z"
+  "signature": "BTC|EARLY_SETUP|long|session_poc+24h_poc|none|neutral",
+  "previous_state": "EARLY_SETUP",
+  "state_changed_at": "2026-09-24T18:26:16.913Z"
 }
