@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-24T21:45:37.768Z",
-  "context_spot": 117.12,
+  "context_timestamp": "2026-09-24T22:45:28.850Z",
+  "context_spot": 116.4,
   "strategic_bias": {
     "value": "neutral",
-    "score": -1.0,
+    "score": 2.5,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,31 +17,31 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 113.39221214079895,
+        "value": 113.44739060315466,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 115.30681056021365,
+        "value": 115.35734463090947,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": -6972839.311869999,
+        "value": -7886633.757549999,
         "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": -888774.0575700002,
+        "value": -2898804.05375,
         "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": -523506.57984141196,
-        "score": -1.25
+        "value": 1869885.634319705,
+        "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": -426374.05250887084,
-        "score": -0.5
+        "value": 1072031.594600061,
+        "score": 0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 1.192695608502128,
+        "value": 0.7229189756336919,
         "score": 0.5
       }
     },
@@ -50,58 +50,69 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 114.1,
+      "value": 113.45,
+      "labels": [
+        "7d_vwap"
+      ],
+      "values": [
+        113.45
+      ],
+      "confluence_count": 1,
+      "id": "7d_vwap"
+    },
+    {
+      "value": 114.5,
       "labels": [
         "session_val",
         "24h_val"
       ],
       "values": [
-        114.1,
-        114.1
+        114.5,
+        114.5
       ],
       "confluence_count": 2,
       "id": "session_val+24h_val"
     },
     {
-      "value": 114.9,
+      "value": 114.95,
       "labels": [
-        "24h_poc",
-        "session_poc"
+        "session_poc",
+        "24h_poc"
       ],
       "values": [
-        114.85,
+        114.95,
         114.95
       ],
       "confluence_count": 2,
-      "id": "24h_poc+session_poc"
+      "id": "session_poc+24h_poc"
     },
     {
-      "value": 115.32,
+      "value": 115.36,
       "labels": [
         "24h_vwap",
         "session_vwap"
       ],
       "values": [
-        115.31,
-        115.33
+        115.36,
+        115.37
       ],
       "confluence_count": 2,
       "id": "24h_vwap+session_vwap"
     },
     {
-      "value": 117.32,
+      "value": 117.38,
       "labels": [
+        "7d_poc",
         "session_vah",
-        "24h_vah",
-        "7d_poc"
+        "24h_vah"
       ],
       "values": [
-        117.3,
-        117.3,
-        117.35
+        117.35,
+        117.4,
+        117.4
       ],
       "confluence_count": 3,
-      "id": "session_vah+24h_vah+7d_poc"
+      "id": "7d_poc+session_vah+24h_vah"
     },
     {
       "value": 119.3,
@@ -116,32 +127,32 @@
     }
   ],
   "nearest_below": {
-    "value": 115.32,
+    "value": 115.36,
     "labels": [
       "24h_vwap",
       "session_vwap"
     ],
     "values": [
-      115.31,
-      115.33
+      115.36,
+      115.37
     ],
     "confluence_count": 2,
     "id": "24h_vwap+session_vwap"
   },
   "nearest_above": {
-    "value": 117.32,
+    "value": 117.38,
     "labels": [
+      "7d_poc",
       "session_vah",
-      "24h_vah",
-      "7d_poc"
+      "24h_vah"
     ],
     "values": [
-      117.3,
-      117.3,
-      117.35
+      117.35,
+      117.4,
+      117.4
     ],
     "confluence_count": 3,
-    "id": "session_vah+24h_vah+7d_poc"
+    "id": "7d_poc+session_vah+24h_vah"
   },
   "rules": {
     "early_probe_r": [
@@ -195,7 +206,7 @@
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -1.0,
+    "score": 2.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
