@@ -1,22 +1,22 @@
 {
   "schema_version": "1.2.0",
   "asset": "ETH",
-  "state": "INVALIDATED",
+  "state": "EARLY_SETUP",
   "direction": "short",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
-    "value": 2648.79,
+    "value": 2666.25,
     "labels": [
-      "24h_val",
-      "7d_vwap"
+      "session_vwap",
+      "24h_poc"
     ],
     "values": [
-      2648.0,
-      2649.59
+      2665.49,
+      2667.0
     ],
     "confluence_count": 2,
-    "id": "24h_val+7d_vwap"
+    "id": "session_vwap+24h_poc"
   },
   "flow_score": 2,
   "strategic_bias": "bearish",
@@ -34,20 +34,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Anchor reclaimed with opposing fast flow",
+  "reason": "Breakdown lacks fast-flow confirmation",
   "context_timestamp": "2026-09-24T12:52:32.393Z",
-  "fast_timestamp": "2026-09-24T13:06:37.873Z",
-  "fast_spot": 2654.47,
+  "fast_timestamp": "2026-09-24T13:25:11.928Z",
+  "fast_spot": 2661.21,
   "execution": {
-    "entry_reference": 2654.47,
-    "hard_stop": 2655.43,
-    "target1": 2646.0,
-    "target2": 2612.0,
-    "risk_usd": 0.96,
-    "risk_pct": 0.0361,
-    "rr_to_target1": 8.85
+    "entry_reference": 2661.21,
+    "hard_stop": 2670.25,
+    "target1": 2653.31,
+    "target2": 2646.0,
+    "risk_usd": 9.04,
+    "risk_pct": 0.3397,
+    "rr_to_target1": 0.874
   },
-  "signature": "ETH|INVALIDATED|short|24h_val+7d_vwap|breakout|bearish",
-  "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-24T13:06:37.873Z"
+  "signature": "ETH|EARLY_SETUP|short|session_vwap+24h_poc|breakdown|bearish",
+  "previous_state": "INVALIDATED",
+  "state_changed_at": "2026-09-24T13:25:11.928Z"
 }
