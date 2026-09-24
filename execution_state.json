@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_poc+24h_poc"
   },
-  "flow_score": 0,
+  "flow_score": -2,
   "strategic_bias": "bullish",
   "strategic_bias_score": 3.5,
   "bias_alignment": "countertrend_confirmed",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-24T21:35:01.247Z",
-  "fast_timestamp": "2026-09-24T22:03:14.078Z",
-  "fast_spot": 84332.0,
+  "fast_timestamp": "2026-09-24T22:20:57.729Z",
+  "fast_spot": 84063.19,
   "execution": {
-    "entry_reference": 84332.0,
-    "hard_stop": 84880.158,
+    "entry_reference": 84063.19,
+    "hard_stop": 84852.0875,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.2504,
+      "recent_1h_range_pct": 0.6575,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 84046.43,
-    "checkpoint2": 83685.31,
-    "target1": 83344.49,
-    "target1_type": "structural",
-    "target2": 82687.526,
+    "checkpoint1": 83685.31,
+    "checkpoint2": 83344.49,
+    "target1": 82485.395,
+    "target1_type": "open_path_2r_projection",
+    "target2": 81696.4975,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 548.158,
-    "risk_pct": 0.65,
-    "rr_to_target1": 1.802,
+    "risk_usd": 788.8975,
+    "risk_pct": 0.9385,
+    "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|bullish",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakdown|bullish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-24T21:42:42.661Z"
+  "state_changed_at": "2026-09-24T22:20:57.729Z"
 }

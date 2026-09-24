@@ -3,8 +3,8 @@
   "asset": "SOL",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 116.1,
     "labels": [
@@ -31,31 +31,31 @@
   },
   "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-24T21:45:37.768Z",
-  "fast_timestamp": "2026-09-24T22:03:16.691Z",
-  "fast_spot": 116.85,
+  "fast_timestamp": "2026-09-24T22:21:00.360Z",
+  "fast_spot": 116.27,
   "execution": {
-    "entry_reference": 116.85,
-    "hard_stop": 115.14702,
+    "entry_reference": 116.27,
+    "hard_stop": 115.1073,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.0,
       "adaptive_stop_pct": 1.0,
-      "recent_1h_range_pct": 0.5648,
+      "recent_1h_range_pct": 0.9805,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 117.32,
     "checkpoint2": 119.3,
-    "target1": 120.25596,
-    "target1_type": "open_path_2r_projection",
-    "target2": 121.95894,
+    "target1": 119.3,
+    "target1_type": "structural",
+    "target2": 119.7581,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 1.70298,
-    "risk_pct": 1.4574,
-    "rr_to_target1": 2.0,
+    "risk_usd": 1.1627,
+    "risk_pct": 1.0,
+    "rr_to_target1": 2.606,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "SOL|HOLD_MANAGE|long|session_vah|none|neutral",
+  "signature": "SOL|HOLD_MANAGE|long|session_vah|breakout-retest/trend-pullback|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-24T19:49:30.604Z"
+  "state_changed_at": "2026-09-24T22:21:00.360Z"
 }
