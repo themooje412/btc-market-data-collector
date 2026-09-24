@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "asset": "ETH",
-  "state": "ADD_ALLOWED",
+  "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakdown-retest/trend-pullback",
-  "event": "retest_hold_short",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 2648.79,
     "labels": [
@@ -34,20 +34,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Retest held and fast flow strengthened",
+  "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-24T09:48:32.791Z",
-  "fast_timestamp": "2026-09-24T10:03:59.052Z",
-  "fast_spot": 2643.51,
+  "fast_timestamp": "2026-09-24T10:21:57.591Z",
+  "fast_spot": 2635.85,
   "execution": {
-    "entry_reference": 2643.51,
+    "entry_reference": 2635.85,
     "hard_stop": 2652.76,
     "target1": 2606.0,
     "target2": null,
-    "risk_usd": 9.25,
-    "risk_pct": 0.35,
-    "rr_to_target1": 4.054
+    "risk_usd": 16.91,
+    "risk_pct": 0.6417,
+    "rr_to_target1": 1.765
   },
-  "signature": "ETH|ADD_ALLOWED|short|24h_val+7d_vwap|breakdown-retest/trend-pullback|bearish",
-  "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-24T10:03:59.052Z"
+  "signature": "ETH|HOLD_MANAGE|short|24h_val+7d_vwap|none|bearish",
+  "previous_state": "ADD_ALLOWED",
+  "state_changed_at": "2026-09-24T10:21:57.591Z"
 }
