@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "asset": "SOL",
-  "state": "ADD_ALLOWED",
+  "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakdown-retest/trend-pullback",
-  "event": "retest_hold_short",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
     "value": 113.4,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "24h_val"
   },
-  "flow_score": -2,
+  "flow_score": 0,
   "strategic_bias": "bearish",
   "strategic_bias_score": -4.0,
   "bias_alignment": "aligned",
@@ -29,20 +29,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Retest held and fast flow strengthened",
+  "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-24T09:48:44.862Z",
-  "fast_timestamp": "2026-09-24T09:52:42.105Z",
-  "fast_spot": 113.43,
+  "fast_timestamp": "2026-09-24T10:04:00.421Z",
+  "fast_spot": 113.16,
   "execution": {
-    "entry_reference": 113.43,
+    "entry_reference": 113.16,
     "hard_stop": 113.57,
     "target1": 112.57,
     "target2": 110.2,
-    "risk_usd": 0.14,
-    "risk_pct": 0.1235,
-    "rr_to_target1": 6.138
+    "risk_usd": 0.41,
+    "risk_pct": 0.3624,
+    "rr_to_target1": 1.439
   },
-  "signature": "SOL|ADD_ALLOWED|short|24h_val|breakdown-retest/trend-pullback|bearish",
-  "previous_state": "SHORT_TRIGGERED",
-  "state_changed_at": "2026-09-24T09:52:42.105Z"
+  "signature": "SOL|HOLD_MANAGE|short|24h_val|breakdown|bearish",
+  "previous_state": "ADD_ALLOWED",
+  "state_changed_at": "2026-09-24T10:04:00.421Z"
 }
