@@ -1,27 +1,27 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "asset": "SOL",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": "sweep-reclaim",
-  "event": "sweep_reclaim_long",
+  "state": "EARLY_SETUP",
+  "direction": "long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
-    "value": 114.52,
+    "value": 115.05,
     "labels": [
-      "session_vwap",
-      "24h_vwap"
+      "session_poc",
+      "24h_poc"
     ],
     "values": [
-      114.49,
-      114.54
+      115.05,
+      115.05
     ],
     "confluence_count": 2,
-    "id": "session_vwap+24h_vwap"
+    "id": "session_poc+24h_poc"
   },
-  "flow_score": -2,
+  "flow_score": 4,
   "strategic_bias": "bullish",
   "strategic_bias_score": 5.5,
-  "bias_alignment": "none",
+  "bias_alignment": "aligned",
   "core_swing": {
     "status": "EARLY_ENTRY_CANDIDATE",
     "direction": "long",
@@ -34,12 +34,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No executable trigger",
+  "reason": "Positive fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-24T14:51:11.501Z",
-  "fast_timestamp": "2026-09-24T14:57:40.962Z",
-  "fast_spot": 114.61,
-  "execution": null,
-  "signature": "SOL|NO_TRADE|none|session_vwap+24h_vwap|sweep-reclaim|bullish",
+  "fast_timestamp": "2026-09-24T15:15:03.595Z",
+  "fast_spot": 115.01,
+  "execution": {
+    "entry_reference": 115.01,
+    "hard_stop": 113.2325,
+    "hard_stop_type": "core_swing_structure_volatility",
+    "stop_basis": {
+      "asset_floor_pct": 1.0,
+      "adaptive_stop_pct": 1.5455,
+      "recent_1h_range_pct": 2.0607,
+      "note": "Position size must adapt to this stop; total trade risk cap does not increase."
+    },
+    "checkpoint1": 115.6,
+    "checkpoint2": 116.1,
+    "target1": 118.05,
+    "target1_type": "structural",
+    "target2": 120.3425,
+    "target2_type": "open_path_3r_projection",
+    "risk_usd": 1.7775,
+    "risk_pct": 1.5455,
+    "rr_to_target1": 1.71,
+    "horizon": "2-5d_or_longer_if_structure_holds",
+    "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
+  },
+  "signature": "SOL|EARLY_SETUP|long|session_poc+24h_poc|none|bullish",
   "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-24T14:57:40.962Z"
+  "state_changed_at": "2026-09-24T15:15:03.595Z"
 }

@@ -1,11 +1,11 @@
 {
-  "schema_version": "1.2.0",
-  "profile": "controlled_aggressive_swing_plus30",
-  "context_timestamp": "2026-09-24T14:38:36.776Z",
-  "context_spot": 84791.88,
+  "schema_version": "1.3.0",
+  "profile": "controlled_aggressive_swing_plus30_v2",
+  "context_timestamp": "2026-09-24T15:10:18.020Z",
+  "context_spot": 83649.86,
   "strategic_bias": {
-    "value": "bullish",
-    "score": 7.5,
+    "value": "neutral",
+    "score": -2.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -13,36 +13,36 @@
         "score": 0.0
       },
       "24h_location": {
-        "value": "above_value",
-        "score": 1.5
+        "value": "below_value",
+        "score": -1.5
       },
       "7d_vwap": {
-        "value": 83153.63600626087,
+        "value": 83179.9779804767,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 84049.52731455344,
-        "score": 1.0
+        "value": 84038.37332117504,
+        "score": -1.0
       },
       "binance_4h_cvd": {
-        "value": 16506370.580689704,
-        "score": 1.25
+        "value": -43106288.670449495,
+        "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": 9599963.278835103,
-        "score": 0.5
+        "value": -43586506.8682112,
+        "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": 9738785.495034114,
+        "value": 11193245.8133811,
         "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": 4745536.674493242,
+        "value": 8675009.340817263,
         "score": 0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 0.783983506262115,
-        "score": 0.5
+        "value": -0.872527213322315,
+        "score": -0.5
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -50,12 +50,34 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 83153.64,
+      "value": 81275.0,
+      "labels": [
+        "7d_poc"
+      ],
+      "values": [
+        81275.0
+      ],
+      "confluence_count": 1,
+      "id": "7d_poc"
+    },
+    {
+      "value": 81772.82,
+      "labels": [
+        "cumulative_gamma_flip"
+      ],
+      "values": [
+        81772.82
+      ],
+      "confluence_count": 1,
+      "id": "cumulative_gamma_flip"
+    },
+    {
+      "value": 83179.98,
       "labels": [
         "7d_vwap"
       ],
       "values": [
-        83153.64
+        83179.98
       ],
       "confluence_count": 1,
       "id": "7d_vwap"
@@ -72,30 +94,39 @@
       "id": "session_val"
     },
     {
-      "value": 83838.73,
+      "value": 83700.0,
       "labels": [
-        "24h_val",
-        "session_vwap"
+        "24h_val"
       ],
       "values": [
-        83800.0,
-        83877.45
+        83700.0
       ],
-      "confluence_count": 2,
-      "id": "24h_val+session_vwap"
+      "confluence_count": 1,
+      "id": "24h_val"
     },
     {
-      "value": 84112.26,
+      "value": 83976.63,
       "labels": [
-        "24h_vwap",
+        "session_vwap",
+        "24h_vwap"
+      ],
+      "values": [
+        83914.9,
+        84038.37
+      ],
+      "confluence_count": 2,
+      "id": "session_vwap+24h_vwap"
+    },
+    {
+      "value": 84175.0,
+      "labels": [
         "session_poc"
       ],
       "values": [
-        84049.53,
         84175.0
       ],
-      "confluence_count": 2,
-      "id": "24h_vwap+session_poc"
+      "confluence_count": 1,
+      "id": "session_poc"
     },
     {
       "value": 84325.0,
@@ -109,14 +140,14 @@
       "id": "24h_poc"
     },
     {
-      "value": 84600.0,
+      "value": 84625.0,
       "labels": [
         "session_vah",
         "24h_vah"
       ],
       "values": [
         84600.0,
-        84600.0
+        84650.0
       ],
       "confluence_count": 2,
       "id": "session_vah+24h_vah"
@@ -134,28 +165,26 @@
     }
   ],
   "nearest_below": {
-    "value": 84600.0,
+    "value": 83500.0,
     "labels": [
-      "session_vah",
-      "24h_vah"
+      "session_val"
     ],
     "values": [
-      84600.0,
-      84600.0
-    ],
-    "confluence_count": 2,
-    "id": "session_vah+24h_vah"
-  },
-  "nearest_above": {
-    "value": 85950.0,
-    "labels": [
-      "7d_vah"
-    ],
-    "values": [
-      85950.0
+      83500.0
     ],
     "confluence_count": 1,
-    "id": "7d_vah"
+    "id": "session_val"
+  },
+  "nearest_above": {
+    "value": 83700.0,
+    "labels": [
+      "24h_val"
+    ],
+    "values": [
+      83700.0
+    ],
+    "confluence_count": 1,
+    "id": "24h_val"
   },
   "rules": {
     "early_probe_r": [
@@ -187,7 +216,12 @@
       0.65
     ],
     "max_level_distance_pct": 0.7799999999999999,
-    "early_proximity_pct": 0.325
+    "early_proximity_pct": 0.325,
+    "minimum_core_stop_pct": 0.65,
+    "maximum_core_stop_pct": 1.7999999999999998,
+    "core_stop_recent_range_multiplier": 0.75,
+    "local_level_semantics": "checkpoint_not_automatic_take_profit",
+    "active_trade_invalidation": "core_hard_stop_not_5m_anchor_noise"
   },
   "semantics": {
     "strategic_bias": "Slow hourly day/trend direction; five-minute noise cannot flip it alone",
@@ -196,18 +230,17 @@
     "cumulative_gamma_flip": "tactical strike/OI balance level",
     "note": "Counter-trend trades require completed 15m acceptance plus strong aligned flow.",
     "core_swing": "Slow 2-5d trend position; local 5m noise is timing, not the core directional thesis",
-    "aggressiveness": "About 30% more permissive on trend-following entries; counter-trend gate and 1.25R cap unchanged"
+    "aggressiveness": "About 30% more permissive on trend-following entries; counter-trend gate and 1.25R cap unchanged",
+    "swing_geometry": "Hard stop is structure/volatility based for a 2-5d core swing; nearest local level is only a checkpoint",
+    "active_trade_management": "Once triggered, a 5m anchor wobble cannot invalidate the trade before the frozen core hard stop is breached"
   },
   "asset": "BTC",
   "core_swing": {
-    "status": "TREND_ACTIVE",
-    "direction": "long",
-    "score": 7.5,
+    "status": "NONE",
+    "direction": null,
+    "score": -2.0,
     "entry_bias_threshold": 5.5,
-    "starter_r": [
-      0.5,
-      0.65
-    ],
+    "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   }
