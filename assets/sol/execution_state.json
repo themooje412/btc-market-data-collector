@@ -1,50 +1,50 @@
 {
   "schema_version": "1.2.0",
   "asset": "SOL",
-  "state": "MISSED_DO_NOT_CHASE",
+  "state": "EARLY_SETUP",
   "direction": "long",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
-    "value": 115.33,
+    "value": 115.47,
     "labels": [
-      "session_poc",
+      "24h_vwap",
       "session_vah"
     ],
     "values": [
-      115.25,
-      115.4
+      115.44,
+      115.5
     ],
     "confluence_count": 2,
-    "id": "session_poc+session_vah"
+    "id": "24h_vwap+session_vah"
   },
   "flow_score": 4,
   "strategic_bias": "neutral",
-  "strategic_bias_score": 1.5,
+  "strategic_bias_score": 2.5,
   "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": 1.5,
+    "score": 2.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Trigger present but first-target R/R is below 1.45",
-  "context_timestamp": "2026-09-24T06:52:14.820Z",
-  "fast_timestamp": "2026-09-24T07:40:30.668Z",
-  "fast_spot": 115.46,
+  "reason": "Positive fast flow near structural zone under plus30 profile",
+  "context_timestamp": "2026-09-24T07:48:45.641Z",
+  "fast_timestamp": "2026-09-24T07:52:54.096Z",
+  "fast_spot": 115.61,
   "execution": {
-    "entry_reference": 115.46,
-    "hard_stop": 115.1,
-    "target1": 115.59,
-    "target2": 116.8,
-    "risk_usd": 0.36,
-    "risk_pct": 0.3097,
-    "rr_to_target1": 0.364
+    "entry_reference": 115.61,
+    "hard_stop": 115.3,
+    "target1": 116.5,
+    "target2": 118.05,
+    "risk_usd": 0.31,
+    "risk_pct": 0.2709,
+    "rr_to_target1": 2.842
   },
-  "signature": "SOL|MISSED_DO_NOT_CHASE|long|session_poc+session_vah|breakout|neutral",
-  "previous_state": null,
-  "state_changed_at": "2026-09-24T07:40:30.668Z"
+  "signature": "SOL|EARLY_SETUP|long|24h_vwap+session_vah|none|neutral",
+  "previous_state": "MISSED_DO_NOT_CHASE",
+  "state_changed_at": "2026-09-24T07:52:54.096Z"
 }
