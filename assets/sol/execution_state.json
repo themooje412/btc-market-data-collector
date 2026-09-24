@@ -1,25 +1,25 @@
 {
   "schema_version": "1.2.0",
   "asset": "SOL",
-  "state": "NO_TRADE",
-  "direction": null,
+  "state": "EARLY_SETUP",
+  "direction": "long",
   "setup_type": null,
   "event": "none",
   "anchor": {
-    "value": 114.55,
+    "value": 115.1,
     "labels": [
-      "24h_poc"
+      "session_vah"
     ],
     "values": [
-      114.55
+      115.1
     ],
     "confluence_count": 1,
-    "id": "24h_poc"
+    "id": "session_vah"
   },
-  "flow_score": -2,
+  "flow_score": 2,
   "strategic_bias": "bullish",
   "strategic_bias_score": 5.5,
-  "bias_alignment": "none",
+  "bias_alignment": "aligned",
   "core_swing": {
     "status": "EARLY_ENTRY_CANDIDATE",
     "direction": "long",
@@ -32,12 +32,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No executable trigger",
+  "reason": "Positive fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-24T13:50:20.572Z",
-  "fast_timestamp": "2026-09-24T13:54:50.066Z",
-  "fast_spot": 114.67,
-  "execution": null,
-  "signature": "SOL|NO_TRADE|none|24h_poc|none|bullish",
-  "previous_state": "MISSED_DO_NOT_CHASE",
-  "state_changed_at": "2026-09-24T13:54:50.066Z"
+  "fast_timestamp": "2026-09-24T14:08:42.284Z",
+  "fast_spot": 115.16,
+  "execution": {
+    "entry_reference": 115.16,
+    "hard_stop": 114.64,
+    "target1": 115.5,
+    "target2": null,
+    "risk_usd": 0.52,
+    "risk_pct": 0.4492,
+    "rr_to_target1": 0.657
+  },
+  "signature": "SOL|EARLY_SETUP|long|session_vah|none|bullish",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-24T14:08:42.284Z"
 }
