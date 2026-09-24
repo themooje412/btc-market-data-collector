@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "asset": "BTC",
-  "state": "MISSED_DO_NOT_CHASE",
+  "state": "EARLY_SETUP",
   "direction": "short",
-  "setup_type": "breakdown-retest/trend-pullback",
-  "event": "retest_hold_short",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 83550.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_val+24h_val"
   },
-  "flow_score": -4,
+  "flow_score": -2,
   "strategic_bias": "bearish",
   "strategic_bias_score": -4.0,
   "bias_alignment": "aligned",
@@ -31,20 +31,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Trigger present but first-target R/R is below 1.60",
+  "reason": "Negative fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-24T11:36:47.486Z",
-  "fast_timestamp": "2026-09-24T11:56:34.721Z",
-  "fast_spot": 83408.84,
+  "fast_timestamp": "2026-09-24T12:15:10.003Z",
+  "fast_spot": 83525.01,
   "execution": {
-    "entry_reference": 83408.84,
+    "entry_reference": 83525.01,
     "hard_stop": 83675.33,
     "target1": 83002.9,
     "target2": 81687.55,
-    "risk_usd": 266.49,
-    "risk_pct": 0.3195,
-    "rr_to_target1": 1.523
+    "risk_usd": 150.32,
+    "risk_pct": 0.18,
+    "rr_to_target1": 3.473
   },
-  "signature": "BTC|MISSED_DO_NOT_CHASE|short|session_val+24h_val|breakdown-retest/trend-pullback|bearish",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-24T11:56:34.721Z"
+  "signature": "BTC|EARLY_SETUP|short|session_val+24h_val|none|bearish",
+  "previous_state": "MISSED_DO_NOT_CHASE",
+  "state_changed_at": "2026-09-24T12:15:10.003Z"
 }
