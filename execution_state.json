@@ -1,30 +1,24 @@
 {
   "schema_version": "1.2.0",
   "asset": "BTC",
-  "state": "INVALIDATED",
-  "direction": "short",
+  "state": "EARLY_SETUP",
+  "direction": "long",
   "setup_type": null,
   "event": "none",
   "anchor": {
-    "value": 84326.86,
+    "value": 84172.21,
     "labels": [
-      "session_val",
-      "session_poc",
-      "24h_poc",
       "session_vwap",
-      "session_vah"
+      "session_poc"
     ],
     "values": [
-      84250.0,
-      84325.0,
-      84325.0,
-      84334.3,
-      84400.0
+      84169.42,
+      84175.0
     ],
-    "confluence_count": 5,
-    "id": "session_val+session_poc+24h_poc+session_vwap+session_vah"
+    "confluence_count": 2,
+    "id": "session_vwap+session_poc"
   },
-  "flow_score": 4,
+  "flow_score": 3,
   "strategic_bias": "neutral",
   "strategic_bias_score": -2.5,
   "bias_alignment": "neutral",
@@ -37,20 +31,20 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Anchor reclaimed with opposing fast flow",
+  "reason": "Positive fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-24T07:43:37.902Z",
-  "fast_timestamp": "2026-09-24T08:04:29.498Z",
-  "fast_spot": 84564.01,
+  "fast_timestamp": "2026-09-24T08:24:06.865Z",
+  "fast_spot": 84132.0,
   "execution": {
-    "entry_reference": 84564.01,
-    "hard_stop": 84654.32,
+    "entry_reference": 84132.0,
+    "hard_stop": 84045.95,
     "target1": 84387.5,
-    "target2": 84172.21,
-    "risk_usd": 90.31,
-    "risk_pct": 0.1068,
-    "rr_to_target1": 1.955
+    "target2": 84669.03,
+    "risk_usd": 86.05,
+    "risk_pct": 0.1023,
+    "rr_to_target1": 2.969
   },
-  "signature": "BTC|INVALIDATED|short|session_val+session_poc+24h_poc+session_vwap+session_vah|none|neutral",
-  "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-24T08:04:29.498Z"
+  "signature": "BTC|EARLY_SETUP|long|session_vwap+session_poc|none|neutral",
+  "previous_state": "INVALIDATED",
+  "state_changed_at": "2026-09-24T08:24:06.865Z"
 }
