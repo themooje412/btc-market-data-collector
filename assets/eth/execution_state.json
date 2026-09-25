@@ -3,8 +3,8 @@
   "asset": "ETH",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 2667.15,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_vwap+24h_vwap"
   },
-  "flow_score": 0,
+  "flow_score": -1,
   "strategic_bias": "neutral",
   "strategic_bias_score": -1.5,
   "bias_alignment": "neutral",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-25T15:47:54.349Z",
-  "fast_timestamp": "2026-09-25T15:57:17.090Z",
-  "fast_spot": 2679.36,
+  "fast_timestamp": "2026-09-25T16:14:52.566Z",
+  "fast_spot": 2693.05,
   "execution": {
-    "entry_reference": 2679.36,
+    "entry_reference": 2693.05,
     "hard_stop": 2644.028,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.85,
       "adaptive_stop_pct": 0.85,
-      "recent_1h_range_pct": 1.1256,
+      "recent_1h_range_pct": 1.1006,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 2690.84,
-    "checkpoint2": 2698.34,
-    "target1": 2751.0,
-    "target1_type": "structural",
-    "target2": 2785.356,
+    "checkpoint1": 2698.34,
+    "checkpoint2": 2706.0,
+    "target1": 2791.094,
+    "target1_type": "open_path_2r_projection",
+    "target2": 2840.116,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 35.332,
-    "risk_pct": 1.3187,
-    "rr_to_target1": 2.028,
+    "risk_usd": 49.022,
+    "risk_pct": 1.8203,
+    "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|breakout-retest/trend-pullback|neutral",
+  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|none|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-25T15:57:17.090Z"
+  "state_changed_at": "2026-09-25T16:14:52.566Z"
 }
