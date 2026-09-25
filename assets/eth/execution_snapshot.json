@@ -1,34 +1,34 @@
 {
   "schema_version": "1.3.0",
   "asset": "ETH",
-  "timestamp": "2026-09-25T22:11:10.764Z",
-  "window_end": "2026-09-25T22:11:00.000Z",
-  "collection_duration_seconds": 1.261,
+  "timestamp": "2026-09-25T22:26:42.240Z",
+  "window_end": "2026-09-25T22:26:00.000Z",
+  "collection_duration_seconds": 1.235,
   "status": "ok",
   "errors": {},
   "spot": {
     "binance": {
-      "value": 2685.36,
+      "value": 2688.69,
       "source": "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=ETHUSDT",
-      "timestamp": "2026-09-25T22:11:10.007Z",
+      "timestamp": "2026-09-25T22:26:41.006Z",
       "unit": "USDT",
       "status": "ok",
       "timestamp_kind": "exchange_rolling_ticker_close",
       "asset": "ETH"
     },
     "coinbase": {
-      "value": 2684.79,
+      "value": 2688.19,
       "source": "https://api.exchange.coinbase.com/products/ETH-USD/ticker",
-      "timestamp": "2026-09-25T22:11:08.260Z",
+      "timestamp": "2026-09-25T22:26:40.131Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade",
       "asset": "ETH"
     },
     "usdt_usd": {
-      "value": 0.9998,
+      "value": 0.99979,
       "source": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
-      "timestamp": "2026-09-25T22:11:07.978Z",
+      "timestamp": "2026-09-25T22:26:29.972Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade",
@@ -37,95 +37,95 @@
   },
   "premium": {
     "usd": {
-      "value": -0.5700000000001637,
+      "value": -0.5,
       "source": "Coinbase ETH-USD minus Binance ETHUSDT (unadjusted)",
-      "timestamp": "2026-09-25T22:11:08.260Z",
+      "timestamp": "2026-09-25T22:26:40.131Z",
       "unit": "USD",
       "status": "ok",
       "assumption": "1 USDT = 1 USD"
     },
     "bps": {
-      "value": -2.1226204307808403,
+      "value": -1.8596416842402805,
       "source": "Coinbase ETH-USD minus Binance ETHUSDT (unadjusted)",
-      "timestamp": "2026-09-25T22:11:08.260Z",
+      "timestamp": "2026-09-25T22:26:40.131Z",
       "unit": "bp",
       "status": "ok"
     },
     "pct": {
-      "value": -0.021226204307808402,
+      "value": -0.018596416842402805,
       "source": "Coinbase ETH-USD minus Binance ETHUSDT (unadjusted)",
-      "timestamp": "2026-09-25T22:11:08.260Z",
+      "timestamp": "2026-09-25T22:26:40.131Z",
       "unit": "%",
       "status": "ok"
     },
     "fx_adjusted": {
       "usd": {
-        "value": -0.03292800000008356,
+        "value": 0.06462490000012622,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-25T22:11:07.978Z",
+        "timestamp": "2026-09-25T22:26:29.972Z",
         "unit": "USD",
         "status": "ok",
         "assumption": null
       },
       "bps": {
-        "value": -0.12264495977249623,
+        "value": 0.24040880160852665,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-25T22:11:07.978Z",
+        "timestamp": "2026-09-25T22:26:29.972Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.0012264495977249623,
+        "value": 0.0024040880160852663,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-25T22:11:07.978Z",
+        "timestamp": "2026-09-25T22:26:29.972Z",
         "unit": "%",
         "status": "ok"
       }
     },
     "raw_coinbase_premium": {
       "usd": {
-        "value": -0.5700000000001637,
+        "value": -0.5,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT (unadjusted)",
-        "timestamp": "2026-09-25T22:11:08.260Z",
+        "timestamp": "2026-09-25T22:26:40.131Z",
         "unit": "USD",
         "status": "ok",
         "assumption": "1 USDT = 1 USD"
       },
       "bps": {
-        "value": -2.1226204307808403,
+        "value": -1.8596416842402805,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT (unadjusted)",
-        "timestamp": "2026-09-25T22:11:08.260Z",
+        "timestamp": "2026-09-25T22:26:40.131Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.021226204307808402,
+        "value": -0.018596416842402805,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT (unadjusted)",
-        "timestamp": "2026-09-25T22:11:08.260Z",
+        "timestamp": "2026-09-25T22:26:40.131Z",
         "unit": "%",
         "status": "ok"
       }
     },
     "fx_adjusted_coinbase_premium": {
       "usd": {
-        "value": -0.03292800000008356,
+        "value": 0.06462490000012622,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-25T22:11:07.978Z",
+        "timestamp": "2026-09-25T22:26:29.972Z",
         "unit": "USD",
         "status": "ok",
         "assumption": null
       },
       "bps": {
-        "value": -0.12264495977249623,
+        "value": 0.24040880160852665,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-25T22:11:07.978Z",
+        "timestamp": "2026-09-25T22:26:29.972Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.0012264495977249623,
+        "value": 0.0024040880160852663,
         "source": "Coinbase ETH-USD minus Binance ETHUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-25T22:11:07.978Z",
+        "timestamp": "2026-09-25T22:26:29.972Z",
         "unit": "%",
         "status": "ok"
       }
@@ -134,38 +134,38 @@
   },
   "binance_cvd": {
     "15m": {
-      "value": -122.40559999999999,
+      "value": 53.919,
       "source": "Binance ETHUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-25T22:11:00.000Z",
+      "timestamp": "2026-09-25T22:26:00.000Z",
       "unit": "ETH",
       "status": "ok",
       "quote_cvd": {
-        "value": -328459.066016,
+        "value": 144915.849524,
         "source": "Binance ETHUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-25T22:11:00.000Z",
+        "timestamp": "2026-09-25T22:26:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-25T21:56:00.000Z",
-      "window_end": "2026-09-25T22:11:00.000Z",
+      "window_start": "2026-09-25T22:11:00.000Z",
+      "window_end": "2026-09-25T22:26:00.000Z",
       "coverage_minutes": 15,
       "expected_minutes": 15
     },
     "1h": {
-      "value": -1150.0891,
+      "value": -716.0387,
       "source": "Binance ETHUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-25T22:11:00.000Z",
+      "timestamp": "2026-09-25T22:26:00.000Z",
       "unit": "ETH",
       "status": "ok",
       "quote_cvd": {
-        "value": -3083235.31319,
+        "value": -1919816.288798,
         "source": "Binance ETHUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-25T22:11:00.000Z",
+        "timestamp": "2026-09-25T22:26:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-25T21:11:00.000Z",
-      "window_end": "2026-09-25T22:11:00.000Z",
+      "window_start": "2026-09-25T21:26:00.000Z",
+      "window_end": "2026-09-25T22:26:00.000Z",
       "coverage_minutes": 60,
       "expected_minutes": 60
     }
@@ -175,46 +175,46 @@
     "instrument_type": "reversed",
     "settlement_currency": "ETH",
     "mark_price": {
-      "value": 2684.91,
+      "value": 2688.15,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-PERPETUAL",
-      "timestamp": "2026-09-25T22:11:10.695Z",
+      "timestamp": "2026-09-25T22:26:42.030Z",
       "unit": "USD",
       "status": "ok"
     },
     "index_price": {
-      "value": 2684.79,
+      "value": 2688.19,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-PERPETUAL",
-      "timestamp": "2026-09-25T22:11:10.695Z",
+      "timestamp": "2026-09-25T22:26:42.030Z",
       "unit": "USD",
       "status": "ok"
     },
     "oi": {
-      "value": 242529784.0,
+      "value": 242526176.0,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-PERPETUAL",
-      "timestamp": "2026-09-25T22:11:10.695Z",
+      "timestamp": "2026-09-25T22:26:42.030Z",
       "unit": "USD",
       "status": "ok"
     },
     "funding": {
       "value": 1e-06,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-PERPETUAL",
-      "timestamp": "2026-09-25T22:11:10.695Z",
+      "timestamp": "2026-09-25T22:26:42.030Z",
       "unit": "fraction",
       "status": "ok",
       "kind": "Deribit funding_8h; not interchangeable with Binance settlement rate"
     },
     "basis": {
       "absolute": {
-        "value": 0.11999999999989086,
+        "value": -0.03999999999996362,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-PERPETUAL",
-        "timestamp": "2026-09-25T22:11:10.695Z",
+        "timestamp": "2026-09-25T22:26:42.030Z",
         "unit": "quote currency",
         "status": "ok"
       },
       "bps": {
-        "value": 0.446962332250056,
+        "value": -0.14879900602227103,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-PERPETUAL",
-        "timestamp": "2026-09-25T22:11:10.695Z",
+        "timestamp": "2026-09-25T22:26:42.030Z",
         "unit": "bp",
         "status": "ok"
       },
@@ -229,36 +229,6 @@
     }
   },
   "candles_5m": [
-    {
-      "start": "2026-09-25T21:10:00.000Z",
-      "end": "2026-09-25T21:15:00.000Z",
-      "open": 2679.25,
-      "high": 2680.74,
-      "low": 2678.38,
-      "close": 2679.33,
-      "quote_volume": 986448.944033,
-      "quote_cvd": -308244.57517300005
-    },
-    {
-      "start": "2026-09-25T21:15:00.000Z",
-      "end": "2026-09-25T21:20:00.000Z",
-      "open": 2679.33,
-      "high": 2679.72,
-      "low": 2677.36,
-      "close": 2677.82,
-      "quote_volume": 1441031.1676,
-      "quote_cvd": -538258.130694
-    },
-    {
-      "start": "2026-09-25T21:20:00.000Z",
-      "end": "2026-09-25T21:25:00.000Z",
-      "open": 2677.59,
-      "high": 2679.17,
-      "low": 2677.45,
-      "close": 2679.17,
-      "quote_volume": 418494.233962,
-      "quote_cvd": 15266.171032000013
-    },
     {
       "start": "2026-09-25T21:25:00.000Z",
       "end": "2026-09-25T21:30:00.000Z",
@@ -348,19 +318,39 @@
       "close": 2685.17,
       "quote_volume": 555453.429367,
       "quote_cvd": -90154.776207
+    },
+    {
+      "start": "2026-09-25T22:10:00.000Z",
+      "end": "2026-09-25T22:15:00.000Z",
+      "open": 2685.17,
+      "high": 2685.81,
+      "low": 2685.17,
+      "close": 2685.7,
+      "quote_volume": 433455.64627100003,
+      "quote_cvd": -171482.93899700002
+    },
+    {
+      "start": "2026-09-25T22:15:00.000Z",
+      "end": "2026-09-25T22:20:00.000Z",
+      "open": 2685.71,
+      "high": 2688.0,
+      "low": 2685.7,
+      "close": 2687.86,
+      "quote_volume": 707239.844927,
+      "quote_cvd": 190790.43122300002
+    },
+    {
+      "start": "2026-09-25T22:20:00.000Z",
+      "end": "2026-09-25T22:25:00.000Z",
+      "open": 2687.86,
+      "high": 2688.5,
+      "low": 2686.95,
+      "close": 2688.49,
+      "quote_volume": 445010.714911,
+      "quote_cvd": 117915.622037
     }
   ],
   "candles_15m": [
-    {
-      "start": "2026-09-25T21:15:00.000Z",
-      "end": "2026-09-25T21:30:00.000Z",
-      "open": 2679.33,
-      "high": 2681.17,
-      "low": 2677.36,
-      "close": 2680.89,
-      "quote_volume": 2591822.757352,
-      "quote_cvd": -768576.833684
-    },
     {
       "start": "2026-09-25T21:30:00.000Z",
       "end": "2026-09-25T21:45:00.000Z",
@@ -380,6 +370,16 @@
       "close": 2681.48,
       "quote_volume": 1853647.927254,
       "quote_cvd": -651800.336962
+    },
+    {
+      "start": "2026-09-25T22:00:00.000Z",
+      "end": "2026-09-25T22:15:00.000Z",
+      "open": 2681.47,
+      "high": 2685.81,
+      "low": 2680.18,
+      "close": 2685.7,
+      "quote_volume": 1795693.386283,
+      "quote_cvd": -480115.245689
     }
   ]
 }
