@@ -3,8 +3,8 @@
   "asset": "SOL",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
     "value": 116.1,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_vah"
   },
-  "flow_score": 2,
+  "flow_score": 4,
   "strategic_bias": "bullish",
   "strategic_bias_score": 3.5,
   "bias_alignment": "aligned",
@@ -31,31 +31,31 @@
   },
   "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-25T06:53:00.655Z",
-  "fast_timestamp": "2026-09-25T07:25:15.601Z",
-  "fast_spot": 116.49,
+  "fast_timestamp": "2026-09-25T07:40:34.671Z",
+  "fast_spot": 116.0,
   "execution": {
-    "entry_reference": 116.49,
-    "hard_stop": 115.3251,
+    "entry_reference": 116.0,
+    "hard_stop": 114.84,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.0,
       "adaptive_stop_pct": 1.0,
-      "recent_1h_range_pct": 0.6352,
+      "recent_1h_range_pct": 0.6552,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 117.13,
-    "checkpoint2": 117.5,
-    "target1": 119.3,
+    "checkpoint1": 116.2,
+    "checkpoint2": 116.45,
+    "target1": 117.9,
     "target1_type": "structural",
-    "target2": 119.9847,
-    "target2_type": "open_path_3r_projection",
-    "risk_usd": 1.1649,
+    "target2": 119.3,
+    "target2_type": "structural",
+    "risk_usd": 1.16,
     "risk_pct": 1.0,
-    "rr_to_target1": 2.412,
+    "rr_to_target1": 1.638,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "SOL|HOLD_MANAGE|long|session_vah|none|bullish",
-  "previous_state": "ADD_ALLOWED",
-  "state_changed_at": "2026-09-25T07:07:56.867Z"
+  "signature": "SOL|HOLD_MANAGE|long|session_vah|breakdown|bullish",
+  "previous_state": "HOLD_MANAGE",
+  "state_changed_at": "2026-09-25T07:40:34.671Z"
 }
