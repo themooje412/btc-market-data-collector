@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakdown-retest/trend-pullback",
+  "event": "retest_hold_short",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_poc+24h_poc"
   },
-  "flow_score": -2,
+  "flow_score": 2,
   "strategic_bias": "bullish",
   "strategic_bias_score": 4.0,
   "bias_alignment": "countertrend_confirmed",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-25T12:42:07.303Z",
-  "fast_timestamp": "2026-09-25T13:11:11.211Z",
-  "fast_spot": 84434.0,
+  "fast_timestamp": "2026-09-25T13:28:55.200Z",
+  "fast_spot": 84200.0,
   "execution": {
-    "entry_reference": 84434.0,
-    "hard_stop": 85016.0075,
+    "entry_reference": 84200.0,
+    "hard_stop": 84747.3,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
-      "adaptive_stop_pct": 0.6893,
-      "recent_1h_range_pct": 0.9191,
+      "adaptive_stop_pct": 0.65,
+      "recent_1h_range_pct": 0.4501,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 84225.0,
-    "checkpoint2": 84000.0,
-    "target1": 83269.985,
+    "checkpoint1": 84000.0,
+    "checkpoint2": 83839.57,
+    "target1": 83105.4,
     "target1_type": "open_path_2r_projection",
-    "target2": 82687.9775,
+    "target2": 82558.1,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 582.0075,
-    "risk_pct": 0.6893,
+    "risk_usd": 547.3,
+    "risk_pct": 0.65,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|bullish",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakdown-retest/trend-pullback|bullish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-25T12:55:17.412Z"
+  "state_changed_at": "2026-09-25T13:28:55.200Z"
 }
