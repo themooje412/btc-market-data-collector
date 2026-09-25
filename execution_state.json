@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakdown",
-  "event": "cross_down",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_poc+24h_poc"
   },
-  "flow_score": 1,
+  "flow_score": -3,
   "strategic_bias": "neutral",
   "strategic_bias_score": 0.75,
   "bias_alignment": "neutral",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-25T03:36:03.196Z",
-  "fast_timestamp": "2026-09-25T03:46:33.863Z",
-  "fast_spot": 84165.68,
+  "fast_timestamp": "2026-09-25T03:58:21.391Z",
+  "fast_spot": 84231.2,
   "execution": {
-    "entry_reference": 84165.68,
-    "hard_stop": 84712.75692,
+    "entry_reference": 84231.2,
+    "hard_stop": 84778.7028,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.5012,
+      "recent_1h_range_pct": 0.3822,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 84086.61,
     "checkpoint2": 83679.67,
-    "target1": 83071.52616,
+    "target1": 83136.1944,
     "target1_type": "open_path_2r_projection",
-    "target2": 82524.44924,
+    "target2": 82588.6916,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 547.07692,
+    "risk_usd": 547.5028,
     "risk_pct": 0.65,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakdown|neutral",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-25T03:46:33.863Z"
+  "state_changed_at": "2026-09-25T03:58:21.391Z"
 }
