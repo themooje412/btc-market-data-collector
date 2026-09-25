@@ -1,10 +1,10 @@
 {
   "schema_version": "1.3.0",
   "asset": "SOL",
-  "state": "HOLD_MANAGE",
+  "state": "ADD_ALLOWED",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 116.1,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_vah"
   },
-  "flow_score": -1,
+  "flow_score": 4,
   "strategic_bias": "neutral",
   "strategic_bias_score": 0.5,
   "bias_alignment": "neutral",
@@ -29,33 +29,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Triggered long thesis remains tied to original anchor",
+  "reason": "Retest held and fast flow strengthened",
   "context_timestamp": "2026-09-25T05:48:28.197Z",
-  "fast_timestamp": "2026-09-25T06:14:55.656Z",
-  "fast_spot": 116.34,
+  "fast_timestamp": "2026-09-25T06:37:35.634Z",
+  "fast_spot": 116.21,
   "execution": {
-    "entry_reference": 116.34,
-    "hard_stop": 115.1766,
+    "entry_reference": 116.21,
+    "hard_stop": 115.0479,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.0,
       "adaptive_stop_pct": 1.0,
-      "recent_1h_range_pct": 0.4384,
+      "recent_1h_range_pct": 0.5507,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 116.5,
     "checkpoint2": 117.17,
     "target1": 119.3,
     "target1_type": "structural",
-    "target2": 119.8302,
+    "target2": 119.6963,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 1.1634,
+    "risk_usd": 1.1621,
     "risk_pct": 1.0,
-    "rr_to_target1": 2.544,
+    "rr_to_target1": 2.659,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "SOL|HOLD_MANAGE|long|session_vah|none|neutral",
+  "signature": "SOL|ADD_ALLOWED|long|session_vah|breakout-retest/trend-pullback|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-25T05:56:17.252Z"
+  "state_changed_at": "2026-09-25T06:37:35.634Z"
 }
