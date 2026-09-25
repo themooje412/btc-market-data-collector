@@ -3,8 +3,8 @@
   "asset": "ETH",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 2667.15,
     "labels": [
@@ -18,46 +18,46 @@
     "confluence_count": 2,
     "id": "session_vwap+24h_vwap"
   },
-  "flow_score": -2,
+  "flow_score": -3,
   "strategic_bias": "neutral",
-  "strategic_bias_score": -1.0,
+  "strategic_bias_score": -1.5,
   "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -1.0,
+    "score": -1.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
   "reason": "Triggered long thesis remains tied to original anchor",
-  "context_timestamp": "2026-09-25T06:52:46.686Z",
-  "fast_timestamp": "2026-09-25T07:40:32.996Z",
-  "fast_spot": 2668.68,
+  "context_timestamp": "2026-09-25T07:48:25.969Z",
+  "fast_timestamp": "2026-09-25T07:53:11.117Z",
+  "fast_spot": 2671.54,
   "execution": {
-    "entry_reference": 2668.68,
-    "hard_stop": 2645.99622,
+    "entry_reference": 2671.54,
+    "hard_stop": 2648.83191,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.85,
       "adaptive_stop_pct": 0.85,
-      "recent_1h_range_pct": 0.4849,
+      "recent_1h_range_pct": 0.5042,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 2672.48,
-    "checkpoint2": 2679.0,
+    "checkpoint1": 2673.03,
+    "checkpoint2": 2680.49,
     "target1": 2751.0,
     "target1_type": "structural",
-    "target2": 2736.73134,
+    "target2": 2739.66427,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 22.68378,
+    "risk_usd": 22.70809,
     "risk_pct": 0.85,
-    "rr_to_target1": 3.629,
+    "rr_to_target1": 3.499,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|none|neutral",
+  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|breakout-retest/trend-pullback|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-25T00:54:01.942Z"
+  "state_changed_at": "2026-09-25T07:53:11.117Z"
 }
