@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-26T14:46:29.287Z",
-  "context_spot": 2688.19,
+  "context_timestamp": "2026-09-26T15:47:14.892Z",
+  "context_spot": 2690.98,
   "strategic_bias": {
     "value": "neutral",
-    "score": -1.5,
+    "score": -0.25,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,31 +17,31 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 2697.6462960896515,
+        "value": 2697.842798686157,
         "score": -1.0
       },
       "24h_vwap": {
-        "value": 2688.326108847646,
-        "score": -1.0
+        "value": 2688.5136204281766,
+        "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": -6649398.43715,
+        "value": -4980906.797687,
         "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": 329078.6371879999,
+        "value": 1820789.680657,
         "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": 1337910.4441854372,
-        "score": 1.25
+        "value": null,
+        "score": 0.0
       },
       "coinbase_1h_cvd": {
-        "value": -7436.126923471258,
-        "score": -0.5
+        "value": null,
+        "score": 0.0
       },
       "fx_adjusted_premium_bps": {
-        "value": 0.5517385791049843,
+        "value": 1.165234217330418,
         "score": 0.5
       }
     },
@@ -61,48 +61,39 @@
       "id": "7d_val"
     },
     {
-      "value": 2686.32,
+      "value": 2688.75,
       "labels": [
         "session_val",
         "24h_val",
-        "session_poc",
         "session_vwap",
-        "24h_vwap"
-      ],
-      "values": [
-        2684.0,
-        2684.0,
-        2687.0,
-        2688.29,
-        2688.33
-      ],
-      "confluence_count": 5,
-      "id": "session_val+24h_val+session_poc+session_vwap+24h_vwap"
-    },
-    {
-      "value": 2691.33,
-      "labels": [
+        "24h_vwap",
+        "session_poc",
         "24h_poc",
         "7d_poc",
         "session_vah"
       ],
       "values": [
+        2684.0,
+        2686.0,
+        2688.51,
+        2688.51,
+        2689.0,
         2691.0,
         2691.0,
         2692.0
       ],
-      "confluence_count": 3,
-      "id": "24h_poc+7d_poc+session_vah"
+      "confluence_count": 8,
+      "id": "session_val+24h_val+session_vwap+24h_vwap+session_poc+24h_poc+7d_poc+session_vah"
     },
     {
-      "value": 2696.82,
+      "value": 2696.92,
       "labels": [
         "24h_vah",
         "7d_vwap"
       ],
       "values": [
         2696.0,
-        2697.65
+        2697.84
       ],
       "confluence_count": 2,
       "id": "24h_vah+7d_vwap"
@@ -120,38 +111,42 @@
     }
   ],
   "nearest_below": {
-    "value": 2686.32,
+    "value": 2688.75,
     "labels": [
       "session_val",
       "24h_val",
-      "session_poc",
       "session_vwap",
-      "24h_vwap"
-    ],
-    "values": [
-      2684.0,
-      2684.0,
-      2687.0,
-      2688.29,
-      2688.33
-    ],
-    "confluence_count": 5,
-    "id": "session_val+24h_val+session_poc+session_vwap+24h_vwap"
-  },
-  "nearest_above": {
-    "value": 2691.33,
-    "labels": [
+      "24h_vwap",
+      "session_poc",
       "24h_poc",
       "7d_poc",
       "session_vah"
     ],
     "values": [
+      2684.0,
+      2686.0,
+      2688.51,
+      2688.51,
+      2689.0,
       2691.0,
       2691.0,
       2692.0
     ],
-    "confluence_count": 3,
-    "id": "24h_poc+7d_poc+session_vah"
+    "confluence_count": 8,
+    "id": "session_val+24h_val+session_vwap+24h_vwap+session_poc+24h_poc+7d_poc+session_vah"
+  },
+  "nearest_above": {
+    "value": 2696.92,
+    "labels": [
+      "24h_vah",
+      "7d_vwap"
+    ],
+    "values": [
+      2696.0,
+      2697.84
+    ],
+    "confluence_count": 2,
+    "id": "24h_vah+7d_vwap"
   },
   "rules": {
     "early_probe_r": [
@@ -205,7 +200,7 @@
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -1.5,
+    "score": -0.25,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
