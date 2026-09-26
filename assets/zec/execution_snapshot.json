@@ -1,25 +1,25 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "timestamp": "2026-09-26T07:54:01.223Z",
-  "window_end": "2026-09-26T07:53:00.000Z",
-  "collection_duration_seconds": 1.231,
+  "timestamp": "2026-09-26T08:08:00.108Z",
+  "window_end": "2026-09-26T08:07:00.000Z",
+  "collection_duration_seconds": 1.176,
   "status": "ok",
   "errors": {},
   "spot": {
     "binance": {
-      "value": 1532.88,
+      "value": 1531.32,
       "source": "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=ZECUSDT",
-      "timestamp": "2026-09-26T07:53:59.397Z",
+      "timestamp": "2026-09-26T08:07:55.472Z",
       "unit": "USDT",
       "status": "ok",
       "timestamp_kind": "exchange_rolling_ticker_close",
       "asset": "ZEC"
     },
     "coinbase": {
-      "value": 1532.47,
+      "value": 1530.26,
       "source": "https://api.exchange.coinbase.com/products/ZEC-USD/ticker",
-      "timestamp": "2026-09-26T07:53:59.198Z",
+      "timestamp": "2026-09-26T08:07:54.642Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade",
@@ -28,7 +28,7 @@
     "usdt_usd": {
       "value": 0.99977,
       "source": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
-      "timestamp": "2026-09-26T07:53:59.065Z",
+      "timestamp": "2026-09-26T08:06:34.214Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade",
@@ -37,135 +37,139 @@
   },
   "premium": {
     "usd": {
-      "value": -0.41000000000008185,
+      "value": -1.0599999999999454,
       "source": "Coinbase ZEC-USD minus Binance ZECUSDT (unadjusted)",
-      "timestamp": "2026-09-26T07:53:59.198Z",
+      "timestamp": "2026-09-26T08:07:54.642Z",
       "unit": "USD",
       "status": "ok",
       "assumption": "1 USDT = 1 USD"
     },
     "bps": {
-      "value": -2.6747038254793707,
+      "value": -6.92213253924683,
       "source": "Coinbase ZEC-USD minus Binance ZECUSDT (unadjusted)",
-      "timestamp": "2026-09-26T07:53:59.198Z",
+      "timestamp": "2026-09-26T08:07:54.642Z",
       "unit": "bp",
       "status": "ok"
     },
     "pct": {
-      "value": -0.026747038254793708,
+      "value": -0.0692213253924683,
       "source": "Coinbase ZEC-USD minus Binance ZECUSDT (unadjusted)",
-      "timestamp": "2026-09-26T07:53:59.198Z",
+      "timestamp": "2026-09-26T08:07:54.642Z",
       "unit": "%",
       "status": "ok"
     },
     "fx_adjusted": {
       "usd": {
-        "value": -0.05743760000018483,
+        "value": null,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:59.065Z",
+        "timestamp": null,
         "unit": "USD",
-        "status": "ok",
-        "assumption": null
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       },
       "bps": {
-        "value": -0.3747900271862958,
+        "value": null,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:59.065Z",
+        "timestamp": null,
         "unit": "bp",
-        "status": "ok"
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       },
       "pct": {
-        "value": -0.003747900271862958,
+        "value": null,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:59.065Z",
+        "timestamp": null,
         "unit": "%",
-        "status": "ok"
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       }
     },
     "raw_coinbase_premium": {
       "usd": {
-        "value": -0.41000000000008185,
+        "value": -1.0599999999999454,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT (unadjusted)",
-        "timestamp": "2026-09-26T07:53:59.198Z",
+        "timestamp": "2026-09-26T08:07:54.642Z",
         "unit": "USD",
         "status": "ok",
         "assumption": "1 USDT = 1 USD"
       },
       "bps": {
-        "value": -2.6747038254793707,
+        "value": -6.92213253924683,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT (unadjusted)",
-        "timestamp": "2026-09-26T07:53:59.198Z",
+        "timestamp": "2026-09-26T08:07:54.642Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.026747038254793708,
+        "value": -0.0692213253924683,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT (unadjusted)",
-        "timestamp": "2026-09-26T07:53:59.198Z",
+        "timestamp": "2026-09-26T08:07:54.642Z",
         "unit": "%",
         "status": "ok"
       }
     },
     "fx_adjusted_coinbase_premium": {
       "usd": {
-        "value": -0.05743760000018483,
+        "value": null,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:59.065Z",
+        "timestamp": null,
         "unit": "USD",
-        "status": "ok",
-        "assumption": null
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       },
       "bps": {
-        "value": -0.3747900271862958,
+        "value": null,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:59.065Z",
+        "timestamp": null,
         "unit": "bp",
-        "status": "ok"
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       },
       "pct": {
-        "value": -0.003747900271862958,
+        "value": null,
         "source": "Coinbase ZEC-USD minus Binance ZECUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:59.065Z",
+        "timestamp": null,
         "unit": "%",
-        "status": "ok"
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       }
     },
     "methodology": "ZEC price difference; not the CoinGlass Coinbase Premium Index"
   },
   "binance_cvd": {
     "15m": {
-      "value": -295.883,
+      "value": -63.55599999999999,
       "source": "Binance ZECUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-26T07:53:00.000Z",
+      "timestamp": "2026-09-26T08:07:00.000Z",
       "unit": "ZEC",
       "status": "ok",
       "quote_cvd": {
-        "value": -453710.62463000003,
+        "value": -97376.17430999997,
         "source": "Binance ZECUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-26T07:53:00.000Z",
+        "timestamp": "2026-09-26T08:07:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-26T07:38:00.000Z",
-      "window_end": "2026-09-26T07:53:00.000Z",
+      "window_start": "2026-09-26T07:52:00.000Z",
+      "window_end": "2026-09-26T08:07:00.000Z",
       "coverage_minutes": 15,
       "expected_minutes": 15
     },
     "1h": {
-      "value": -376.1549999999999,
+      "value": -467.0949999999999,
       "source": "Binance ZECUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-26T07:53:00.000Z",
+      "timestamp": "2026-09-26T08:07:00.000Z",
       "unit": "ZEC",
       "status": "ok",
       "quote_cvd": {
-        "value": -575963.40559,
+        "value": -715953.7960399999,
         "source": "Binance ZECUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-26T07:53:00.000Z",
+        "timestamp": "2026-09-26T08:07:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-26T06:53:00.000Z",
-      "window_end": "2026-09-26T07:53:00.000Z",
+      "window_start": "2026-09-26T07:07:00.000Z",
+      "window_end": "2026-09-26T08:07:00.000Z",
       "coverage_minutes": 60,
       "expected_minutes": 60
     }
@@ -175,46 +179,46 @@
     "instrument_type": "linear",
     "settlement_currency": "USDC",
     "mark_price": {
-      "value": 1533.5897,
+      "value": 1531.7192,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ZEC_USDC-PERPETUAL",
-      "timestamp": "2026-09-26T07:54:01.022Z",
+      "timestamp": "2026-09-26T08:07:59.943Z",
       "unit": "USD",
       "status": "ok"
     },
     "index_price": {
-      "value": 1532.6695,
+      "value": 1530.8012,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ZEC_USDC-PERPETUAL",
-      "timestamp": "2026-09-26T07:54:01.022Z",
+      "timestamp": "2026-09-26T08:07:59.943Z",
       "unit": "USD",
       "status": "ok"
     },
     "oi": {
-      "value": 400.998,
+      "value": 401.304,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ZEC_USDC-PERPETUAL",
-      "timestamp": "2026-09-26T07:54:01.022Z",
+      "timestamp": "2026-09-26T08:07:59.943Z",
       "unit": "ZEC",
       "status": "ok"
     },
     "funding": {
-      "value": 0.00020261,
+      "value": 0.00020635,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ZEC_USDC-PERPETUAL",
-      "timestamp": "2026-09-26T07:54:01.022Z",
+      "timestamp": "2026-09-26T08:07:59.943Z",
       "unit": "fraction",
       "status": "ok",
       "kind": "Deribit funding_8h; not interchangeable with Binance settlement rate"
     },
     "basis": {
       "absolute": {
-        "value": 0.9202000000000226,
+        "value": 0.9179999999998927,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ZEC_USDC-PERPETUAL",
-        "timestamp": "2026-09-26T07:54:01.022Z",
+        "timestamp": "2026-09-26T08:07:59.943Z",
         "unit": "quote currency",
         "status": "ok"
       },
       "bps": {
-        "value": 6.00390364654535,
+        "value": 5.996859683672362,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ZEC_USDC-PERPETUAL",
-        "timestamp": "2026-09-26T07:54:01.022Z",
+        "timestamp": "2026-09-26T08:07:59.943Z",
         "unit": "bp",
         "status": "ok"
       },
@@ -229,36 +233,6 @@
     }
   },
   "candles_5m": [
-    {
-      "start": "2026-09-26T06:50:00.000Z",
-      "end": "2026-09-26T06:55:00.000Z",
-      "open": 1532.54,
-      "high": 1532.87,
-      "low": 1530.14,
-      "close": 1531.2,
-      "quote_volume": 238624.45453,
-      "quote_cvd": -102473.28505
-    },
-    {
-      "start": "2026-09-26T06:55:00.000Z",
-      "end": "2026-09-26T07:00:00.000Z",
-      "open": 1531.2,
-      "high": 1533.93,
-      "low": 1530.07,
-      "close": 1532.17,
-      "quote_volume": 494167.81704999995,
-      "quote_cvd": 60872.76285000003
-    },
-    {
-      "start": "2026-09-26T07:00:00.000Z",
-      "end": "2026-09-26T07:05:00.000Z",
-      "open": 1532.18,
-      "high": 1538.74,
-      "low": 1532.18,
-      "close": 1538.56,
-      "quote_volume": 367374.81196,
-      "quote_cvd": 124305.98858
-    },
     {
       "start": "2026-09-26T07:05:00.000Z",
       "end": "2026-09-26T07:10:00.000Z",
@@ -348,19 +322,39 @@
       "close": 1532.75,
       "quote_volume": 547102.1372,
       "quote_cvd": -196488.59298000002
+    },
+    {
+      "start": "2026-09-26T07:50:00.000Z",
+      "end": "2026-09-26T07:55:00.000Z",
+      "open": 1532.68,
+      "high": 1533.11,
+      "low": 1531.29,
+      "close": 1532.29,
+      "quote_volume": 235928.42403999998,
+      "quote_cvd": -46478.21977999999
+    },
+    {
+      "start": "2026-09-26T07:55:00.000Z",
+      "end": "2026-09-26T08:00:00.000Z",
+      "open": 1532.4,
+      "high": 1534.66,
+      "low": 1532.4,
+      "close": 1533.85,
+      "quote_volume": 202130.41057,
+      "quote_cvd": 42050.782490000005
+    },
+    {
+      "start": "2026-09-26T08:00:00.000Z",
+      "end": "2026-09-26T08:05:00.000Z",
+      "open": 1533.85,
+      "high": 1534.55,
+      "low": 1531.12,
+      "close": 1531.21,
+      "quote_volume": 278299.46864,
+      "quote_cvd": -6022.7377599999945
     }
   ],
   "candles_15m": [
-    {
-      "start": "2026-09-26T06:45:00.000Z",
-      "end": "2026-09-26T07:00:00.000Z",
-      "open": 1532.6,
-      "high": 1533.93,
-      "low": 1527.56,
-      "close": 1532.17,
-      "quote_volume": 1149044.14854,
-      "quote_cvd": -32055.681519999973
-    },
     {
       "start": "2026-09-26T07:00:00.000Z",
       "end": "2026-09-26T07:15:00.000Z",
@@ -390,6 +384,16 @@
       "close": 1533.07,
       "quote_volume": 988999.05956,
       "quote_cvd": -354734.68452
+    },
+    {
+      "start": "2026-09-26T07:45:00.000Z",
+      "end": "2026-09-26T08:00:00.000Z",
+      "open": 1533.06,
+      "high": 1534.84,
+      "low": 1531.29,
+      "close": 1533.85,
+      "quote_volume": 985160.97181,
+      "quote_cvd": -200916.03027
     }
   ]
 }

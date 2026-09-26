@@ -1,25 +1,25 @@
 {
   "schema_version": "1.3.0",
   "asset": "SOL",
-  "timestamp": "2026-09-26T07:53:59.935Z",
-  "window_end": "2026-09-26T07:53:00.000Z",
-  "collection_duration_seconds": 1.302,
+  "timestamp": "2026-09-26T08:07:58.875Z",
+  "window_end": "2026-09-26T08:07:00.000Z",
+  "collection_duration_seconds": 1.218,
   "status": "ok",
   "errors": {},
   "spot": {
     "binance": {
-      "value": 120.64,
+      "value": 120.58,
       "source": "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=SOLUSDT",
-      "timestamp": "2026-09-26T07:53:58.761Z",
+      "timestamp": "2026-09-26T08:07:57.789Z",
       "unit": "USDT",
       "status": "ok",
       "timestamp_kind": "exchange_rolling_ticker_close",
       "asset": "SOL"
     },
     "coinbase": {
-      "value": 120.62,
+      "value": 120.55,
       "source": "https://api.exchange.coinbase.com/products/SOL-USD/ticker",
-      "timestamp": "2026-09-26T07:53:50.862Z",
+      "timestamp": "2026-09-26T08:07:56.941Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade",
@@ -28,7 +28,7 @@
     "usdt_usd": {
       "value": 0.99977,
       "source": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
-      "timestamp": "2026-09-26T07:53:58.061Z",
+      "timestamp": "2026-09-26T08:06:34.214Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade",
@@ -37,135 +37,139 @@
   },
   "premium": {
     "usd": {
-      "value": -0.01999999999999602,
+      "value": -0.030000000000001137,
       "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-      "timestamp": "2026-09-26T07:53:50.862Z",
+      "timestamp": "2026-09-26T08:07:56.941Z",
       "unit": "USD",
       "status": "ok",
       "assumption": "1 USDT = 1 USD"
     },
     "bps": {
-      "value": -1.6578249336866726,
+      "value": -2.4879747885222376,
       "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-      "timestamp": "2026-09-26T07:53:50.862Z",
+      "timestamp": "2026-09-26T08:07:56.941Z",
       "unit": "bp",
       "status": "ok"
     },
     "pct": {
-      "value": -0.016578249336866725,
+      "value": -0.024879747885222375,
       "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-      "timestamp": "2026-09-26T07:53:50.862Z",
+      "timestamp": "2026-09-26T08:07:56.941Z",
       "unit": "%",
       "status": "ok"
     },
     "fx_adjusted": {
       "usd": {
-        "value": 0.0077471999999971786,
+        "value": null,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": null,
         "unit": "USD",
-        "status": "ok",
-        "assumption": null
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       },
       "bps": {
-        "value": 0.6423228005568915,
+        "value": null,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": null,
         "unit": "bp",
-        "status": "ok"
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       },
       "pct": {
-        "value": 0.006423228005568915,
+        "value": null,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": null,
         "unit": "%",
-        "status": "ok"
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       }
     },
     "raw_coinbase_premium": {
       "usd": {
-        "value": -0.01999999999999602,
+        "value": -0.030000000000001137,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": "2026-09-26T08:07:56.941Z",
         "unit": "USD",
         "status": "ok",
         "assumption": "1 USDT = 1 USD"
       },
       "bps": {
-        "value": -1.6578249336866726,
+        "value": -2.4879747885222376,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": "2026-09-26T08:07:56.941Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.016578249336866725,
+        "value": -0.024879747885222375,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": "2026-09-26T08:07:56.941Z",
         "unit": "%",
         "status": "ok"
       }
     },
     "fx_adjusted_coinbase_premium": {
       "usd": {
-        "value": 0.0077471999999971786,
+        "value": null,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": null,
         "unit": "USD",
-        "status": "ok",
-        "assumption": null
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       },
       "bps": {
-        "value": 0.6423228005568915,
+        "value": null,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": null,
         "unit": "bp",
-        "status": "ok"
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       },
       "pct": {
-        "value": 0.006423228005568915,
+        "value": null,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-26T07:53:50.862Z",
+        "timestamp": null,
         "unit": "%",
-        "status": "ok"
+        "status": "stale",
+        "reason": "Input timestamps differ by more than 60s"
       }
     },
     "methodology": "SOL price difference; not the CoinGlass Coinbase Premium Index"
   },
   "binance_cvd": {
     "15m": {
-      "value": -2490.859,
+      "value": -6452.816,
       "source": "Binance SOLUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-26T07:53:00.000Z",
+      "timestamp": "2026-09-26T08:07:00.000Z",
       "unit": "SOL",
       "status": "ok",
       "quote_cvd": {
-        "value": -300477.5815999999,
+        "value": -779116.71852,
         "source": "Binance SOLUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-26T07:53:00.000Z",
+        "timestamp": "2026-09-26T08:07:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-26T07:38:00.000Z",
-      "window_end": "2026-09-26T07:53:00.000Z",
+      "window_start": "2026-09-26T07:52:00.000Z",
+      "window_end": "2026-09-26T08:07:00.000Z",
       "coverage_minutes": 15,
       "expected_minutes": 15
     },
     "1h": {
-      "value": -11609.379,
+      "value": -15269.365,
       "source": "Binance SOLUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-26T07:53:00.000Z",
+      "timestamp": "2026-09-26T08:07:00.000Z",
       "unit": "SOL",
       "status": "ok",
       "quote_cvd": {
-        "value": -1398522.0191700002,
+        "value": -1841839.00739,
         "source": "Binance SOLUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-26T07:53:00.000Z",
+        "timestamp": "2026-09-26T08:07:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-26T06:53:00.000Z",
-      "window_end": "2026-09-26T07:53:00.000Z",
+      "window_start": "2026-09-26T07:07:00.000Z",
+      "window_end": "2026-09-26T08:07:00.000Z",
       "coverage_minutes": 60,
       "expected_minutes": 60
     }
@@ -175,46 +179,46 @@
     "instrument_type": "linear",
     "settlement_currency": "USDC",
     "mark_price": {
-      "value": 120.6557,
+      "value": 120.5817,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-      "timestamp": "2026-09-26T07:53:59.835Z",
+      "timestamp": "2026-09-26T08:07:58.764Z",
       "unit": "USD",
       "status": "ok"
     },
     "index_price": {
-      "value": 120.6391,
+      "value": 120.5665,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-      "timestamp": "2026-09-26T07:53:59.835Z",
+      "timestamp": "2026-09-26T08:07:58.764Z",
       "unit": "USD",
       "status": "ok"
     },
     "oi": {
-      "value": 202885.56,
+      "value": 202536.736,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-      "timestamp": "2026-09-26T07:53:59.835Z",
+      "timestamp": "2026-09-26T08:07:58.764Z",
       "unit": "SOL",
       "status": "ok"
     },
     "funding": {
-      "value": 1.62e-06,
+      "value": 1.6e-06,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-      "timestamp": "2026-09-26T07:53:59.835Z",
+      "timestamp": "2026-09-26T08:07:58.764Z",
       "unit": "fraction",
       "status": "ok",
       "kind": "Deribit funding_8h; not interchangeable with Binance settlement rate"
     },
     "basis": {
       "absolute": {
-        "value": 0.01659999999999684,
+        "value": 0.015199999999992997,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-        "timestamp": "2026-09-26T07:53:59.835Z",
+        "timestamp": "2026-09-26T08:07:58.764Z",
         "unit": "quote currency",
         "status": "ok"
       },
       "bps": {
-        "value": 1.3760049602495883,
+        "value": 1.2607150410759438,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-        "timestamp": "2026-09-26T07:53:59.835Z",
+        "timestamp": "2026-09-26T08:07:58.764Z",
         "unit": "bp",
         "status": "ok"
       },
@@ -229,36 +233,6 @@
     }
   },
   "candles_5m": [
-    {
-      "start": "2026-09-26T06:50:00.000Z",
-      "end": "2026-09-26T06:55:00.000Z",
-      "open": 120.45,
-      "high": 120.45,
-      "low": 120.27,
-      "close": 120.33,
-      "quote_volume": 525409.0323300001,
-      "quote_cvd": -136154.90351
-    },
-    {
-      "start": "2026-09-26T06:55:00.000Z",
-      "end": "2026-09-26T07:00:00.000Z",
-      "open": 120.33,
-      "high": 120.34,
-      "low": 120.14,
-      "close": 120.21,
-      "quote_volume": 811920.08115,
-      "quote_cvd": -327160.48061
-    },
-    {
-      "start": "2026-09-26T07:00:00.000Z",
-      "end": "2026-09-26T07:05:00.000Z",
-      "open": 120.22,
-      "high": 120.42,
-      "low": 120.16,
-      "close": 120.37,
-      "quote_volume": 771466.04562,
-      "quote_cvd": 72917.91105999993
-    },
     {
       "start": "2026-09-26T07:05:00.000Z",
       "end": "2026-09-26T07:10:00.000Z",
@@ -348,19 +322,39 @@
       "close": 120.69,
       "quote_volume": 854155.98867,
       "quote_cvd": -39991.26424999995
+    },
+    {
+      "start": "2026-09-26T07:50:00.000Z",
+      "end": "2026-09-26T07:55:00.000Z",
+      "open": 120.7,
+      "high": 120.74,
+      "low": 120.62,
+      "close": 120.65,
+      "quote_volume": 411453.96312,
+      "quote_cvd": -110962.25822
+    },
+    {
+      "start": "2026-09-26T07:55:00.000Z",
+      "end": "2026-09-26T08:00:00.000Z",
+      "open": 120.64,
+      "high": 120.82,
+      "low": 120.64,
+      "close": 120.76,
+      "quote_volume": 1521009.47054,
+      "quote_cvd": -355212.42701999994
+    },
+    {
+      "start": "2026-09-26T08:00:00.000Z",
+      "end": "2026-09-26T08:05:00.000Z",
+      "open": 120.76,
+      "high": 120.83,
+      "low": 120.61,
+      "close": 120.63,
+      "quote_volume": 718724.04285,
+      "quote_cvd": -297098.73433
     }
   ],
   "candles_15m": [
-    {
-      "start": "2026-09-26T06:45:00.000Z",
-      "end": "2026-09-26T07:00:00.000Z",
-      "open": 120.41,
-      "high": 120.51,
-      "low": 120.14,
-      "close": 120.21,
-      "quote_volume": 2185058.19215,
-      "quote_cvd": -150224.89915
-    },
     {
       "start": "2026-09-26T07:00:00.000Z",
       "end": "2026-09-26T07:15:00.000Z",
@@ -390,6 +384,16 @@
       "close": 120.59,
       "quote_volume": 1787693.01285,
       "quote_cvd": -317453.87841
+    },
+    {
+      "start": "2026-09-26T07:45:00.000Z",
+      "end": "2026-09-26T08:00:00.000Z",
+      "open": 120.6,
+      "high": 120.82,
+      "low": 120.59,
+      "close": 120.76,
+      "quote_volume": 2786619.42233,
+      "quote_cvd": -506165.9494899999
     }
   ]
 }
