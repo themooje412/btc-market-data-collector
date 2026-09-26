@@ -19,48 +19,45 @@
     "id": "7d_poc+session_vwap"
   },
   "flow_score": 2,
-  "strategic_bias": "bearish",
-  "strategic_bias_score": -6.0,
-  "bias_alignment": "countertrend_confirmed",
+  "strategic_bias": "neutral",
+  "strategic_bias_score": 1.0,
+  "bias_alignment": "neutral",
   "core_swing": {
-    "status": "EARLY_ENTRY_CANDIDATE",
-    "direction": "short",
-    "score": -6.0,
+    "status": "NONE",
+    "direction": null,
+    "score": 1.0,
     "entry_bias_threshold": 5.5,
-    "starter_r": [
-      0.35,
-      0.45
-    ],
+    "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
   "reason": "Triggered long thesis remains tied to original anchor",
-  "context_timestamp": "2026-09-26T03:47:38.848Z",
-  "fast_timestamp": "2026-09-26T04:40:45.555Z",
-  "fast_spot": 1534.32,
+  "context_timestamp": "2026-09-26T04:47:46.087Z",
+  "fast_timestamp": "2026-09-26T04:52:25.279Z",
+  "fast_spot": 1536.64,
   "execution": {
-    "entry_reference": 1534.32,
+    "entry_reference": 1536.64,
     "hard_stop": 1498.02958,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 0.6896,
+      "recent_1h_range_pct": 0.6885,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 1536.83,
-    "checkpoint2": 1540.32,
-    "target1": 1606.90084,
+    "checkpoint1": 1537.75,
+    "checkpoint2": 1542.2,
+    "target1": 1613.86084,
     "target1_type": "open_path_2r_projection",
-    "target2": 1643.19126,
+    "target2": 1652.47126,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 36.29042,
-    "risk_pct": 2.3652,
+    "risk_usd": 38.61042,
+    "risk_pct": 2.5127,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|HOLD_MANAGE|long|7d_poc+session_vwap|none|bearish",
+  "signature": "ZEC|HOLD_MANAGE|long|7d_poc+session_vwap|none|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-26T03:55:45.282Z"
+  "state_changed_at": "2026-09-26T04:52:25.279Z"
 }
