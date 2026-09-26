@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakdown",
-  "event": "cross_down",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_poc+24h_poc"
   },
-  "flow_score": 3,
+  "flow_score": -1,
   "strategic_bias": "neutral",
   "strategic_bias_score": -1.0,
   "bias_alignment": "neutral",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-26T08:36:16.284Z",
-  "fast_timestamp": "2026-09-26T08:51:35.671Z",
-  "fast_spot": 84222.66,
+  "fast_timestamp": "2026-09-26T09:01:37.877Z",
+  "fast_spot": 84209.47,
   "execution": {
-    "entry_reference": 84222.66,
-    "hard_stop": 84770.10729,
+    "entry_reference": 84209.47,
+    "hard_stop": 84756.831555,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.362,
+      "recent_1h_range_pct": 0.3621,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 84137.21,
     "checkpoint2": 83976.32,
-    "target1": 83127.76542,
+    "target1": 83114.74689,
     "target1_type": "open_path_2r_projection",
-    "target2": 82580.31813,
+    "target2": 82567.385335,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 547.44729,
+    "risk_usd": 547.361555,
     "risk_pct": 0.65,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakdown|neutral",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-26T08:51:35.671Z"
+  "state_changed_at": "2026-09-26T09:01:37.877Z"
 }
