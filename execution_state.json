@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_poc+24h_poc"
   },
-  "flow_score": 4,
+  "flow_score": 3,
   "strategic_bias": "neutral",
   "strategic_bias_score": -1.0,
   "bias_alignment": "neutral",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-26T08:36:16.284Z",
-  "fast_timestamp": "2026-09-26T08:39:39.127Z",
-  "fast_spot": 84303.8,
+  "fast_timestamp": "2026-09-26T08:51:35.671Z",
+  "fast_spot": 84222.66,
   "execution": {
-    "entry_reference": 84303.8,
-    "hard_stop": 84851.7747,
+    "entry_reference": 84222.66,
+    "hard_stop": 84770.10729,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.3036,
+      "recent_1h_range_pct": 0.362,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 84137.21,
     "checkpoint2": 83976.32,
-    "target1": 83207.8506,
+    "target1": 83127.76542,
     "target1_type": "open_path_2r_projection",
-    "target2": 82659.8759,
+    "target2": 82580.31813,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 547.9747,
+    "risk_usd": 547.44729,
     "risk_pct": 0.65,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|neutral",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakdown|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-26T06:48:51.472Z"
+  "state_changed_at": "2026-09-26T08:51:35.671Z"
 }
