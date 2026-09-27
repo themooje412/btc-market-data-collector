@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "setup_type": "breakout",
+  "event": "cross_up",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_poc+24h_poc"
   },
-  "flow_score": 1,
+  "flow_score": 0,
   "strategic_bias": "neutral",
   "strategic_bias_score": 2.25,
   "bias_alignment": "neutral",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-27T02:36:19.535Z",
-  "fast_timestamp": "2026-09-27T02:53:39.427Z",
-  "fast_spot": 84458.23,
+  "fast_timestamp": "2026-09-27T03:05:53.492Z",
+  "fast_spot": 84508.65,
   "execution": {
-    "entry_reference": 84458.23,
-    "hard_stop": 85007.208495,
+    "entry_reference": 84508.65,
+    "hard_stop": 85057.956225,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.1434,
+      "recent_1h_range_pct": 0.1089,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 84214.08,
-    "checkpoint2": 83983.33,
+    "checkpoint1": 84437.07,
+    "checkpoint2": 84214.08,
     "target1": 83450.0,
     "target1_type": "structural",
-    "target2": 82811.294515,
+    "target2": 82860.731325,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 548.978495,
+    "risk_usd": 549.306225,
     "risk_pct": 0.65,
-    "rr_to_target1": 1.837,
+    "rr_to_target1": 1.927,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakout-retest/trend-pullback|neutral",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakout|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-27T02:53:39.427Z"
+  "state_changed_at": "2026-09-27T03:05:53.492Z"
 }
