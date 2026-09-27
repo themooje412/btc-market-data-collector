@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-27T02:48:12.866Z",
-  "context_spot": 2699.86,
+  "context_timestamp": "2026-09-27T03:48:24.148Z",
+  "context_spot": 2696.81,
   "strategic_bias": {
     "value": "neutral",
-    "score": 2.75,
+    "score": 1.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,32 +17,32 @@
         "score": 1.5
       },
       "7d_vwap": {
-        "value": 2700.158479550453,
+        "value": 2701.4749452499245,
         "score": -1.0
       },
       "24h_vwap": {
-        "value": 2688.6898075798717,
+        "value": 2689.1383496900035,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": 8971925.122991,
+        "value": 3777250.259527,
         "score": 1.25
       },
       "binance_1h_cvd": {
-        "value": 5011098.601117999,
-        "score": 0.5
+        "value": -4358327.1566119995,
+        "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": null,
-        "score": 0.0
+        "value": -3958152.8773155487,
+        "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": null,
-        "score": 0.0
+        "value": -376032.43731981126,
+        "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": -0.8114590719355737,
-        "score": -0.5
+        "value": 0.5011277787431927,
+        "score": 0.5
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -61,60 +61,51 @@
       "id": "7d_val"
     },
     {
-      "value": 2684.0,
+      "value": 2682.0,
       "labels": [
         "24h_val"
       ],
       "values": [
-        2684.0
+        2682.0
       ],
       "confluence_count": 1,
       "id": "24h_val"
     },
     {
-      "value": 2690.74,
+      "value": 2690.28,
       "labels": [
         "24h_vwap",
         "session_val",
         "24h_poc",
-        "7d_poc",
-        "session_poc"
+        "7d_poc"
       ],
       "values": [
-        2688.69,
+        2689.14,
         2690.0,
         2691.0,
-        2691.0,
-        2693.0
+        2691.0
       ],
-      "confluence_count": 5,
-      "id": "24h_vwap+session_val+24h_poc+7d_poc+session_poc"
+      "confluence_count": 4,
+      "id": "24h_vwap+session_val+24h_poc+7d_poc"
     },
     {
-      "value": 2697.66,
+      "value": 2698.32,
       "labels": [
         "24h_vah",
+        "session_poc",
         "session_vwap",
+        "session_vah",
         "7d_vwap"
       ],
       "values": [
         2696.0,
-        2696.84,
-        2700.16
+        2697.0,
+        2697.14,
+        2700.0,
+        2701.47
       ],
-      "confluence_count": 3,
-      "id": "24h_vah+session_vwap+7d_vwap"
-    },
-    {
-      "value": 2702.0,
-      "labels": [
-        "session_vah"
-      ],
-      "values": [
-        2702.0
-      ],
-      "confluence_count": 1,
-      "id": "session_vah"
+      "confluence_count": 5,
+      "id": "24h_vah+session_poc+session_vwap+session_vah+7d_vwap"
     },
     {
       "value": 2750.0,
@@ -129,30 +120,40 @@
     }
   ],
   "nearest_below": {
-    "value": 2697.66,
+    "value": 2690.28,
+    "labels": [
+      "24h_vwap",
+      "session_val",
+      "24h_poc",
+      "7d_poc"
+    ],
+    "values": [
+      2689.14,
+      2690.0,
+      2691.0,
+      2691.0
+    ],
+    "confluence_count": 4,
+    "id": "24h_vwap+session_val+24h_poc+7d_poc"
+  },
+  "nearest_above": {
+    "value": 2698.32,
     "labels": [
       "24h_vah",
+      "session_poc",
       "session_vwap",
+      "session_vah",
       "7d_vwap"
     ],
     "values": [
       2696.0,
-      2696.84,
-      2700.16
+      2697.0,
+      2697.14,
+      2700.0,
+      2701.47
     ],
-    "confluence_count": 3,
-    "id": "24h_vah+session_vwap+7d_vwap"
-  },
-  "nearest_above": {
-    "value": 2702.0,
-    "labels": [
-      "session_vah"
-    ],
-    "values": [
-      2702.0
-    ],
-    "confluence_count": 1,
-    "id": "session_vah"
+    "confluence_count": 5,
+    "id": "24h_vah+session_poc+session_vwap+session_vah+7d_vwap"
   },
   "rules": {
     "early_probe_r": [
@@ -206,7 +207,7 @@
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": 2.75,
+    "score": 1.0,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
