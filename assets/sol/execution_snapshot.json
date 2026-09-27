@@ -1,34 +1,34 @@
 {
   "schema_version": "1.3.0",
   "asset": "SOL",
-  "timestamp": "2026-09-27T08:27:39.748Z",
-  "window_end": "2026-09-27T08:27:00.000Z",
-  "collection_duration_seconds": 1.207,
+  "timestamp": "2026-09-27T08:42:22.825Z",
+  "window_end": "2026-09-27T08:42:00.000Z",
+  "collection_duration_seconds": 1.243,
   "status": "ok",
   "errors": {},
   "spot": {
     "binance": {
-      "value": 124.39,
+      "value": 124.2,
       "source": "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=SOLUSDT",
-      "timestamp": "2026-09-27T08:27:38.778Z",
+      "timestamp": "2026-09-27T08:42:20.761Z",
       "unit": "USDT",
       "status": "ok",
       "timestamp_kind": "exchange_rolling_ticker_close",
       "asset": "SOL"
     },
     "coinbase": {
-      "value": 124.35,
+      "value": 124.12,
       "source": "https://api.exchange.coinbase.com/products/SOL-USD/ticker",
-      "timestamp": "2026-09-27T08:27:37.268Z",
+      "timestamp": "2026-09-27T08:42:17.138Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade",
       "asset": "SOL"
     },
     "usdt_usd": {
-      "value": 0.99979,
+      "value": 0.99976,
       "source": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
-      "timestamp": "2026-09-27T08:27:26.977Z",
+      "timestamp": "2026-09-27T08:42:02.013Z",
       "unit": "USD",
       "status": "ok",
       "timestamp_kind": "last_trade",
@@ -37,95 +37,95 @@
   },
   "premium": {
     "usd": {
-      "value": -0.04000000000000625,
+      "value": -0.0799999999999983,
       "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-      "timestamp": "2026-09-27T08:27:37.268Z",
+      "timestamp": "2026-09-27T08:42:17.138Z",
       "unit": "USD",
       "status": "ok",
       "assumption": "1 USDT = 1 USD"
     },
     "bps": {
-      "value": -3.2156925797898746,
+      "value": -6.441223832528043,
       "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-      "timestamp": "2026-09-27T08:27:37.268Z",
+      "timestamp": "2026-09-27T08:42:17.138Z",
       "unit": "bp",
       "status": "ok"
     },
     "pct": {
-      "value": -0.03215692579789875,
+      "value": -0.06441223832528042,
       "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-      "timestamp": "2026-09-27T08:27:37.268Z",
+      "timestamp": "2026-09-27T08:42:17.138Z",
       "unit": "%",
       "status": "ok"
     },
     "fx_adjusted": {
       "usd": {
-        "value": -0.01387809999999945,
+        "value": -0.050191999999995573,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-27T08:27:26.977Z",
+        "timestamp": "2026-09-27T08:42:02.013Z",
         "unit": "USD",
         "status": "ok",
         "assumption": null
       },
       "bps": {
-        "value": -1.115926924443461,
+        "value": -4.042193959078003,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-27T08:27:26.977Z",
+        "timestamp": "2026-09-27T08:42:02.013Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.011159269244434611,
+        "value": -0.040421939590780026,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-27T08:27:26.977Z",
+        "timestamp": "2026-09-27T08:42:02.013Z",
         "unit": "%",
         "status": "ok"
       }
     },
     "raw_coinbase_premium": {
       "usd": {
-        "value": -0.04000000000000625,
+        "value": -0.0799999999999983,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-        "timestamp": "2026-09-27T08:27:37.268Z",
+        "timestamp": "2026-09-27T08:42:17.138Z",
         "unit": "USD",
         "status": "ok",
         "assumption": "1 USDT = 1 USD"
       },
       "bps": {
-        "value": -3.2156925797898746,
+        "value": -6.441223832528043,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-        "timestamp": "2026-09-27T08:27:37.268Z",
+        "timestamp": "2026-09-27T08:42:17.138Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.03215692579789875,
+        "value": -0.06441223832528042,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT (unadjusted)",
-        "timestamp": "2026-09-27T08:27:37.268Z",
+        "timestamp": "2026-09-27T08:42:17.138Z",
         "unit": "%",
         "status": "ok"
       }
     },
     "fx_adjusted_coinbase_premium": {
       "usd": {
-        "value": -0.01387809999999945,
+        "value": -0.050191999999995573,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-27T08:27:26.977Z",
+        "timestamp": "2026-09-27T08:42:02.013Z",
         "unit": "USD",
         "status": "ok",
         "assumption": null
       },
       "bps": {
-        "value": -1.115926924443461,
+        "value": -4.042193959078003,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-27T08:27:26.977Z",
+        "timestamp": "2026-09-27T08:42:02.013Z",
         "unit": "bp",
         "status": "ok"
       },
       "pct": {
-        "value": -0.011159269244434611,
+        "value": -0.040421939590780026,
         "source": "Coinbase SOL-USD minus Binance SOLUSDT converted with Coinbase USDT-USD",
-        "timestamp": "2026-09-27T08:27:26.977Z",
+        "timestamp": "2026-09-27T08:42:02.013Z",
         "unit": "%",
         "status": "ok"
       }
@@ -134,38 +134,38 @@
   },
   "binance_cvd": {
     "15m": {
-      "value": -19275.629,
+      "value": 12391.19,
       "source": "Binance SOLUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-27T08:27:00.000Z",
+      "timestamp": "2026-09-27T08:42:00.000Z",
       "unit": "SOL",
       "status": "ok",
       "quote_cvd": {
-        "value": -2404568.5273500006,
+        "value": 1540183.4824899998,
         "source": "Binance SOLUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-27T08:27:00.000Z",
+        "timestamp": "2026-09-27T08:42:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-27T08:12:00.000Z",
-      "window_end": "2026-09-27T08:27:00.000Z",
+      "window_start": "2026-09-27T08:27:00.000Z",
+      "window_end": "2026-09-27T08:42:00.000Z",
       "coverage_minutes": 15,
       "expected_minutes": 15
     },
     "1h": {
-      "value": 28417.626000000004,
+      "value": 25695.162000000004,
       "source": "Binance SOLUSDT /api/v3/klines (taker volumes)",
-      "timestamp": "2026-09-27T08:27:00.000Z",
+      "timestamp": "2026-09-27T08:42:00.000Z",
       "unit": "SOL",
       "status": "ok",
       "quote_cvd": {
-        "value": 3444410.45443,
+        "value": 3141452.06035,
         "source": "Binance SOLUSDT /api/v3/klines (taker volumes)",
-        "timestamp": "2026-09-27T08:27:00.000Z",
+        "timestamp": "2026-09-27T08:42:00.000Z",
         "unit": "USDT",
         "status": "ok"
       },
-      "window_start": "2026-09-27T07:27:00.000Z",
-      "window_end": "2026-09-27T08:27:00.000Z",
+      "window_start": "2026-09-27T07:42:00.000Z",
+      "window_end": "2026-09-27T08:42:00.000Z",
       "coverage_minutes": 60,
       "expected_minutes": 60
     }
@@ -175,46 +175,46 @@
     "instrument_type": "linear",
     "settlement_currency": "USDC",
     "mark_price": {
-      "value": 124.4073,
+      "value": 124.2051,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-      "timestamp": "2026-09-27T08:27:39.580Z",
+      "timestamp": "2026-09-27T08:42:22.720Z",
       "unit": "USD",
       "status": "ok"
     },
     "index_price": {
-      "value": 124.3694,
+      "value": 124.1476,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-      "timestamp": "2026-09-27T08:27:39.580Z",
+      "timestamp": "2026-09-27T08:42:22.720Z",
       "unit": "USD",
       "status": "ok"
     },
     "oi": {
-      "value": 199937.085,
+      "value": 199014.736,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-      "timestamp": "2026-09-27T08:27:39.580Z",
+      "timestamp": "2026-09-27T08:42:22.720Z",
       "unit": "SOL",
       "status": "ok"
     },
     "funding": {
-      "value": 1.56e-05,
+      "value": 1.88e-05,
       "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-      "timestamp": "2026-09-27T08:27:39.580Z",
+      "timestamp": "2026-09-27T08:42:22.720Z",
       "unit": "fraction",
       "status": "ok",
       "kind": "Deribit funding_8h; not interchangeable with Binance settlement rate"
     },
     "basis": {
       "absolute": {
-        "value": 0.037900000000007594,
+        "value": 0.05750000000000455,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-        "timestamp": "2026-09-27T08:27:39.580Z",
+        "timestamp": "2026-09-27T08:42:22.720Z",
         "unit": "quote currency",
         "status": "ok"
       },
       "bps": {
-        "value": 3.0473733892755206,
+        "value": 4.631583695537955,
         "source": "https://www.deribit.com/api/v2/public/ticker?instrument_name=SOL_USDC-PERPETUAL",
-        "timestamp": "2026-09-27T08:27:39.580Z",
+        "timestamp": "2026-09-27T08:42:22.720Z",
         "unit": "bp",
         "status": "ok"
       },
@@ -229,36 +229,6 @@
     }
   },
   "candles_5m": [
-    {
-      "start": "2026-09-27T07:25:00.000Z",
-      "end": "2026-09-27T07:30:00.000Z",
-      "open": 121.56,
-      "high": 121.65,
-      "low": 121.5,
-      "close": 121.64,
-      "quote_volume": 439390.1666,
-      "quote_cvd": 89620.26701999997
-    },
-    {
-      "start": "2026-09-27T07:30:00.000Z",
-      "end": "2026-09-27T07:35:00.000Z",
-      "open": 121.64,
-      "high": 122.02,
-      "low": 121.64,
-      "close": 122.01,
-      "quote_volume": 1785744.5314,
-      "quote_cvd": 1195243.0900400002
-    },
-    {
-      "start": "2026-09-27T07:35:00.000Z",
-      "end": "2026-09-27T07:40:00.000Z",
-      "open": 122.02,
-      "high": 122.36,
-      "low": 121.91,
-      "close": 122.0,
-      "quote_volume": 1427245.45551,
-      "quote_cvd": 435210.73240999994
-    },
     {
       "start": "2026-09-27T07:40:00.000Z",
       "end": "2026-09-27T07:45:00.000Z",
@@ -348,19 +318,39 @@
       "close": 124.38,
       "quote_volume": 4616149.91639,
       "quote_cvd": -1628920.0064100004
+    },
+    {
+      "start": "2026-09-27T08:25:00.000Z",
+      "end": "2026-09-27T08:30:00.000Z",
+      "open": 124.38,
+      "high": 124.54,
+      "low": 124.3,
+      "close": 124.42,
+      "quote_volume": 1179801.94352,
+      "quote_cvd": 204382.44886000003
+    },
+    {
+      "start": "2026-09-27T08:30:00.000Z",
+      "end": "2026-09-27T08:35:00.000Z",
+      "open": 124.42,
+      "high": 124.59,
+      "low": 124.3,
+      "close": 124.4,
+      "quote_volume": 1353900.5172000001,
+      "quote_cvd": 255209.0155
+    },
+    {
+      "start": "2026-09-27T08:35:00.000Z",
+      "end": "2026-09-27T08:40:00.000Z",
+      "open": 124.39,
+      "high": 124.4,
+      "low": 124.11,
+      "close": 124.33,
+      "quote_volume": 1935176.45416,
+      "quote_cvd": 845274.3889199999
     }
   ],
   "candles_15m": [
-    {
-      "start": "2026-09-27T07:30:00.000Z",
-      "end": "2026-09-27T07:45:00.000Z",
-      "open": 121.64,
-      "high": 122.36,
-      "low": 121.64,
-      "close": 122.29,
-      "quote_volume": 4139524.9599,
-      "quote_cvd": 1772688.0766399999
-    },
     {
       "start": "2026-09-27T07:45:00.000Z",
       "end": "2026-09-27T08:00:00.000Z",
@@ -380,6 +370,16 @@
       "close": 124.25,
       "quote_volume": 12618256.63285,
       "quote_cvd": -217443.83462999994
+    },
+    {
+      "start": "2026-09-27T08:15:00.000Z",
+      "end": "2026-09-27T08:30:00.000Z",
+      "open": 124.24,
+      "high": 124.95,
+      "low": 124.22,
+      "close": 124.42,
+      "quote_volume": 14434082.30134,
+      "quote_cvd": -2478225.7117600003
     }
   ]
 }
