@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -32,32 +32,32 @@
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
   "reason": "Triggered short thesis remains tied to original anchor",
-  "context_timestamp": "2026-09-27T20:34:37.232Z",
-  "fast_timestamp": "2026-09-27T21:27:19.166Z",
-  "fast_spot": 84660.0,
+  "context_timestamp": "2026-09-27T21:34:35.994Z",
+  "fast_timestamp": "2026-09-27T21:41:02.629Z",
+  "fast_spot": 84520.0,
   "execution": {
-    "entry_reference": 84660.0,
-    "hard_stop": 85210.29,
+    "entry_reference": 84520.0,
+    "hard_stop": 85069.38,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.203,
+      "recent_1h_range_pct": 0.3098,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 84416.44,
-    "checkpoint2": 84025.0,
+    "checkpoint1": 84450.0,
+    "checkpoint2": 84081.46,
     "target1": 83500.0,
     "target1_type": "structural",
-    "target2": 83009.13,
+    "target2": 82871.86,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 550.29,
+    "risk_usd": 549.38,
     "risk_pct": 0.65,
-    "rr_to_target1": 2.108,
+    "rr_to_target1": 1.857,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|bearish",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakout-retest/trend-pullback|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-27T20:46:30.407Z"
+  "state_changed_at": "2026-09-27T21:41:02.629Z"
 }
