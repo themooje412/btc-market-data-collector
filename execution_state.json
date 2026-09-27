@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakout",
+  "event": "cross_up",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-27T03:36:19.163Z",
-  "fast_timestamp": "2026-09-27T04:01:39.922Z",
-  "fast_spot": 84406.51,
+  "fast_timestamp": "2026-09-27T04:19:47.850Z",
+  "fast_spot": 84460.06,
   "execution": {
-    "entry_reference": 84406.51,
-    "hard_stop": 84955.152315,
+    "entry_reference": 84460.06,
+    "hard_stop": 85009.05039,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.1737,
+      "recent_1h_range_pct": 0.1634,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 84139.61,
-    "checkpoint2": 83983.33,
+    "checkpoint1": 84407.34,
+    "checkpoint2": 84139.61,
     "target1": 83450.0,
     "target1_type": "structural",
-    "target2": 82760.583055,
+    "target2": 82813.08883,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 548.642315,
+    "risk_usd": 548.99039,
     "risk_pct": 0.65,
-    "rr_to_target1": 1.743,
+    "rr_to_target1": 1.84,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|neutral",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|breakout|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-27T03:22:54.098Z"
+  "state_changed_at": "2026-09-27T04:19:47.850Z"
 }
