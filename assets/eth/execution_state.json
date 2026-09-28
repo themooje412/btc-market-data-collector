@@ -3,8 +3,8 @@
   "asset": "ETH",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 2667.15,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_vwap+24h_vwap"
   },
-  "flow_score": 4,
+  "flow_score": -2,
   "strategic_bias": "neutral",
   "strategic_bias_score": -1.0,
   "bias_alignment": "neutral",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-28T11:50:56.176Z",
-  "fast_timestamp": "2026-09-28T12:05:19.016Z",
-  "fast_spot": 2675.19,
+  "fast_timestamp": "2026-09-28T12:29:40.418Z",
+  "fast_spot": 2680.39,
   "execution": {
-    "entry_reference": 2675.19,
-    "hard_stop": 2652.450885,
+    "entry_reference": 2680.39,
+    "hard_stop": 2656.01,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.85,
       "adaptive_stop_pct": 0.85,
-      "recent_1h_range_pct": 0.5573,
+      "recent_1h_range_pct": 1.1233,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 2689.5,
     "checkpoint2": 2708.34,
     "target1": 2738.0,
     "target1_type": "structural",
-    "target2": 2743.407345,
+    "target2": 2753.53,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 22.739115,
-    "risk_pct": 0.85,
-    "rr_to_target1": 2.762,
+    "risk_usd": 24.38,
+    "risk_pct": 0.9096,
+    "rr_to_target1": 2.363,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|breakout|neutral",
+  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|none|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-28T12:05:19.016Z"
+  "state_changed_at": "2026-09-28T12:29:40.418Z"
 }
