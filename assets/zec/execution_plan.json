@@ -1,8 +1,8 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-28T02:49:58.114Z",
-  "context_spot": 1568.78,
+  "context_timestamp": "2026-09-28T03:51:27.381Z",
+  "context_spot": 1562.32,
   "strategic_bias": {
     "value": "neutral",
     "score": -0.5,
@@ -17,38 +17,49 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 1562.9767678861572,
-        "score": 1.0
+        "value": 1563.2469158911113,
+        "score": -1.0
       },
       "24h_vwap": {
-        "value": 1615.30090870844,
+        "value": 1613.227526470657,
         "score": -1.0
       },
       "binance_4h_cvd": {
-        "value": 3252315.02277,
+        "value": 2513505.1909500007,
         "score": 1.25
       },
       "binance_1h_cvd": {
-        "value": 1597553.96207,
+        "value": 336842.72023000027,
         "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": -1498251.6948859084,
+        "value": -930121.9842829878,
         "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": -437814.8264021251,
-        "score": -0.5
+        "value": 411183.6418360948,
+        "score": 0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": -0.9511526117849882,
-        "score": -0.5
+        "value": 7.8028938918753115,
+        "score": 0.5
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
   },
   "gamma_regime": null,
   "levels": [
+    {
+      "value": 1555.0,
+      "labels": [
+        "24h_val"
+      ],
+      "values": [
+        1555.0
+      ],
+      "confluence_count": 1,
+      "id": "24h_val"
+    },
     {
       "value": 1560.03,
       "labels": [
@@ -61,92 +72,84 @@
       "id": "7d_poc"
     },
     {
-      "value": 1563.99,
+      "value": 1563.25,
       "labels": [
-        "7d_vwap",
-        "24h_val"
+        "7d_vwap"
       ],
       "values": [
-        1562.98,
-        1565.0
+        1563.25
       ],
-      "confluence_count": 2,
-      "id": "7d_vwap+24h_val"
+      "confluence_count": 1,
+      "id": "7d_vwap"
     },
     {
-      "value": 1569.2,
+      "value": 1567.4,
       "labels": [
         "session_val"
       ],
       "values": [
-        1569.2
+        1567.4
       ],
       "confluence_count": 1,
       "id": "session_val"
     },
     {
-      "value": 1579.83,
+      "value": 1575.47,
       "labels": [
-        "session_vwap",
+        "session_vwap"
+      ],
+      "values": [
+        1575.47
+      ],
+      "confluence_count": 1,
+      "id": "session_vwap"
+    },
+    {
+      "value": 1580.53,
+      "labels": [
         "24h_poc",
         "session_poc"
       ],
       "values": [
-        1578.43,
         1580.03,
         1581.03
       ],
-      "confluence_count": 3,
-      "id": "session_vwap+24h_poc+session_poc"
+      "confluence_count": 2,
+      "id": "24h_poc+session_poc"
     },
     {
-      "value": 1583.1,
+      "value": 1585.05,
       "labels": [
         "session_vah"
       ],
       "values": [
-        1583.1
+        1585.05
       ],
       "confluence_count": 1,
       "id": "session_vah"
-    },
-    {
-      "value": 1614.75,
-      "labels": [
-        "7d_vah",
-        "24h_vwap"
-      ],
-      "values": [
-        1614.2,
-        1615.3
-      ],
-      "confluence_count": 2,
-      "id": "7d_vah+24h_vwap"
     }
   ],
   "nearest_below": {
-    "value": 1563.99,
+    "value": 1560.03,
     "labels": [
-      "7d_vwap",
-      "24h_val"
+      "7d_poc"
     ],
     "values": [
-      1562.98,
-      1565.0
-    ],
-    "confluence_count": 2,
-    "id": "7d_vwap+24h_val"
-  },
-  "nearest_above": {
-    "value": 1569.2,
-    "labels": [
-      "session_val"
-    ],
-    "values": [
-      1569.2
+      1560.03
     ],
     "confluence_count": 1,
-    "id": "session_val"
+    "id": "7d_poc"
+  },
+  "nearest_above": {
+    "value": 1563.25,
+    "labels": [
+      "7d_vwap"
+    ],
+    "values": [
+      1563.25
+    ],
+    "confluence_count": 1,
+    "id": "7d_vwap"
   },
   "rules": {
     "early_probe_r": [
