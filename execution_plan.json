@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-28T05:37:35.020Z",
-  "context_spot": 83043.8,
+  "context_timestamp": "2026-09-28T06:45:51.819Z",
+  "context_spot": 83114.01,
   "strategic_bias": {
     "value": "bearish",
-    "score": -9.5,
+    "score": -7.5,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,32 +17,32 @@
         "score": -1.5
       },
       "7d_vwap": {
-        "value": 84812.8253838381,
+        "value": 84810.2112190225,
         "score": -1.0
       },
       "24h_vwap": {
-        "value": 84360.78934013665,
+        "value": 84233.60129001958,
         "score": -1.0
       },
       "binance_4h_cvd": {
-        "value": -64605865.317266606,
+        "value": -49897271.38354231,
         "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": -17636983.947835203,
-        "score": -0.5
+        "value": 778210.5720099985,
+        "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": -13708618.998012131,
+        "value": -10279722.896620538,
         "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": -4533396.434125952,
+        "value": -843180.2719264769,
         "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": -0.6200556537380368,
-        "score": -0.5
+        "value": 1.526595250935796,
+        "score": 0.5
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -50,12 +50,12 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 83200.0,
+      "value": 82900.0,
       "labels": [
         "session_val"
       ],
       "values": [
-        83200.0
+        82900.0
       ],
       "confluence_count": 1,
       "id": "session_val"
@@ -74,51 +74,51 @@
       "id": "7d_val+session_poc"
     },
     {
-      "value": 83742.34,
+      "value": 83646.36,
       "labels": [
-        "session_vwap"
-      ],
-      "values": [
-        83742.34
-      ],
-      "confluence_count": 1,
-      "id": "session_vwap"
-    },
-    {
-      "value": 84075.0,
-      "labels": [
-        "7d_poc",
-        "session_vah",
+        "session_vwap",
         "24h_val"
       ],
       "values": [
-        84025.0,
-        84050.0,
-        84150.0
+        83592.71,
+        83700.0
       ],
-      "confluence_count": 3,
-      "id": "7d_poc+session_vah+24h_val"
+      "confluence_count": 2,
+      "id": "session_vwap+24h_val"
     },
     {
-      "value": 84360.79,
+      "value": 83962.5,
+      "labels": [
+        "session_vah",
+        "7d_poc"
+      ],
+      "values": [
+        83900.0,
+        84025.0
+      ],
+      "confluence_count": 2,
+      "id": "session_vah+7d_poc"
+    },
+    {
+      "value": 84233.6,
       "labels": [
         "24h_vwap"
       ],
       "values": [
-        84360.79
+        84233.6
       ],
       "confluence_count": 1,
       "id": "24h_vwap"
     },
     {
-      "value": 84793.91,
+      "value": 84792.61,
       "labels": [
         "24h_poc",
         "7d_vwap"
       ],
       "values": [
         84775.0,
-        84812.83
+        84810.21
       ],
       "confluence_count": 2,
       "id": "24h_poc+7d_vwap"
@@ -135,17 +135,29 @@
       "id": "24h_vah"
     }
   ],
-  "nearest_below": null,
-  "nearest_above": {
-    "value": 83200.0,
+  "nearest_below": {
+    "value": 82900.0,
     "labels": [
       "session_val"
     ],
     "values": [
-      83200.0
+      82900.0
     ],
     "confluence_count": 1,
     "id": "session_val"
+  },
+  "nearest_above": {
+    "value": 83412.5,
+    "labels": [
+      "7d_val",
+      "session_poc"
+    ],
+    "values": [
+      83350.0,
+      83475.0
+    ],
+    "confluence_count": 2,
+    "id": "7d_val+session_poc"
   },
   "rules": {
     "early_probe_r": [
@@ -199,7 +211,7 @@
   "core_swing": {
     "status": "TREND_ACTIVE",
     "direction": "short",
-    "score": -9.5,
+    "score": -7.5,
     "entry_bias_threshold": 5.5,
     "starter_r": [
       0.5,
