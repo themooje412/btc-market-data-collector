@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "SHORT_TRIGGERED",
+  "state": "HOLD_MANAGE",
   "direction": "short",
   "setup_type": "breakdown-retest/trend-pullback",
   "event": "retest_hold_short",
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_vwap"
   },
-  "flow_score": -4,
+  "flow_score": -1,
   "strategic_bias": "bearish",
   "strategic_bias_score": -4.0,
   "bias_alignment": "aligned",
@@ -29,33 +29,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Sweep/retest short at structural zone",
+  "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-29T20:50:33.152Z",
-  "fast_timestamp": "2026-09-29T20:52:33.709Z",
-  "fast_spot": 1405.12,
+  "fast_timestamp": "2026-09-29T21:03:42.702Z",
+  "fast_spot": 1398.91,
   "execution": {
-    "entry_reference": 1405.12,
-    "hard_stop": 1426.1875,
+    "entry_reference": 1398.91,
+    "hard_stop": 1419.9775,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
-      "adaptive_stop_pct": 1.4993,
-      "recent_1h_range_pct": 1.9991,
+      "adaptive_stop_pct": 1.506,
+      "recent_1h_range_pct": 2.008,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": null,
     "checkpoint2": null,
-    "target1": 1362.985,
+    "target1": 1356.775,
     "target1_type": "open_path_2r_projection",
-    "target2": 1341.9175,
+    "target2": 1335.7075,
     "target2_type": "open_path_3r_projection",
     "risk_usd": 21.0675,
-    "risk_pct": 1.4993,
+    "risk_pct": 1.506,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|SHORT_TRIGGERED|short|session_vwap|breakdown-retest/trend-pullback|bearish",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-29T20:52:33.709Z"
+  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|breakdown-retest/trend-pullback|bearish",
+  "previous_state": "SHORT_TRIGGERED",
+  "state_changed_at": "2026-09-29T21:03:42.702Z"
 }
