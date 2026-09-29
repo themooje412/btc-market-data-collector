@@ -3,8 +3,8 @@
   "asset": "ETH",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 2667.15,
     "labels": [
@@ -36,31 +36,31 @@
   },
   "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-29T05:49:50.580Z",
-  "fast_timestamp": "2026-09-29T05:51:08.725Z",
-  "fast_spot": 2672.52,
+  "fast_timestamp": "2026-09-29T06:01:35.684Z",
+  "fast_spot": 2677.22,
   "execution": {
-    "entry_reference": 2672.52,
-    "hard_stop": 2649.80358,
+    "entry_reference": 2677.22,
+    "hard_stop": 2652.016,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.85,
       "adaptive_stop_pct": 0.85,
-      "recent_1h_range_pct": 0.6698,
+      "recent_1h_range_pct": 0.8169,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 2689.5,
     "checkpoint2": 2696.02,
-    "target1": 2712.0,
-    "target1_type": "structural",
-    "target2": 2740.66926,
+    "target1": 2727.628,
+    "target1_type": "open_path_2r_projection",
+    "target2": 2752.832,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 22.71642,
-    "risk_pct": 0.85,
-    "rr_to_target1": 1.738,
+    "risk_usd": 25.204,
+    "risk_pct": 0.9414,
+    "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|breakout|bearish",
+  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|none|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-29T05:21:17.807Z"
+  "state_changed_at": "2026-09-29T06:01:35.684Z"
 }

@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "sweep-reclaim",
-  "event": "sweep_reclaim_long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1381.6,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_val"
   },
-  "flow_score": -4,
+  "flow_score": 0,
   "strategic_bias": "bearish",
   "strategic_bias_score": -7.25,
   "bias_alignment": "aligned",
@@ -34,31 +34,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-29T05:50:16.946Z",
-  "fast_timestamp": "2026-09-29T05:51:11.335Z",
-  "fast_spot": 1385.94,
+  "fast_timestamp": "2026-09-29T06:01:38.475Z",
+  "fast_spot": 1388.8,
   "execution": {
-    "entry_reference": 1385.94,
-    "hard_stop": 1410.105,
+    "entry_reference": 1388.8,
+    "hard_stop": 1412.965,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
-      "adaptive_stop_pct": 1.7436,
-      "recent_1h_range_pct": 2.3248,
+      "adaptive_stop_pct": 1.74,
+      "recent_1h_range_pct": 2.32,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 1362.03,
     "checkpoint2": 1359.9,
-    "target1": 1337.61,
+    "target1": 1340.47,
     "target1_type": "open_path_2r_projection",
-    "target2": 1313.445,
+    "target2": 1316.305,
     "target2_type": "open_path_3r_projection",
     "risk_usd": 24.165,
-    "risk_pct": 1.7436,
+    "risk_pct": 1.74,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|HOLD_MANAGE|short|session_val|sweep-reclaim|bearish",
+  "signature": "ZEC|HOLD_MANAGE|short|session_val|none|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-29T05:51:11.335Z"
+  "state_changed_at": "2026-09-29T06:01:38.475Z"
 }
