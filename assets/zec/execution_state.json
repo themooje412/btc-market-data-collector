@@ -1,10 +1,10 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "SHORT_TRIGGERED",
+  "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakdown-retest/trend-pullback",
-  "event": "retest_hold_short",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1381.6,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_val"
   },
-  "flow_score": -4,
+  "flow_score": -3,
   "strategic_bias": "bearish",
   "strategic_bias_score": -9.5,
   "bias_alignment": "aligned",
@@ -32,33 +32,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Sweep/retest short at structural zone",
+  "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-29T01:49:51.313Z",
-  "fast_timestamp": "2026-09-29T02:31:48.496Z",
-  "fast_spot": 1377.79,
+  "fast_timestamp": "2026-09-29T02:46:39.452Z",
+  "fast_spot": 1386.6,
   "execution": {
-    "entry_reference": 1377.79,
+    "entry_reference": 1386.6,
     "hard_stop": 1417.152545,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
-      "adaptive_stop_pct": 2.044,
-      "recent_1h_range_pct": 2.7254,
+      "adaptive_stop_pct": 2.031,
+      "recent_1h_range_pct": 2.7081,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": null,
+    "checkpoint1": 1381.6,
     "checkpoint2": null,
-    "target1": 1299.06491,
+    "target1": 1325.49491,
     "target1_type": "open_path_2r_projection",
-    "target2": 1259.702365,
+    "target2": 1294.942365,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 39.362545,
-    "risk_pct": 2.8569,
+    "risk_usd": 30.552545,
+    "risk_pct": 2.2034,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|SHORT_TRIGGERED|short|session_val|breakdown-retest/trend-pullback|bearish",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-29T02:31:48.496Z"
+  "signature": "ZEC|HOLD_MANAGE|short|session_val|none|bearish",
+  "previous_state": "SHORT_TRIGGERED",
+  "state_changed_at": "2026-09-29T02:46:39.452Z"
 }
