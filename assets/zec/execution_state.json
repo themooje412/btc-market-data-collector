@@ -3,20 +3,20 @@
   "asset": "ZEC",
   "state": "NO_TRADE",
   "direction": null,
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "sweep-reclaim",
+  "event": "sweep_reclaim_long",
   "anchor": {
-    "value": 1423.05,
+    "value": 1427.28,
     "labels": [
-      "session_vah"
+      "24h_vwap"
     ],
     "values": [
-      1423.05
+      1427.28
     ],
     "confluence_count": 1,
-    "id": "session_vah"
+    "id": "24h_vwap"
   },
-  "flow_score": 4,
+  "flow_score": 2,
   "strategic_bias": "bearish",
   "strategic_bias_score": -7.0,
   "bias_alignment": "none",
@@ -32,12 +32,12 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No executable trigger",
+  "reason": "5m long move is counter-trend to bearish strategic bias; need completed 15m acceptance + strong flow",
   "context_timestamp": "2026-09-29T17:50:39.825Z",
-  "fast_timestamp": "2026-09-29T18:26:22.337Z",
-  "fast_spot": 1417.68,
+  "fast_timestamp": "2026-09-29T18:46:12.776Z",
+  "fast_spot": 1429.54,
   "execution": null,
-  "signature": "ZEC|NO_TRADE|none|session_vah|none|bearish",
+  "signature": "ZEC|NO_TRADE|none|24h_vwap|sweep-reclaim|bearish",
   "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-29T18:26:22.337Z"
+  "state_changed_at": "2026-09-29T18:46:12.776Z"
 }
