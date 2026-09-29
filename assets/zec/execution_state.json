@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "failed-break/sweep-reject",
+  "event": "sweep_reject_short",
   "anchor": {
     "value": 1381.6,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_val"
   },
-  "flow_score": 4,
+  "flow_score": -4,
   "strategic_bias": "bearish",
   "strategic_bias_score": -8.0,
   "bias_alignment": "aligned",
@@ -32,33 +32,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Local 5m anchor failure ignored; frozen core swing hard stop has not been breached",
+  "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-29T03:51:11.155Z",
-  "fast_timestamp": "2026-09-29T04:21:09.662Z",
-  "fast_spot": 1384.11,
+  "fast_timestamp": "2026-09-29T04:36:46.951Z",
+  "fast_spot": 1376.66,
   "execution": {
-    "entry_reference": 1375.94,
+    "entry_reference": 1376.66,
     "hard_stop": 1405.20465,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 1.0829,
+      "recent_1h_range_pct": 1.0925,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 1375.03,
     "checkpoint2": 1370.7,
-    "target1": 1317.4107,
+    "target1": 1319.5707,
     "target1_type": "open_path_2r_projection",
-    "target2": 1288.14605,
+    "target2": 1291.02605,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 29.26465,
-    "risk_pct": 2.1269,
+    "risk_usd": 28.54465,
+    "risk_pct": 2.0735,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|HOLD_MANAGE|short|session_val|none|bearish",
-  "previous_state": "ADD_ALLOWED",
-  "state_changed_at": "2026-09-29T04:01:34.154Z"
+  "signature": "ZEC|HOLD_MANAGE|short|session_val|failed-break/sweep-reject|bearish",
+  "previous_state": "HOLD_MANAGE",
+  "state_changed_at": "2026-09-29T04:36:46.951Z"
 }
