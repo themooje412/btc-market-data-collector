@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "EARLY_SETUP",
   "direction": "short",
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "setup_type": "sweep-reclaim",
+  "event": "sweep_reclaim_long",
   "anchor": {
     "value": 1391.75,
     "labels": [
@@ -34,31 +34,31 @@
   },
   "reason": "Negative fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-29T19:50:07.783Z",
-  "fast_timestamp": "2026-09-29T20:02:02.878Z",
-  "fast_spot": 1391.44,
+  "fast_timestamp": "2026-09-29T20:22:15.089Z",
+  "fast_spot": 1394.33,
   "execution": {
-    "entry_reference": 1391.44,
-    "hard_stop": 1424.275,
+    "entry_reference": 1394.33,
+    "hard_stop": 1428.2375,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
-      "adaptive_stop_pct": 2.3598,
-      "recent_1h_range_pct": 3.1464,
+      "adaptive_stop_pct": 2.4318,
+      "recent_1h_range_pct": 3.2424,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 1362.03,
-    "checkpoint2": 1359.9,
-    "target1": 1325.77,
+    "checkpoint1": 1391.75,
+    "checkpoint2": 1362.03,
+    "target1": 1326.515,
     "target1_type": "open_path_2r_projection",
-    "target2": 1292.935,
+    "target2": 1292.6075,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 32.835,
-    "risk_pct": 2.3598,
+    "risk_usd": 33.9075,
+    "risk_pct": 2.4318,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|EARLY_SETUP|short|24h_val|breakout-retest/trend-pullback|bearish",
-  "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-29T20:02:02.878Z"
+  "signature": "ZEC|EARLY_SETUP|short|24h_val|sweep-reclaim|bearish",
+  "previous_state": "EARLY_SETUP",
+  "state_changed_at": "2026-09-29T20:22:15.089Z"
 }
