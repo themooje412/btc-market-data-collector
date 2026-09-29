@@ -1,15 +1,25 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "NO_TRADE",
-  "direction": null,
+  "state": "EARLY_SETUP",
+  "direction": "short",
   "setup_type": null,
   "event": "none",
-  "anchor": null,
-  "flow_score": -2,
+  "anchor": {
+    "value": 1383.4,
+    "labels": [
+      "24h_val"
+    ],
+    "values": [
+      1383.4
+    ],
+    "confluence_count": 1,
+    "id": "24h_val"
+  },
+  "flow_score": -4,
   "strategic_bias": "bearish",
   "strategic_bias_score": -8.0,
-  "bias_alignment": "none",
+  "bias_alignment": "aligned",
   "core_swing": {
     "status": "TREND_ACTIVE",
     "direction": "short",
@@ -22,12 +32,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No structural level within 0.78%",
-  "context_timestamp": "2026-09-29T14:53:09.401Z",
-  "fast_timestamp": "2026-09-29T15:52:11.922Z",
-  "fast_spot": 1395.36,
-  "execution": null,
-  "signature": "ZEC|NO_TRADE|none|none|none|bearish",
-  "previous_state": "INVALIDATED",
-  "state_changed_at": "2026-09-29T15:52:11.922Z"
+  "reason": "Negative fast flow near structural zone under plus30 profile",
+  "context_timestamp": "2026-09-29T15:53:03.637Z",
+  "fast_timestamp": "2026-09-29T16:05:18.168Z",
+  "fast_spot": 1386.99,
+  "execution": {
+    "entry_reference": 1386.99,
+    "hard_stop": 1428.33,
+    "hard_stop_type": "core_swing_structure_volatility",
+    "stop_basis": {
+      "asset_floor_pct": 1.25,
+      "adaptive_stop_pct": 2.9806,
+      "recent_1h_range_pct": 3.9741,
+      "note": "Position size must adapt to this stop; total trade risk cap does not increase."
+    },
+    "checkpoint1": 1383.4,
+    "checkpoint2": 1362.03,
+    "target1": 1304.31,
+    "target1_type": "open_path_2r_projection",
+    "target2": 1262.97,
+    "target2_type": "open_path_3r_projection",
+    "risk_usd": 41.34,
+    "risk_pct": 2.9806,
+    "rr_to_target1": 2.0,
+    "horizon": "2-5d_or_longer_if_structure_holds",
+    "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
+  },
+  "signature": "ZEC|EARLY_SETUP|short|24h_val|none|bearish",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-29T16:05:18.168Z"
 }
