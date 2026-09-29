@@ -2,7 +2,7 @@
   "schema_version": "1.3.0",
   "asset": "ZEC",
   "state": "EARLY_SETUP",
-  "direction": "long",
+  "direction": "short",
   "setup_type": null,
   "event": "none",
   "anchor": {
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "24h_val+session_vah"
   },
-  "flow_score": 2,
+  "flow_score": -2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 0.0,
   "bias_alignment": "neutral",
@@ -31,33 +31,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Positive fast flow near structural zone under plus30 profile",
+  "reason": "Negative fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-29T10:52:00.429Z",
-  "fast_timestamp": "2026-09-29T11:00:27.897Z",
-  "fast_spot": 1418.93,
+  "fast_timestamp": "2026-09-29T11:19:52.012Z",
+  "fast_spot": 1419.08,
   "execution": {
-    "entry_reference": 1418.93,
-    "hard_stop": 1399.467645,
+    "entry_reference": 1419.08,
+    "hard_stop": 1436.8185,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 0.8788,
+      "recent_1h_range_pct": 0.8787,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": null,
-    "checkpoint2": null,
-    "target1": 1457.85471,
+    "checkpoint1": 1417.73,
+    "checkpoint2": 1401.57,
+    "target1": 1383.603,
     "target1_type": "open_path_2r_projection",
-    "target2": 1477.317065,
+    "target2": 1365.8645,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 19.462355,
-    "risk_pct": 1.3716,
+    "risk_usd": 17.7385,
+    "risk_pct": 1.25,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|EARLY_SETUP|long|24h_val+session_vah|none|neutral",
+  "signature": "ZEC|EARLY_SETUP|short|24h_val+session_vah|none|neutral",
   "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-29T11:00:27.897Z"
+  "state_changed_at": "2026-09-29T11:19:52.012Z"
 }
