@@ -1,10 +1,10 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": null,
-  "event": "none",
+  "state": "EARLY_SETUP",
+  "direction": "short",
+  "setup_type": "sweep-reclaim",
+  "event": "sweep_reclaim_long",
   "anchor": {
     "value": 1420.05,
     "labels": [
@@ -16,10 +16,10 @@
     "confluence_count": 1,
     "id": "24h_val"
   },
-  "flow_score": 0,
+  "flow_score": -1,
   "strategic_bias": "bearish",
   "strategic_bias_score": -3.25,
-  "bias_alignment": "none",
+  "bias_alignment": "aligned",
   "core_swing": {
     "status": "NONE",
     "direction": null,
@@ -29,12 +29,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No executable trigger",
+  "reason": "Negative fast flow near structural zone under plus30 profile",
   "context_timestamp": "2026-09-29T07:51:16.806Z",
-  "fast_timestamp": "2026-09-29T07:54:32.518Z",
-  "fast_spot": 1423.44,
-  "execution": null,
-  "signature": "ZEC|NO_TRADE|none|24h_val|none|bearish",
+  "fast_timestamp": "2026-09-29T08:10:54.474Z",
+  "fast_spot": 1422.61,
+  "execution": {
+    "entry_reference": 1422.61,
+    "hard_stop": 1440.392625,
+    "hard_stop_type": "core_swing_structure_volatility",
+    "stop_basis": {
+      "asset_floor_pct": 1.25,
+      "adaptive_stop_pct": 1.25,
+      "recent_1h_range_pct": 0.9426,
+      "note": "Position size must adapt to this stop; total trade risk cap does not increase."
+    },
+    "checkpoint1": 1420.05,
+    "checkpoint2": 1404.55,
+    "target1": 1387.04475,
+    "target1_type": "open_path_2r_projection",
+    "target2": 1369.262125,
+    "target2_type": "open_path_3r_projection",
+    "risk_usd": 17.782625,
+    "risk_pct": 1.25,
+    "rr_to_target1": 2.0,
+    "horizon": "2-5d_or_longer_if_structure_holds",
+    "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
+  },
+  "signature": "ZEC|EARLY_SETUP|short|24h_val|sweep-reclaim|bearish",
   "previous_state": "NO_TRADE",
-  "state_changed_at": "2026-09-29T07:54:32.518Z"
+  "state_changed_at": "2026-09-29T08:10:54.474Z"
 }
