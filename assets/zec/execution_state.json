@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "sweep-reclaim",
-  "event": "sweep_reclaim_long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1407.98,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_vwap"
   },
-  "flow_score": -4,
+  "flow_score": 0,
   "strategic_bias": "neutral",
   "strategic_bias_score": -2.5,
   "bias_alignment": "neutral",
@@ -31,31 +31,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-29T21:49:18.951Z",
-  "fast_timestamp": "2026-09-29T21:50:23.313Z",
-  "fast_spot": 1413.15,
+  "fast_timestamp": "2026-09-29T22:00:08.252Z",
+  "fast_spot": 1410.25,
   "execution": {
-    "entry_reference": 1413.15,
-    "hard_stop": 1432.635,
+    "entry_reference": 1410.25,
+    "hard_stop": 1429.735,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
-      "adaptive_stop_pct": 1.3788,
-      "recent_1h_range_pct": 1.8384,
+      "adaptive_stop_pct": 1.3817,
+      "recent_1h_range_pct": 1.8422,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 1411.18,
-    "checkpoint2": 1407.88,
-    "target1": 1374.18,
+    "checkpoint1": 1407.88,
+    "checkpoint2": null,
+    "target1": 1371.28,
     "target1_type": "open_path_2r_projection",
-    "target2": 1354.695,
+    "target2": 1351.795,
     "target2_type": "open_path_3r_projection",
     "risk_usd": 19.485,
-    "risk_pct": 1.3788,
+    "risk_pct": 1.3817,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|sweep-reclaim|neutral",
+  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|none|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-29T21:50:23.313Z"
+  "state_changed_at": "2026-09-29T22:00:08.252Z"
 }
