@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "ARMED_LONG",
   "direction": "long",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1417.73,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "24h_val+session_vah"
   },
-  "flow_score": 1,
+  "flow_score": 4,
   "strategic_bias": "neutral",
   "strategic_bias_score": 0.0,
   "bias_alignment": "neutral",
@@ -31,33 +31,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Breakout seen; waiting for retest",
+  "reason": "Awaiting long trigger at original anchor",
   "context_timestamp": "2026-09-29T10:52:00.429Z",
-  "fast_timestamp": "2026-09-29T11:34:38.555Z",
-  "fast_spot": 1428.83,
+  "fast_timestamp": "2026-09-29T11:50:42.575Z",
+  "fast_spot": 1455.45,
   "execution": {
-    "entry_reference": 1428.83,
-    "hard_stop": 1399.467645,
+    "entry_reference": 1455.45,
+    "hard_stop": 1415.603405,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
-      "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 0.4507,
+      "adaptive_stop_pct": 2.0463,
+      "recent_1h_range_pct": 2.7284,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": null,
     "checkpoint2": null,
-    "target1": 1487.55471,
+    "target1": 1535.14319,
     "target1_type": "open_path_2r_projection",
-    "target2": 1516.917065,
+    "target2": 1574.989785,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 29.362355,
-    "risk_pct": 2.055,
+    "risk_usd": 39.846595,
+    "risk_pct": 2.7378,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|ARMED_LONG|long|24h_val+session_vah|breakout|neutral",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-09-29T11:34:38.555Z"
+  "signature": "ZEC|ARMED_LONG|long|24h_val+session_vah|none|neutral",
+  "previous_state": "ARMED_LONG",
+  "state_changed_at": "2026-09-29T11:50:42.575Z"
 }
