@@ -3,8 +3,8 @@
   "asset": "ETH",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 2667.15,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_vwap+24h_vwap"
   },
-  "flow_score": -3,
+  "flow_score": -2,
   "strategic_bias": "bullish",
   "strategic_bias_score": 3.5,
   "bias_alignment": "aligned",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-29T00:54:09.473Z",
-  "fast_timestamp": "2026-09-29T01:00:54.588Z",
-  "fast_spot": 2676.81,
+  "fast_timestamp": "2026-09-29T01:18:49.236Z",
+  "fast_spot": 2665.94,
   "execution": {
-    "entry_reference": 2676.81,
-    "hard_stop": 2645.0265,
+    "entry_reference": 2665.94,
+    "hard_stop": 2643.27951,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.85,
       "adaptive_stop_pct": 0.85,
-      "recent_1h_range_pct": 0.678,
+      "recent_1h_range_pct": 1.033,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 2684.0,
-    "checkpoint2": 2690.63,
-    "target1": 2740.377,
-    "target1_type": "open_path_2r_projection",
-    "target2": 2772.1605,
+    "checkpoint1": 2669.54,
+    "checkpoint2": 2684.0,
+    "target1": 2718.0,
+    "target1_type": "structural",
+    "target2": 2733.92147,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 31.7835,
-    "risk_pct": 1.1874,
-    "rr_to_target1": 2.0,
+    "risk_usd": 22.66049,
+    "risk_pct": 0.85,
+    "rr_to_target1": 2.297,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|none|bullish",
+  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|breakout-retest/trend-pullback|bullish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-28T23:49:24.045Z"
+  "state_changed_at": "2026-09-29T01:18:49.236Z"
 }
