@@ -17,45 +17,48 @@
     "id": "session_vah"
   },
   "flow_score": 3,
-  "strategic_bias": "neutral",
-  "strategic_bias_score": 0.0,
-  "bias_alignment": "neutral",
+  "strategic_bias": "bullish",
+  "strategic_bias_score": 5.5,
+  "bias_alignment": "aligned",
   "core_swing": {
-    "status": "NONE",
-    "direction": null,
-    "score": 0.0,
+    "status": "EARLY_ENTRY_CANDIDATE",
+    "direction": "long",
+    "score": 5.5,
     "entry_bias_threshold": 5.5,
-    "starter_r": null,
+    "starter_r": [
+      0.35,
+      0.45
+    ],
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
   "reason": "Triggered long thesis remains tied to original anchor",
-  "context_timestamp": "2026-09-29T05:50:01.396Z",
-  "fast_timestamp": "2026-09-29T06:47:16.172Z",
-  "fast_spot": 118.95,
+  "context_timestamp": "2026-09-29T06:55:01.194Z",
+  "fast_timestamp": "2026-09-29T07:02:36.874Z",
+  "fast_spot": 119.04,
   "execution": {
-    "entry_reference": 118.95,
+    "entry_reference": 119.04,
     "hard_stop": 115.92585,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.0,
       "adaptive_stop_pct": 1.0,
-      "recent_1h_range_pct": 1.3031,
+      "recent_1h_range_pct": 0.8905,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 119.6,
-    "checkpoint2": null,
-    "target1": 124.9983,
+    "checkpoint2": 121.06,
+    "target1": 125.2683,
     "target1_type": "open_path_2r_projection",
-    "target2": 128.02245,
+    "target2": 128.38245,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 3.02415,
-    "risk_pct": 2.5424,
+    "risk_usd": 3.11415,
+    "risk_pct": 2.6161,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "SOL|HOLD_MANAGE|long|session_vah|none|neutral",
+  "signature": "SOL|HOLD_MANAGE|long|session_vah|none|bullish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-29T04:01:32.397Z"
+  "state_changed_at": "2026-09-29T07:02:36.874Z"
 }
