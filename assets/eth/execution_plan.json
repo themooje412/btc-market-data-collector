@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-30T21:51:12.008Z",
-  "context_spot": 2683.71,
+  "context_timestamp": "2026-09-30T22:50:12.966Z",
+  "context_spot": 2689.99,
   "strategic_bias": {
-    "value": "bearish",
-    "score": -4.5,
+    "value": "neutral",
+    "score": -2.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,32 +17,32 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 2688.095937805605,
-        "score": -1.0
+        "value": 2688.089418380606,
+        "score": 1.0
       },
       "24h_vwap": {
-        "value": 2692.452346847948,
+        "value": 2692.6646343303187,
         "score": -1.0
       },
       "binance_4h_cvd": {
-        "value": -2039589.7844459997,
+        "value": -714529.7554639999,
         "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": 278869.57808999997,
+        "value": 1150806.984793,
         "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": -2893404.4622401767,
+        "value": -7338159.334499344,
         "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": -6188816.726210652,
+        "value": -386686.37284399464,
         "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 0.08720281847734121,
-        "score": 0.0
+        "value": 1.0191803504758126,
+        "score": 0.5
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -50,12 +50,12 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 2653.81,
+      "value": 2654.67,
       "labels": [
         "repriced_gamma_flip"
       ],
       "values": [
-        2653.81
+        2654.67
       ],
       "confluence_count": 1,
       "id": "repriced_gamma_flip"
@@ -89,34 +89,43 @@
       "id": "session_poc+24h_poc"
     },
     {
-      "value": 2690.63,
+      "value": 2688.54,
       "labels": [
         "7d_vwap",
-        "7d_poc",
+        "7d_poc"
+      ],
+      "values": [
+        2688.09,
+        2689.0
+      ],
+      "confluence_count": 2,
+      "id": "7d_vwap+7d_poc"
+    },
+    {
+      "value": 2692.77,
+      "labels": [
         "24h_vwap",
         "session_vwap"
       ],
       "values": [
-        2688.1,
-        2689.0,
-        2692.45,
-        2692.98
+        2692.66,
+        2692.87
       ],
-      "confluence_count": 4,
-      "id": "7d_vwap+7d_poc+24h_vwap+session_vwap"
+      "confluence_count": 2,
+      "id": "24h_vwap+session_vwap"
     },
     {
       "value": 2704.0,
       "labels": [
-        "24h_vah",
-        "session_vah"
+        "session_vah",
+        "24h_vah"
       ],
       "values": [
-        2702.0,
-        2706.0
+        2704.0,
+        2704.0
       ],
       "confluence_count": 2,
-      "id": "24h_vah+session_vah"
+      "id": "session_vah+24h_vah"
     },
     {
       "value": 2714.0,
@@ -131,34 +140,30 @@
     }
   ],
   "nearest_below": {
-    "value": 2673.0,
-    "labels": [
-      "session_poc",
-      "24h_poc"
-    ],
-    "values": [
-      2673.0,
-      2673.0
-    ],
-    "confluence_count": 2,
-    "id": "session_poc+24h_poc"
-  },
-  "nearest_above": {
-    "value": 2690.63,
+    "value": 2688.54,
     "labels": [
       "7d_vwap",
-      "7d_poc",
+      "7d_poc"
+    ],
+    "values": [
+      2688.09,
+      2689.0
+    ],
+    "confluence_count": 2,
+    "id": "7d_vwap+7d_poc"
+  },
+  "nearest_above": {
+    "value": 2692.77,
+    "labels": [
       "24h_vwap",
       "session_vwap"
     ],
     "values": [
-      2688.1,
-      2689.0,
-      2692.45,
-      2692.98
+      2692.66,
+      2692.87
     ],
-    "confluence_count": 4,
-    "id": "7d_vwap+7d_poc+24h_vwap+session_vwap"
+    "confluence_count": 2,
+    "id": "24h_vwap+session_vwap"
   },
   "rules": {
     "early_probe_r": [
@@ -212,7 +217,7 @@
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -4.5,
+    "score": -2.0,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
