@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-30T15:41:32.666Z",
-  "context_spot": 84142.0,
+  "context_timestamp": "2026-09-30T16:40:34.675Z",
+  "context_spot": 84336.82,
   "strategic_bias": {
-    "value": "neutral",
-    "score": 2.5,
+    "value": "bullish",
+    "score": 3.0,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,32 +17,32 @@
         "score": 0.0
       },
       "7d_vwap": {
-        "value": 83966.78224701795,
+        "value": 83966.52466862276,
         "score": 1.0
       },
       "24h_vwap": {
-        "value": 83992.86006082743,
+        "value": 84050.54916904835,
         "score": 1.0
       },
       "binance_4h_cvd": {
-        "value": -18745655.3157792,
+        "value": -13972028.9846629,
         "score": -1.25
       },
       "binance_1h_cvd": {
-        "value": 5867080.029761099,
+        "value": 8612181.948917499,
         "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": 12712364.467231955,
+        "value": 13353674.797982028,
         "score": 1.25
       },
       "coinbase_1h_cvd": {
-        "value": -88011.29699855433,
-        "score": -0.5
+        "value": 2174576.6489009517,
+        "score": 0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": 0.9066524420965634,
-        "score": 0.5
+        "value": -0.07765757743564163,
+        "score": 0.0
       }
     },
     "definition": "Slow day/trend bias from hourly 24h/7d structure, VWAP and 1h/4h spot flow"
@@ -50,17 +50,17 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 82975.0,
+      "value": 83000.0,
       "labels": [
-        "24h_val",
-        "session_val"
+        "session_val",
+        "24h_val"
       ],
       "values": [
-        82950.0,
+        83000.0,
         83000.0
       ],
       "confluence_count": 2,
-      "id": "24h_val+session_val"
+      "id": "session_val+24h_val"
     },
     {
       "value": 83416.67,
@@ -78,38 +78,38 @@
       "id": "7d_val+session_poc+24h_poc"
     },
     {
-      "value": 83994.88,
+      "value": 84014.02,
       "labels": [
         "7d_vwap",
-        "24h_vwap",
-        "7d_poc"
+        "7d_poc",
+        "24h_vwap"
       ],
       "values": [
-        83966.78,
-        83992.86,
-        84025.0
+        83966.52,
+        84025.0,
+        84050.55
       ],
       "confluence_count": 3,
-      "id": "7d_vwap+24h_vwap+7d_poc"
+      "id": "7d_vwap+7d_poc+24h_vwap"
     },
     {
-      "value": 84144.01,
+      "value": 84149.71,
       "labels": [
         "session_vwap"
       ],
       "values": [
-        84144.01
+        84149.71
       ],
       "confluence_count": 1,
       "id": "session_vwap"
     },
     {
-      "value": 84500.0,
+      "value": 84550.0,
       "labels": [
         "24h_vah"
       ],
       "values": [
-        84500.0
+        84550.0
       ],
       "confluence_count": 1,
       "id": "24h_vah"
@@ -128,42 +128,38 @@
       "id": "session_vah+7d_vah"
     },
     {
-      "value": 85693.62,
+      "value": 85617.77,
       "labels": [
         "cumulative_gamma_flip"
       ],
       "values": [
-        85693.62
+        85617.77
       ],
       "confluence_count": 1,
       "id": "cumulative_gamma_flip"
     }
   ],
   "nearest_below": {
-    "value": 83994.88,
-    "labels": [
-      "7d_vwap",
-      "24h_vwap",
-      "7d_poc"
-    ],
-    "values": [
-      83966.78,
-      83992.86,
-      84025.0
-    ],
-    "confluence_count": 3,
-    "id": "7d_vwap+24h_vwap+7d_poc"
-  },
-  "nearest_above": {
-    "value": 84144.01,
+    "value": 84149.71,
     "labels": [
       "session_vwap"
     ],
     "values": [
-      84144.01
+      84149.71
     ],
     "confluence_count": 1,
     "id": "session_vwap"
+  },
+  "nearest_above": {
+    "value": 84550.0,
+    "labels": [
+      "24h_vah"
+    ],
+    "values": [
+      84550.0
+    ],
+    "confluence_count": 1,
+    "id": "24h_vah"
   },
   "rules": {
     "early_probe_r": [
@@ -217,7 +213,7 @@
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": 2.5,
+    "score": 3.0,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
