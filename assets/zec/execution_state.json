@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": "sweep-reclaim",
-  "event": "sweep_reclaim_long",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
   "anchor": {
     "value": 1438.14,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_vwap+24h_vah"
   },
-  "flow_score": -2,
+  "flow_score": 1,
   "strategic_bias": "bearish",
   "strategic_bias_score": -5.0,
   "bias_alignment": "countertrend_confirmed",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-30T22:50:48.648Z",
-  "fast_timestamp": "2026-09-30T23:06:41.556Z",
-  "fast_spot": 1438.7,
+  "fast_timestamp": "2026-09-30T23:22:40.442Z",
+  "fast_spot": 1443.17,
   "execution": {
-    "entry_reference": 1438.7,
-    "hard_stop": 1404.8675,
+    "entry_reference": 1443.17,
+    "hard_stop": 1424.8775,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
-      "adaptive_stop_pct": 2.3516,
-      "recent_1h_range_pct": 3.1355,
+      "adaptive_stop_pct": 1.2675,
+      "recent_1h_range_pct": 1.69,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 1453.7,
     "checkpoint2": null,
-    "target1": 1506.365,
+    "target1": 1479.755,
     "target1_type": "open_path_2r_projection",
-    "target2": 1540.1975,
+    "target2": 1498.0475,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 33.8325,
-    "risk_pct": 2.3516,
+    "risk_usd": 18.2925,
+    "risk_pct": 1.2675,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|HOLD_MANAGE|long|session_vwap+24h_vah|sweep-reclaim|bearish",
+  "signature": "ZEC|HOLD_MANAGE|long|session_vwap+24h_vah|breakout-retest/trend-pullback|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-30T23:06:41.556Z"
+  "state_changed_at": "2026-09-30T23:22:40.442Z"
 }
