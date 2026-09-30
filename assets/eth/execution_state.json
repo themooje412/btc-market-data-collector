@@ -3,8 +3,8 @@
   "asset": "ETH",
   "state": "HOLD_MANAGE",
   "direction": "long",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 2667.15,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_vwap+24h_vwap"
   },
-  "flow_score": 1,
+  "flow_score": -3,
   "strategic_bias": "bearish",
   "strategic_bias_score": -5.5,
   "bias_alignment": "countertrend_confirmed",
@@ -36,31 +36,31 @@
   },
   "reason": "Triggered long thesis remains tied to original anchor",
   "context_timestamp": "2026-09-30T08:52:35.765Z",
-  "fast_timestamp": "2026-09-30T08:53:43.000Z",
-  "fast_spot": 2669.91,
+  "fast_timestamp": "2026-09-30T09:05:30.477Z",
+  "fast_spot": 2676.28,
   "execution": {
-    "entry_reference": 2669.91,
-    "hard_stop": 2647.215765,
+    "entry_reference": 2676.28,
+    "hard_stop": 2653.53162,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.85,
       "adaptive_stop_pct": 0.85,
-      "recent_1h_range_pct": 0.4862,
+      "recent_1h_range_pct": 0.3983,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 2673.62,
-    "checkpoint2": 2687.64,
+    "checkpoint1": 2687.64,
+    "checkpoint2": 2698.83,
     "target1": 2716.0,
     "target1_type": "structural",
-    "target2": 2737.992705,
+    "target2": 2744.52514,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 22.694235,
+    "risk_usd": 22.74838,
     "risk_pct": 0.85,
-    "rr_to_target1": 2.031,
+    "rr_to_target1": 1.746,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|breakout|bearish",
+  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|none|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-30T08:53:43.000Z"
+  "state_changed_at": "2026-09-30T09:05:30.477Z"
 }
