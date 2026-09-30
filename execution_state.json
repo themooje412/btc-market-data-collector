@@ -3,8 +3,8 @@
   "asset": "BTC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "sweep-reclaim",
+  "event": "sweep_reclaim_long",
   "anchor": {
     "value": 84375.0,
     "labels": [
@@ -18,7 +18,7 @@
     "confluence_count": 2,
     "id": "session_poc+24h_poc"
   },
-  "flow_score": -2,
+  "flow_score": 2,
   "strategic_bias": "neutral",
   "strategic_bias_score": 2.0,
   "bias_alignment": "neutral",
@@ -33,31 +33,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-30T11:36:14.139Z",
-  "fast_timestamp": "2026-09-30T12:11:07.205Z",
-  "fast_spot": 83822.0,
+  "fast_timestamp": "2026-09-30T12:39:31.498Z",
+  "fast_spot": 84824.51,
   "execution": {
-    "entry_reference": 83822.0,
-    "hard_stop": 84877.125,
+    "entry_reference": 84824.51,
+    "hard_stop": 85375.869315,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.65,
       "adaptive_stop_pct": 0.65,
-      "recent_1h_range_pct": 0.3258,
+      "recent_1h_range_pct": 0.8606,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 83551.19,
-    "checkpoint2": 83415.82,
-    "target1": 81711.75,
-    "target1_type": "open_path_2r_projection",
-    "target2": 80656.625,
-    "target2_type": "open_path_3r_projection",
-    "risk_usd": 1055.125,
-    "risk_pct": 1.2588,
-    "rr_to_target1": 2.0,
+    "checkpoint1": 84750.0,
+    "checkpoint2": 84000.23,
+    "target1": 83800.0,
+    "target1_type": "structural",
+    "target2": 83551.19,
+    "target2_type": "structural",
+    "risk_usd": 551.359315,
+    "risk_pct": 0.65,
+    "rr_to_target1": 1.858,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|none|neutral",
+  "signature": "BTC|HOLD_MANAGE|short|session_poc+24h_poc|sweep-reclaim|neutral",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-30T11:38:37.323Z"
+  "state_changed_at": "2026-09-30T12:39:31.498Z"
 }
