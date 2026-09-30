@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakout-retest/trend-pullback",
-  "event": "retest_hold_long",
+  "setup_type": "breakdown-retest/trend-pullback",
+  "event": "retest_hold_short",
   "anchor": {
     "value": 1407.98,
     "labels": [
@@ -16,46 +16,46 @@
     "confluence_count": 1,
     "id": "session_vwap"
   },
-  "flow_score": -4,
+  "flow_score": 0,
   "strategic_bias": "bearish",
-  "strategic_bias_score": -3.5,
+  "strategic_bias_score": -4.5,
   "bias_alignment": "aligned",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -3.5,
+    "score": -4.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
   "reason": "Triggered short thesis remains tied to original anchor",
-  "context_timestamp": "2026-09-30T04:51:33.914Z",
-  "fast_timestamp": "2026-09-30T05:48:49.882Z",
-  "fast_spot": 1408.78,
+  "context_timestamp": "2026-09-30T05:50:53.825Z",
+  "fast_timestamp": "2026-09-30T06:00:16.252Z",
+  "fast_spot": 1404.97,
   "execution": {
-    "entry_reference": 1408.78,
-    "hard_stop": 1426.38975,
+    "entry_reference": 1404.97,
+    "hard_stop": 1422.532125,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 0.8717,
+      "recent_1h_range_pct": 0.8997,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 1407.4,
-    "checkpoint2": 1390.3,
-    "target1": 1373.5605,
+    "checkpoint1": 1391.75,
+    "checkpoint2": null,
+    "target1": 1369.84575,
     "target1_type": "open_path_2r_projection",
-    "target2": 1355.95075,
+    "target2": 1352.283625,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 17.60975,
+    "risk_usd": 17.562125,
     "risk_pct": 1.25,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|breakout-retest/trend-pullback|bearish",
+  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|breakdown-retest/trend-pullback|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-30T05:48:49.882Z"
+  "state_changed_at": "2026-09-30T06:00:16.252Z"
 }
