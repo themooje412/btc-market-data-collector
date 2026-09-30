@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": null,
-  "event": "none",
+  "setup_type": "failed-break/sweep-reject",
+  "event": "sweep_reject_short",
   "anchor": {
     "value": 1407.98,
     "labels": [
@@ -31,31 +31,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-30T04:51:33.914Z",
-  "fast_timestamp": "2026-09-30T04:57:26.946Z",
-  "fast_spot": 1408.29,
+  "fast_timestamp": "2026-09-30T05:14:32.354Z",
+  "fast_spot": 1402.11,
   "execution": {
-    "entry_reference": 1408.29,
-    "hard_stop": 1425.893625,
+    "entry_reference": 1402.11,
+    "hard_stop": 1419.636375,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 1.0772,
+      "recent_1h_range_pct": 0.873,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 1407.4,
-    "checkpoint2": 1390.3,
-    "target1": 1373.08275,
+    "checkpoint1": 1390.3,
+    "checkpoint2": null,
+    "target1": 1367.05725,
     "target1_type": "open_path_2r_projection",
-    "target2": 1355.479125,
+    "target2": 1349.530875,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 17.603625,
+    "risk_usd": 17.526375,
     "risk_pct": 1.25,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|none|bearish",
-  "previous_state": "ADD_ALLOWED",
-  "state_changed_at": "2026-09-30T04:25:30.532Z"
+  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|failed-break/sweep-reject|bearish",
+  "previous_state": "HOLD_MANAGE",
+  "state_changed_at": "2026-09-30T05:14:32.354Z"
 }
