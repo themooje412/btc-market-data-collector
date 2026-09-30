@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-30T02:49:52.787Z",
-  "context_spot": 2675.79,
+  "context_timestamp": "2026-09-30T03:50:46.200Z",
+  "context_spot": 2672.61,
   "strategic_bias": {
     "value": "bearish",
-    "score": -3.5,
+    "score": -4.5,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -17,31 +17,31 @@
         "score": -1.5
       },
       "7d_vwap": {
-        "value": 2690.0409630548666,
+        "value": 2689.3107108342365,
         "score": -1.0
       },
       "24h_vwap": {
-        "value": 2703.302739229759,
+        "value": 2703.529716378538,
         "score": -1.0
       },
       "binance_4h_cvd": {
-        "value": 5207465.268379,
+        "value": 5668034.7185969995,
         "score": 1.25
       },
       "binance_1h_cvd": {
-        "value": 4608661.128942,
-        "score": 0.5
+        "value": -340557.93474800023,
+        "score": -0.5
       },
       "coinbase_4h_cvd": {
-        "value": -2464337.4318401287,
+        "value": -1649658.8913461838,
         "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": -868930.2929903045,
+        "value": -562422.0882471493,
         "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": -0.15743411490424514,
+        "value": 0.4966464632076801,
         "score": 0.0
       }
     },
@@ -61,32 +61,41 @@
       "id": "7d_val"
     },
     {
-      "value": 2659.36,
+      "value": 2660.79,
       "labels": [
         "repriced_gamma_flip"
       ],
       "values": [
-        2659.36
+        2660.79
       ],
       "confluence_count": 1,
       "id": "repriced_gamma_flip"
     },
     {
-      "value": 2671.75,
+      "value": 2668.0,
       "labels": [
-        "session_val",
+        "session_val"
+      ],
+      "values": [
+        2668.0
+      ],
+      "confluence_count": 1,
+      "id": "session_val"
+    },
+    {
+      "value": 2673.07,
+      "labels": [
         "session_vwap",
         "session_poc",
         "session_vah"
       ],
       "values": [
-        2668.0,
-        2671.98,
+        2672.22,
         2673.0,
         2674.0
       ],
-      "confluence_count": 4,
-      "id": "session_val+session_vwap+session_poc+session_vah"
+      "confluence_count": 3,
+      "id": "session_vwap+session_poc+session_vah"
     },
     {
       "value": 2684.0,
@@ -100,26 +109,26 @@
       "id": "24h_val"
     },
     {
-      "value": 2689.52,
+      "value": 2689.16,
       "labels": [
         "7d_poc",
         "7d_vwap"
       ],
       "values": [
         2689.0,
-        2690.04
+        2689.31
       ],
       "confluence_count": 2,
       "id": "7d_poc+7d_vwap"
     },
     {
-      "value": 2703.65,
+      "value": 2703.76,
       "labels": [
         "24h_vwap",
         "7d_vah"
       ],
       "values": [
-        2703.3,
+        2703.53,
         2704.0
       ],
       "confluence_count": 2,
@@ -149,32 +158,30 @@
     }
   ],
   "nearest_below": {
-    "value": 2671.75,
+    "value": 2668.0,
     "labels": [
-      "session_val",
+      "session_val"
+    ],
+    "values": [
+      2668.0
+    ],
+    "confluence_count": 1,
+    "id": "session_val"
+  },
+  "nearest_above": {
+    "value": 2673.07,
+    "labels": [
       "session_vwap",
       "session_poc",
       "session_vah"
     ],
     "values": [
-      2668.0,
-      2671.98,
+      2672.22,
       2673.0,
       2674.0
     ],
-    "confluence_count": 4,
-    "id": "session_val+session_vwap+session_poc+session_vah"
-  },
-  "nearest_above": {
-    "value": 2684.0,
-    "labels": [
-      "24h_val"
-    ],
-    "values": [
-      2684.0
-    ],
-    "confluence_count": 1,
-    "id": "24h_val"
+    "confluence_count": 3,
+    "id": "session_vwap+session_poc+session_vah"
   },
   "rules": {
     "early_probe_r": [
@@ -228,7 +235,7 @@
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -3.5,
+    "score": -4.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
