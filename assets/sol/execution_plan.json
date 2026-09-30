@@ -1,11 +1,11 @@
 {
   "schema_version": "1.3.0",
   "profile": "controlled_aggressive_swing_plus30_v2",
-  "context_timestamp": "2026-09-30T16:51:21.248Z",
-  "context_spot": 120.19,
+  "context_timestamp": "2026-09-30T17:50:20.940Z",
+  "context_spot": 119.32,
   "strategic_bias": {
-    "value": "bullish",
-    "score": 4.0,
+    "value": "neutral",
+    "score": -2.5,
     "threshold": 3.0,
     "components": {
       "7d_location": {
@@ -13,35 +13,35 @@
         "score": 0.0
       },
       "24h_location": {
-        "value": "above_value",
-        "score": 1.5
+        "value": "inside_value",
+        "score": 0.0
       },
       "7d_vwap": {
-        "value": 119.38676818529855,
-        "score": 1.0
+        "value": 119.42577938914644,
+        "score": -1.0
       },
       "24h_vwap": {
-        "value": 119.66289274229013,
-        "score": 1.0
+        "value": 119.73059273037357,
+        "score": -1.0
       },
       "binance_4h_cvd": {
-        "value": 5037483.987709999,
+        "value": 4800022.68665,
         "score": 1.25
       },
       "binance_1h_cvd": {
-        "value": 926329.15076,
+        "value": 226855.4859900002,
         "score": 0.5
       },
       "coinbase_4h_cvd": {
-        "value": -1495110.4991343345,
+        "value": -1953988.1161305525,
         "score": -1.25
       },
       "coinbase_1h_cvd": {
-        "value": 18915.721632817033,
-        "score": 0.5
+        "value": -212563.9161039034,
+        "score": -0.5
       },
       "fx_adjusted_premium_bps": {
-        "value": -0.5564672426718347,
+        "value": -0.8670107765917278,
         "score": -0.5
       }
     },
@@ -50,30 +50,30 @@
   "gamma_regime": "short_gamma",
   "levels": [
     {
-      "value": 117.4,
+      "value": 117.5,
       "labels": [
         "7d_val"
       ],
       "values": [
-        117.4
+        117.5
       ],
       "confluence_count": 1,
       "id": "7d_val"
     },
     {
-      "value": 117.79,
+      "value": 117.97,
       "labels": [
-        "repriced_gamma_flip",
         "session_val",
-        "24h_val"
+        "24h_val",
+        "repriced_gamma_flip"
       ],
       "values": [
-        117.76,
-        117.8,
-        117.8
+        117.9,
+        118.0,
+        118.01
       ],
       "confluence_count": 3,
-      "id": "repriced_gamma_flip+session_val+24h_val"
+      "id": "session_val+24h_val+repriced_gamma_flip"
     },
     {
       "value": 119.05,
@@ -87,49 +87,49 @@
       "id": "24h_poc"
     },
     {
-      "value": 119.47,
+      "value": 119.49,
       "labels": [
         "7d_vwap",
         "session_poc"
       ],
       "values": [
-        119.39,
+        119.43,
         119.55
       ],
       "confluence_count": 2,
       "id": "7d_vwap+session_poc"
     },
     {
-      "value": 119.66,
+      "value": 119.79,
       "labels": [
-        "24h_vwap"
+        "24h_vwap",
+        "session_vwap"
       ],
       "values": [
-        119.66
+        119.73,
+        119.85
       ],
-      "confluence_count": 1,
-      "id": "24h_vwap"
+      "confluence_count": 2,
+      "id": "24h_vwap+session_vwap"
     },
     {
-      "value": 119.88,
+      "value": 120.1,
       "labels": [
-        "session_vwap",
         "24h_vah"
       ],
       "values": [
-        119.85,
-        119.9
+        120.1
       ],
-      "confluence_count": 2,
-      "id": "session_vwap+24h_vah"
+      "confluence_count": 1,
+      "id": "24h_vah"
     },
     {
-      "value": 120.2,
+      "value": 120.3,
       "labels": [
         "session_vah"
       ],
       "values": [
-        120.2
+        120.3
       ],
       "confluence_count": 1,
       "id": "session_vah"
@@ -158,28 +158,28 @@
     }
   ],
   "nearest_below": {
-    "value": 119.88,
+    "value": 119.05,
     "labels": [
-      "session_vwap",
-      "24h_vah"
+      "24h_poc"
     ],
     "values": [
-      119.85,
-      119.9
-    ],
-    "confluence_count": 2,
-    "id": "session_vwap+24h_vah"
-  },
-  "nearest_above": {
-    "value": 120.2,
-    "labels": [
-      "session_vah"
-    ],
-    "values": [
-      120.2
+      119.05
     ],
     "confluence_count": 1,
-    "id": "session_vah"
+    "id": "24h_poc"
+  },
+  "nearest_above": {
+    "value": 119.49,
+    "labels": [
+      "7d_vwap",
+      "session_poc"
+    ],
+    "values": [
+      119.43,
+      119.55
+    ],
+    "confluence_count": 2,
+    "id": "7d_vwap+session_poc"
   },
   "rules": {
     "early_probe_r": [
@@ -233,7 +233,7 @@
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": 4.0,
+    "score": -2.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
