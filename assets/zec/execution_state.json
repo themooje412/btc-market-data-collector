@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1407.98,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_vwap"
   },
-  "flow_score": -2,
+  "flow_score": 0,
   "strategic_bias": "bearish",
   "strategic_bias_score": -4.5,
   "bias_alignment": "aligned",
@@ -31,31 +31,31 @@
   },
   "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-30T09:52:49.088Z",
-  "fast_timestamp": "2026-09-30T09:58:36.317Z",
-  "fast_spot": 1409.18,
+  "fast_timestamp": "2026-09-30T10:17:51.823Z",
+  "fast_spot": 1410.11,
   "execution": {
-    "entry_reference": 1409.18,
-    "hard_stop": 1426.79475,
+    "entry_reference": 1410.11,
+    "hard_stop": 1427.736375,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 1.261,
+      "recent_1h_range_pct": 1.0886,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 1400.95,
-    "checkpoint2": 1388.15,
-    "target1": 1373.9505,
+    "checkpoint1": 1409.21,
+    "checkpoint2": 1400.95,
+    "target1": 1374.85725,
     "target1_type": "open_path_2r_projection",
-    "target2": 1356.33575,
+    "target2": 1357.230875,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 17.61475,
+    "risk_usd": 17.626375,
     "risk_pct": 1.25,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|breakout|bearish",
+  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|none|bearish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-30T09:58:36.317Z"
+  "state_changed_at": "2026-09-30T10:17:51.823Z"
 }
