@@ -1,10 +1,10 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "ADD_ALLOWED",
+  "state": "HOLD_MANAGE",
   "direction": "short",
-  "setup_type": "breakdown-retest/trend-pullback",
-  "event": "retest_hold_short",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1407.98,
     "labels": [
@@ -16,7 +16,7 @@
     "confluence_count": 1,
     "id": "session_vwap"
   },
-  "flow_score": -4,
+  "flow_score": -1,
   "strategic_bias": "bearish",
   "strategic_bias_score": -4.5,
   "bias_alignment": "aligned",
@@ -29,33 +29,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Retest held and fast flow strengthened",
+  "reason": "Triggered short thesis remains tied to original anchor",
   "context_timestamp": "2026-09-30T03:51:13.528Z",
-  "fast_timestamp": "2026-09-30T04:06:23.742Z",
-  "fast_spot": 1406.43,
+  "fast_timestamp": "2026-09-30T04:25:30.532Z",
+  "fast_spot": 1411.52,
   "execution": {
-    "entry_reference": 1406.43,
-    "hard_stop": 1424.010375,
+    "entry_reference": 1411.52,
+    "hard_stop": 1429.164,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 0.9919,
+      "recent_1h_range_pct": 1.0747,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 1387.55,
     "checkpoint2": null,
-    "target1": 1371.26925,
+    "target1": 1376.232,
     "target1_type": "open_path_2r_projection",
-    "target2": 1353.688875,
+    "target2": 1358.588,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 17.580375,
+    "risk_usd": 17.644,
     "risk_pct": 1.25,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|ADD_ALLOWED|short|session_vwap|breakdown-retest/trend-pullback|bearish",
-  "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-09-30T04:06:23.742Z"
+  "signature": "ZEC|HOLD_MANAGE|short|session_vwap|none|bearish",
+  "previous_state": "ADD_ALLOWED",
+  "state_changed_at": "2026-09-30T04:25:30.532Z"
 }
