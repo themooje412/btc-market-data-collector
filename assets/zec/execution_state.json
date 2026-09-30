@@ -1,33 +1,61 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": null,
-  "event": "none",
-  "anchor": null,
-  "flow_score": 2,
-  "strategic_bias": "bullish",
-  "strategic_bias_score": 5.5,
-  "bias_alignment": "none",
-  "core_swing": {
-    "status": "EARLY_ENTRY_CANDIDATE",
-    "direction": "long",
-    "score": 5.5,
-    "entry_bias_threshold": 5.5,
-    "starter_r": [
-      0.35,
-      0.45
+  "state": "LONG_TRIGGERED",
+  "direction": "long",
+  "setup_type": "breakout-retest/trend-pullback",
+  "event": "retest_hold_long",
+  "anchor": {
+    "value": 1459.75,
+    "labels": [
+      "session_vah"
     ],
+    "values": [
+      1459.75
+    ],
+    "confluence_count": 1,
+    "id": "session_vah"
+  },
+  "flow_score": 4,
+  "strategic_bias": "bullish",
+  "strategic_bias_score": 4.0,
+  "bias_alignment": "aligned",
+  "core_swing": {
+    "status": "NONE",
+    "direction": null,
+    "score": 4.0,
+    "entry_bias_threshold": 5.5,
+    "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No structural level within 0.78%",
-  "context_timestamp": "2026-09-30T12:58:45.403Z",
-  "fast_timestamp": "2026-09-30T13:39:07.494Z",
-  "fast_spot": 1461.47,
-  "execution": null,
-  "signature": "ZEC|NO_TRADE|none|none|none|bullish",
-  "previous_state": "INVALIDATED",
-  "state_changed_at": "2026-09-30T13:00:47.661Z"
+  "reason": "Sweep/retest long at structural zone",
+  "context_timestamp": "2026-09-30T13:52:58.129Z",
+  "fast_timestamp": "2026-09-30T13:56:22.259Z",
+  "fast_spot": 1460.89,
+  "execution": {
+    "entry_reference": 1460.89,
+    "hard_stop": 1423.45,
+    "hard_stop_type": "core_swing_structure_volatility",
+    "stop_basis": {
+      "asset_floor_pct": 1.25,
+      "adaptive_stop_pct": 2.5628,
+      "recent_1h_range_pct": 3.4171,
+      "note": "Position size must adapt to this stop; total trade risk cap does not increase."
+    },
+    "checkpoint1": null,
+    "checkpoint2": null,
+    "target1": 1535.77,
+    "target1_type": "open_path_2r_projection",
+    "target2": 1573.21,
+    "target2_type": "open_path_3r_projection",
+    "risk_usd": 37.44,
+    "risk_pct": 2.5628,
+    "rr_to_target1": 2.0,
+    "horizon": "2-5d_or_longer_if_structure_holds",
+    "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
+  },
+  "signature": "ZEC|LONG_TRIGGERED|long|session_vah|breakout-retest/trend-pullback|bullish",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-09-30T13:56:22.259Z"
 }
