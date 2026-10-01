@@ -1,40 +1,61 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": "sweep-reclaim",
-  "event": "sweep_reclaim_long",
+  "state": "EARLY_SETUP",
+  "direction": "long",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
-    "value": 1437.95,
+    "value": 1438.56,
     "labels": [
       "24h_vwap"
     ],
     "values": [
-      1437.95
+      1438.56
     ],
     "confluence_count": 1,
     "id": "24h_vwap"
   },
-  "flow_score": 3,
-  "strategic_bias": "bearish",
-  "strategic_bias_score": -3.0,
-  "bias_alignment": "none",
+  "flow_score": 2,
+  "strategic_bias": "neutral",
+  "strategic_bias_score": 0.5,
+  "bias_alignment": "neutral",
   "core_swing": {
     "status": "NONE",
     "direction": null,
-    "score": -3.0,
+    "score": 0.5,
     "entry_bias_threshold": 5.5,
     "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "5m long move is counter-trend to bearish strategic bias; need completed 15m acceptance + strong flow",
-  "context_timestamp": "2026-10-01T04:52:59.931Z",
-  "fast_timestamp": "2026-10-01T05:37:20.325Z",
-  "fast_spot": 1439.29,
-  "execution": null,
-  "signature": "ZEC|NO_TRADE|none|24h_vwap|sweep-reclaim|bearish",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-10-01T05:37:20.325Z"
+  "reason": "Positive fast flow near structural zone under plus30 profile",
+  "context_timestamp": "2026-10-01T05:51:01.145Z",
+  "fast_timestamp": "2026-10-01T05:54:09.809Z",
+  "fast_spot": 1439.4,
+  "execution": {
+    "entry_reference": 1439.4,
+    "hard_stop": 1421.4075,
+    "hard_stop_type": "core_swing_structure_volatility",
+    "stop_basis": {
+      "asset_floor_pct": 1.25,
+      "adaptive_stop_pct": 1.25,
+      "recent_1h_range_pct": 0.7267,
+      "note": "Position size must adapt to this stop; total trade risk cap does not increase."
+    },
+    "checkpoint1": 1442.45,
+    "checkpoint2": 1451.03,
+    "target1": 1468.6,
+    "target1_type": "structural",
+    "target2": 1493.3775,
+    "target2_type": "open_path_3r_projection",
+    "risk_usd": 17.9925,
+    "risk_pct": 1.25,
+    "rr_to_target1": 1.623,
+    "horizon": "2-5d_or_longer_if_structure_holds",
+    "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
+  },
+  "signature": "ZEC|EARLY_SETUP|long|24h_vwap|none|neutral",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-10-01T05:54:09.809Z"
 }
