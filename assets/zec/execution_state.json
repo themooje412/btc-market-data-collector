@@ -1,29 +1,31 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "NO_TRADE",
-  "direction": null,
-  "setup_type": null,
-  "event": "none",
+  "state": "ARMED_SHORT",
+  "direction": "short",
+  "setup_type": "breakdown",
+  "event": "cross_down",
   "anchor": {
-    "value": 1421.04,
+    "value": 1426.03,
     "labels": [
-      "session_vwap"
+      "7d_val",
+      "session_vah"
     ],
     "values": [
-      1421.04
+      1425.1,
+      1426.95
     ],
-    "confluence_count": 1,
-    "id": "session_vwap"
+    "confluence_count": 2,
+    "id": "7d_val+session_vah"
   },
-  "flow_score": 0,
+  "flow_score": -3,
   "strategic_bias": "bearish",
-  "strategic_bias_score": -8.5,
-  "bias_alignment": "none",
+  "strategic_bias_score": -8.0,
+  "bias_alignment": "aligned",
   "core_swing": {
     "status": "TREND_ACTIVE",
     "direction": "short",
-    "score": -8.5,
+    "score": -8.0,
     "entry_bias_threshold": 5.5,
     "starter_r": [
       0.5,
@@ -32,12 +34,33 @@
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "No executable trigger",
-  "context_timestamp": "2026-10-01T02:51:05.273Z",
-  "fast_timestamp": "2026-10-01T03:38:30.509Z",
-  "fast_spot": 1420.21,
-  "execution": null,
-  "signature": "ZEC|NO_TRADE|none|session_vwap|none|bearish",
-  "previous_state": "EARLY_SETUP",
-  "state_changed_at": "2026-10-01T03:38:30.509Z"
+  "reason": "Breakdown seen; waiting for retest",
+  "context_timestamp": "2026-10-01T03:52:29.182Z",
+  "fast_timestamp": "2026-10-01T03:55:00.930Z",
+  "fast_spot": 1425.45,
+  "execution": {
+    "entry_reference": 1425.45,
+    "hard_stop": 1443.268125,
+    "hard_stop_type": "core_swing_structure_volatility",
+    "stop_basis": {
+      "asset_floor_pct": 1.25,
+      "adaptive_stop_pct": 1.25,
+      "recent_1h_range_pct": 1.154,
+      "note": "Position size must adapt to this stop; total trade risk cap does not increase."
+    },
+    "checkpoint1": 1419.58,
+    "checkpoint2": 1414.9,
+    "target1": 1389.81375,
+    "target1_type": "open_path_2r_projection",
+    "target2": 1371.995625,
+    "target2_type": "open_path_3r_projection",
+    "risk_usd": 17.818125,
+    "risk_pct": 1.25,
+    "rr_to_target1": 2.0,
+    "horizon": "2-5d_or_longer_if_structure_holds",
+    "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
+  },
+  "signature": "ZEC|ARMED_SHORT|short|7d_val+session_vah|breakdown|bearish",
+  "previous_state": "NO_TRADE",
+  "state_changed_at": "2026-10-01T03:55:00.930Z"
 }
