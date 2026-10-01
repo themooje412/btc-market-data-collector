@@ -10,12 +10,12 @@ permissions:
 
 concurrency:
   group: multi-asset-execution-watcher
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   watch:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v7
         with:
@@ -32,18 +32,44 @@ jobs:
           python -m unittest discover -s tests -p 'test_multi_asset_execution.py' -v
           python -m unittest discover -s tests -p 'test_swing_execution.py' -v
           python -m unittest discover -s tests -p 'test_pnl_tracker.py' -v
+          python -m unittest discover -s tests -p 'test_bybit_demo_executor.py' -v
 
-      - name: Collect swing-aware execution state for four assets
+      - name: Run five one-minute swing cycles
+        env:
+          BYBIT_DEMO_API_KEY: ${{ secrets.BYBIT_DEMO_API_KEY }}
+          BYBIT_DEMO_API_SECRET: ${{ secrets.BYBIT_DEMO_API_SECRET }}
+          BYBIT_DEMO_ACCOUNT_R_PCT: '0.01'
+        shell: bash
         run: |
-          python -u -m btc_collector.swing_execution --asset BTC
-          python -u -m btc_collector.swing_execution --asset ETH
-          python -u -m btc_collector.swing_execution --asset SOL
-          python -u -m btc_collector.swing_execution --asset ZEC
+          set -euo pipefail
+          for iteration in 1 2 3 4 5; do
+            cycle_start=$(date +%s)
+            echo "=== swing cycle $iteration/5 ==="
+
+            python -u -m btc_collector.swing_execution --asset BTC
+            python -u -m btc_collector.swing_execution --asset ETH
+            python -u -m btc_collector.swing_execution --asset SOL
+            python -u -m btc_collector.swing_execution --asset ZEC
+
+            if [[ -n "${BYBIT_DEMO_API_KEY:-}" && -n "${BYBIT_DEMO_API_SECRET:-}" ]]; then
+              python -u -m btc_collector.bybit_demo_executor --execute
+            else
+              echo "Bybit demo secrets are not configured; execution skipped."
+            fi
+
+            if [[ "$iteration" -lt 5 ]]; then
+              elapsed=$(( $(date +%s) - cycle_start ))
+              remaining=$(( 60 - elapsed ))
+              if [[ "$remaining" -gt 0 ]]; then
+                sleep "$remaining"
+              fi
+            fi
+          done
 
       - name: Rebuild historical PnL reports
         run: python -u -m btc_collector.pnl_tracker
 
-      - name: Commit latest execution state and PnL
+      - name: Commit latest execution state, demo ledger and PnL
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         shell: bash
@@ -57,10 +83,12 @@ jobs:
             assets/sol/execution_plan.json assets/sol/execution_snapshot.json assets/sol/execution_state.json assets/sol/execution_history.csv \
             assets/zec/execution_plan.json assets/zec/execution_snapshot.json assets/zec/execution_state.json assets/zec/execution_history.csv \
             performance/trades.csv performance/summary.json
+          [[ -f bybit_demo_state.json ]] && git add bybit_demo_state.json
+          [[ -f bybit_demo_history.csv ]] && git add bybit_demo_history.csv
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "data: update multi-asset swing execution state and PnL $(date -u +%Y-%m-%dT%H:%MZ)"
+          git commit -m "data: update swing execution, Bybit demo and PnL $(date -u +%Y-%m-%dT%H:%MZ)"
           for attempt in 1 2 3; do
             if git push origin "HEAD:$DEFAULT_BRANCH"; then
               exit 0
