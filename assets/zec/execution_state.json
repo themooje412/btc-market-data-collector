@@ -3,8 +3,8 @@
   "asset": "ZEC",
   "state": "ARMED_SHORT",
   "direction": "short",
-  "setup_type": "breakout",
-  "event": "cross_up",
+  "setup_type": null,
+  "event": "none",
   "anchor": {
     "value": 1426.03,
     "labels": [
@@ -36,31 +36,31 @@
   },
   "reason": "Awaiting short trigger at original anchor",
   "context_timestamp": "2026-10-01T03:52:29.182Z",
-  "fast_timestamp": "2026-10-01T04:10:00.757Z",
-  "fast_spot": 1428.79,
+  "fast_timestamp": "2026-10-01T04:29:44.399Z",
+  "fast_spot": 1429.7,
   "execution": {
-    "entry_reference": 1428.79,
-    "hard_stop": 1446.649875,
+    "entry_reference": 1429.7,
+    "hard_stop": 1447.57125,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 1.2738,
+      "recent_1h_range_pct": 1.0974,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 1426.03,
     "checkpoint2": 1419.58,
-    "target1": 1393.07025,
+    "target1": 1393.9575,
     "target1_type": "open_path_2r_projection",
-    "target2": 1375.210375,
+    "target2": 1376.08625,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 17.859875,
+    "risk_usd": 17.87125,
     "risk_pct": 1.25,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|ARMED_SHORT|short|7d_val+session_vah|breakout|bearish",
+  "signature": "ZEC|ARMED_SHORT|short|7d_val+session_vah|none|bearish",
   "previous_state": "ARMED_SHORT",
-  "state_changed_at": "2026-10-01T04:10:00.757Z"
+  "state_changed_at": "2026-10-01T04:29:44.399Z"
 }
