@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3.0",
   "asset": "ZEC",
-  "state": "ARMED_SHORT",
+  "state": "INVALIDATED",
   "direction": "short",
   "setup_type": null,
   "event": "none",
@@ -18,49 +18,46 @@
     "confluence_count": 2,
     "id": "7d_val+session_vah"
   },
-  "flow_score": 0,
+  "flow_score": 3,
   "strategic_bias": "bearish",
-  "strategic_bias_score": -8.0,
+  "strategic_bias_score": -3.0,
   "bias_alignment": "aligned",
   "core_swing": {
-    "status": "TREND_ACTIVE",
-    "direction": "short",
-    "score": -8.0,
+    "status": "NONE",
+    "direction": null,
+    "score": -3.0,
     "entry_bias_threshold": 5.5,
-    "starter_r": [
-      0.5,
-      0.65
-    ],
+    "starter_r": null,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
-  "reason": "Awaiting short trigger at original anchor",
-  "context_timestamp": "2026-10-01T03:52:29.182Z",
-  "fast_timestamp": "2026-10-01T04:49:37.620Z",
-  "fast_spot": 1441.2,
+  "reason": "Armed short lost original anchor",
+  "context_timestamp": "2026-10-01T04:52:59.931Z",
+  "fast_timestamp": "2026-10-01T05:01:39.099Z",
+  "fast_spot": 1435.44,
   "execution": {
-    "entry_reference": 1441.2,
-    "hard_stop": 1459.215,
+    "entry_reference": 1435.44,
+    "hard_stop": 1453.383,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 1.25,
       "adaptive_stop_pct": 1.25,
-      "recent_1h_range_pct": 0.8833,
+      "recent_1h_range_pct": 1.5013,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
-    "checkpoint1": 1437.49,
-    "checkpoint2": 1426.03,
-    "target1": 1405.17,
+    "checkpoint1": 1429.7,
+    "checkpoint2": 1425.0,
+    "target1": 1399.554,
     "target1_type": "open_path_2r_projection",
-    "target2": 1387.155,
+    "target2": 1381.611,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 18.015,
+    "risk_usd": 17.943,
     "risk_pct": 1.25,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ZEC|ARMED_SHORT|short|7d_val+session_vah|none|bearish",
+  "signature": "ZEC|INVALIDATED|short|7d_val+session_vah|none|bearish",
   "previous_state": "ARMED_SHORT",
-  "state_changed_at": "2026-10-01T04:29:44.399Z"
+  "state_changed_at": "2026-10-01T05:01:39.099Z"
 }
