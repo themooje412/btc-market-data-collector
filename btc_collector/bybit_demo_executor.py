@@ -3,6 +3,7 @@
 Safety properties:
 - demo endpoint only; no production Bybit URL exists in this module;
 - only schema >= 1.3 swing geometry is accepted;
+- scalp-like stop distances are rejected per asset;
 - EARLY_SETUP and ARMED states are never auto-entered;
 - exchange-side stop loss is attached to every demo entry/add;
 - stale signals, duplicate signatures and opposite-position conflicts fail closed;
@@ -32,6 +33,8 @@ INITIAL_R = 0.50
 ADD_R = 0.35
 MAX_TOTAL_R = 1.25
 MAX_NOTIONAL_MULTIPLE = 2.0
+MIN_SWING_RISK_PCT = {"BTC": 0.65, "ETH": 0.85, "SOL": 1.00, "ZEC": 1.25}
+MAX_SWING_RISK_PCT = {"BTC": 1.80, "ETH": 2.20, "SOL": 2.60, "ZEC": 3.20}
 LEDGER_PATH = Path("bybit_demo_state.json")
 HISTORY_PATH = Path("bybit_demo_history.csv")
 
@@ -64,6 +67,9 @@ def signal_key(state):
 
 def validate_signal(state, now=None):
     now = now or datetime.now(timezone.utc)
+    asset = str(state.get("asset") or "").upper()
+    if asset not in SYMBOLS:
+        return False, "unsupported_asset"
     if not _schema_ok(state.get("schema_version")):
         return False, "schema_before_1.3"
     timestamp = _dt(state.get("fast_timestamp"))
@@ -87,6 +93,10 @@ def validate_signal(state, now=None):
             return False, "non_swing_stop"
         if entry <= 0 or stop <= 0 or risk_pct <= 0:
             return False, "invalid_geometry"
+        if risk_pct + 1e-6 < MIN_SWING_RISK_PCT[asset]:
+            return False, "scalp_stop_rejected"
+        if risk_pct - 1e-6 > MAX_SWING_RISK_PCT[asset]:
+            return False, "stop_too_wide"
         if direction == "long" and stop >= entry:
             return False, "invalid_long_stop"
         if direction == "short" and stop <= entry:
