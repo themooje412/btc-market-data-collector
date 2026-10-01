@@ -1,5 +1,8 @@
+import tempfile
 import unittest
 from datetime import datetime, timezone
+from pathlib import Path
+from unittest.mock import patch
 
 from btc_collector.bybit_demo import quantize_down
 from btc_collector.bybit_demo_executor import (
@@ -53,6 +56,18 @@ class FakeClient:
 
 
 class BybitDemoExecutorTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.history_patch = patch(
+            "btc_collector.bybit_demo_executor.HISTORY_PATH",
+            Path(self.tmp.name) / "history.csv",
+        )
+        self.history_patch.start()
+
+    def tearDown(self):
+        self.history_patch.stop()
+        self.tmp.cleanup()
+
     def test_quantize_down(self):
         self.assertEqual(quantize_down(1.2349, "0.001"), "1.234")
         self.assertEqual(quantize_down(0.019, "0.01"), "0.01")
