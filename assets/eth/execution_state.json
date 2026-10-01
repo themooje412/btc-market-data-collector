@@ -19,45 +19,48 @@
     "id": "session_vwap+24h_vwap"
   },
   "flow_score": 3,
-  "strategic_bias": "neutral",
-  "strategic_bias_score": 2.0,
-  "bias_alignment": "neutral",
+  "strategic_bias": "bullish",
+  "strategic_bias_score": 5.5,
+  "bias_alignment": "aligned",
   "core_swing": {
-    "status": "NONE",
-    "direction": null,
-    "score": 2.0,
+    "status": "EARLY_ENTRY_CANDIDATE",
+    "direction": "long",
+    "score": 5.5,
     "entry_bias_threshold": 5.5,
-    "starter_r": null,
+    "starter_r": [
+      0.35,
+      0.45
+    ],
     "horizon": "2-5d_or_longer_if_structure_holds",
     "note": "Core swing can be evaluated even when the 5m tactical state is NO_TRADE."
   },
   "reason": "Triggered long thesis remains tied to original anchor",
-  "context_timestamp": "2026-10-01T10:51:39.394Z",
-  "fast_timestamp": "2026-10-01T11:42:29.158Z",
-  "fast_spot": 2702.98,
+  "context_timestamp": "2026-10-01T11:51:51.766Z",
+  "fast_timestamp": "2026-10-01T11:59:08.642Z",
+  "fast_spot": 2706.66,
   "execution": {
-    "entry_reference": 2702.98,
+    "entry_reference": 2706.66,
     "hard_stop": 2663.149275,
     "hard_stop_type": "core_swing_structure_volatility",
     "stop_basis": {
       "asset_floor_pct": 0.85,
       "adaptive_stop_pct": 0.85,
-      "recent_1h_range_pct": 0.5368,
+      "recent_1h_range_pct": 0.4988,
       "note": "Position size must adapt to this stop; total trade risk cap does not increase."
     },
     "checkpoint1": 2712.0,
     "checkpoint2": null,
-    "target1": 2782.64145,
+    "target1": 2793.68145,
     "target1_type": "open_path_2r_projection",
-    "target2": 2822.472175,
+    "target2": 2837.192175,
     "target2_type": "open_path_3r_projection",
-    "risk_usd": 39.830725,
-    "risk_pct": 1.4736,
+    "risk_usd": 43.510725,
+    "risk_pct": 1.6075,
     "rr_to_target1": 2.0,
     "horizon": "2-5d_or_longer_if_structure_holds",
     "semantics": "5m is entry timing; hard stop and targets are swing geometry, local levels are checkpoints."
   },
-  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|none|neutral",
+  "signature": "ETH|HOLD_MANAGE|long|session_vwap+24h_vwap|none|bullish",
   "previous_state": "HOLD_MANAGE",
-  "state_changed_at": "2026-10-01T09:01:23.831Z"
+  "state_changed_at": "2026-10-01T11:55:08.245Z"
 }
