@@ -1,34 +1,34 @@
 {
-  "checked_at": "2026-10-02T11:30:21.977749Z",
+  "checked_at": "2026-10-02T12:37:46.955011Z",
   "official_rest_documentation": "https://developers.binance.com/en/docs/derivatives/usds-margined-futures/general-info",
   "official_rest_base": "https://fapi.binance.com",
   "official_rest": {
     "open_interest": {
       "url": "https://fapi.binance.com/fapi/v1/openInterest?symbol=BTCUSDT",
-      "requested_at": "2026-10-02T11:30:20.823771Z",
-      "http_status": 451,
-      "status": "error",
-      "error": "HTTP 451"
+      "requested_at": "2026-10-02T12:37:43.953636Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
     },
     "mark_funding": {
       "url": "https://fapi.binance.com/fapi/v1/premiumIndex?symbol=BTCUSDT",
-      "requested_at": "2026-10-02T11:30:21.161405Z",
-      "http_status": 451,
-      "status": "error",
-      "error": "HTTP 451"
+      "requested_at": "2026-10-02T12:37:44.717959Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
     },
     "open_interest_history": {
       "url": "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=5m&limit=2",
-      "requested_at": "2026-10-02T11:30:21.404942Z",
-      "http_status": 451,
-      "status": "error",
-      "error": "HTTP 451"
+      "requested_at": "2026-10-02T12:37:45.297903Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
     }
   },
   "official_archive_documentation": "https://github.com/binance/binance-public-data",
   "official_archive": {
     "url": "https://data.binance.vision/data/futures/um/daily/metrics/BTCUSDT/BTCUSDT-metrics-2026-10-01.zip",
-    "requested_at": "2026-10-02T11:30:21.739810Z",
+    "requested_at": "2026-10-02T12:37:45.831252Z",
     "http_status": 200,
     "status": "ok",
     "error": null,
@@ -36,6 +36,6 @@
     "usage": "access_check_only_not_used_for_current_snapshot",
     "latency": "daily_historical_archive_not_realtime"
   },
-  "rest_access_resolved": false,
+  "rest_access_resolved": true,
   "collector_policy": "If official REST is unavailable, Binance Futures fields remain null/error. The delayed archive and other exchanges never populate Binance fields."
 }
