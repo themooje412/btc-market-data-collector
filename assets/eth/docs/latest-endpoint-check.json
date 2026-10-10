@@ -1,484 +1,596 @@
 {
-  "tested_at": "2026-10-10T13:50:32.165Z",
+  "tested_at": "2026-10-10T14:49:59.747Z",
   "asset": "ETH",
-  "status": "ok",
+  "status": "partial",
   "endpoint_requests": [
     {
       "url": "https://api.exchange.coinbase.com/products/ETH-USD/ticker",
-      "requested_at": "2026-10-10T13:50:14.101Z",
-      "received_at": "2026-10-10T13:50:14.336Z",
+      "requested_at": "2026-10-10T14:49:43.783Z",
+      "received_at": "2026-10-10T14:49:43.921Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/get_instruments?currency=any&kind=future&expired=false",
-      "requested_at": "2026-10-10T13:50:14.104Z",
-      "received_at": "2026-10-10T13:50:14.493Z",
+      "requested_at": "2026-10-10T14:49:43.786Z",
+      "received_at": "2026-10-10T14:49:43.974Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://fapi.binance.com/fapi/v1/premiumIndex?symbol=ETHUSDT",
-      "requested_at": "2026-10-10T13:50:14.103Z",
-      "received_at": "2026-10-10T13:50:14.525Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
+      "requested_at": "2026-10-10T14:49:43.785Z",
+      "received_at": "2026-10-10T14:49:44.028Z",
+      "http_status": 451,
+      "status": "error",
+      "error": "HTTP 451"
     },
     {
       "url": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
-      "requested_at": "2026-10-10T13:50:14.361Z",
-      "received_at": "2026-10-10T13:50:14.648Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://fapi.binance.com/fapi/v1/openInterest?symbol=ETHUSDT",
-      "requested_at": "2026-10-10T13:50:14.525Z",
-      "received_at": "2026-10-10T13:50:14.821Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000",
-      "requested_at": "2026-10-10T13:50:14.621Z",
-      "received_at": "2026-10-10T13:50:14.824Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847834530",
-      "requested_at": "2026-10-10T13:50:14.881Z",
-      "received_at": "2026-10-10T13:50:15.098Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://fapi.binance.com/futures/data/openInterestHist?symbol=ETHUSDT&period=5m&limit=310",
-      "requested_at": "2026-10-10T13:50:14.821Z",
-      "received_at": "2026-10-10T13:50:15.414Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://www.deribit.com/api/v2/public/get_instruments?currency=any&kind=future&expired=false",
-      "requested_at": "2026-10-10T13:50:15.154Z",
-      "received_at": "2026-10-10T13:50:15.446Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847833530",
-      "requested_at": "2026-10-10T13:50:15.141Z",
-      "received_at": "2026-10-10T13:50:15.534Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847832530",
-      "requested_at": "2026-10-10T13:50:15.536Z",
-      "received_at": "2026-10-10T13:50:15.830Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://www.deribit.com/api/v2/public/get_instruments?currency=any&kind=option&expired=false",
-      "requested_at": "2026-10-10T13:50:16.204Z",
-      "received_at": "2026-10-10T13:50:16.844Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-PERPETUAL",
-      "requested_at": "2026-10-10T13:50:17.254Z",
-      "received_at": "2026-10-10T13:50:17.559Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-11OCT26",
-      "requested_at": "2026-10-10T13:50:17.514Z",
-      "received_at": "2026-10-10T13:50:17.742Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://www.deribit.com/api/v2/public/get_book_summary_by_currency?currency=ETH&kind=option",
-      "requested_at": "2026-10-10T13:50:17.774Z",
-      "received_at": "2026-10-10T13:50:18.116Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-11OCT26",
-      "requested_at": "2026-10-10T13:50:18.294Z",
-      "received_at": "2026-10-10T13:50:18.517Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-12OCT26",
-      "requested_at": "2026-10-10T13:50:18.554Z",
-      "received_at": "2026-10-10T13:50:18.779Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&limit=1",
-      "requested_at": "2026-10-10T13:50:14.341Z",
-      "received_at": "2026-10-10T13:50:18.936Z",
+      "requested_at": "2026-10-10T14:49:44.044Z",
+      "received_at": "2026-10-10T14:49:44.128Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=ETHUSDT",
-      "requested_at": "2026-10-10T13:50:14.101Z",
-      "received_at": "2026-10-10T13:50:18.936Z",
+      "requested_at": "2026-10-10T14:49:43.783Z",
+      "received_at": "2026-10-10T14:49:44.371Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000",
+      "requested_at": "2026-10-10T14:49:44.304Z",
+      "received_at": "2026-10-10T14:49:44.398Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847840845",
+      "requested_at": "2026-10-10T14:49:44.564Z",
+      "received_at": "2026-10-10T14:49:44.679Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&limit=1",
+      "requested_at": "2026-10-10T14:49:44.023Z",
+      "received_at": "2026-10-10T14:49:44.869Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791557340000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:43.903Z",
+      "received_at": "2026-10-10T14:49:44.891Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847839845",
+      "requested_at": "2026-10-10T14:49:44.824Z",
+      "received_at": "2026-10-10T14:49:44.975Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/get_instruments?currency=any&kind=future&expired=false",
+      "requested_at": "2026-10-10T14:49:44.836Z",
+      "received_at": "2026-10-10T14:49:45.147Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847838845",
+      "requested_at": "2026-10-10T14:49:45.084Z",
+      "received_at": "2026-10-10T14:49:45.290Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847837845",
+      "requested_at": "2026-10-10T14:49:45.344Z",
+      "received_at": "2026-10-10T14:49:45.467Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847836845",
+      "requested_at": "2026-10-10T14:49:45.604Z",
+      "received_at": "2026-10-10T14:49:45.756Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097635495&limit=1000",
+      "requested_at": "2026-10-10T14:49:44.869Z",
+      "received_at": "2026-10-10T14:49:45.823Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097636495&limit=1000",
+      "requested_at": "2026-10-10T14:49:44.989Z",
+      "received_at": "2026-10-10T14:49:45.950Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000&after=847835845",
+      "requested_at": "2026-10-10T14:49:45.864Z",
+      "received_at": "2026-10-10T14:49:45.983Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097637495&limit=1000",
+      "requested_at": "2026-10-10T14:49:45.109Z",
+      "received_at": "2026-10-10T14:49:46.061Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097638495&limit=1000",
+      "requested_at": "2026-10-10T14:49:45.229Z",
+      "received_at": "2026-10-10T14:49:46.222Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/get_instruments?currency=any&kind=option&expired=false",
+      "requested_at": "2026-10-10T14:49:45.886Z",
+      "received_at": "2026-10-10T14:49:46.222Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097639495&limit=1000",
+      "requested_at": "2026-10-10T14:49:45.349Z",
+      "received_at": "2026-10-10T14:49:46.334Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097640495&limit=1000",
+      "requested_at": "2026-10-10T14:49:45.469Z",
+      "received_at": "2026-10-10T14:49:46.420Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097641495&limit=1000",
+      "requested_at": "2026-10-10T14:49:45.589Z",
+      "received_at": "2026-10-10T14:49:46.546Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097642495&limit=1000",
+      "requested_at": "2026-10-10T14:49:45.709Z",
+      "received_at": "2026-10-10T14:49:46.683Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097643495&limit=1000",
+      "requested_at": "2026-10-10T14:49:45.829Z",
+      "received_at": "2026-10-10T14:49:46.779Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097644495&limit=1000",
+      "requested_at": "2026-10-10T14:49:45.950Z",
+      "received_at": "2026-10-10T14:49:46.914Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791617340000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:46.309Z",
+      "received_at": "2026-10-10T14:49:47.129Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-PERPETUAL",
+      "requested_at": "2026-10-10T14:49:46.936Z",
+      "received_at": "2026-10-10T14:49:47.152Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097646495&limit=1000",
+      "requested_at": "2026-10-10T14:49:46.220Z",
+      "received_at": "2026-10-10T14:49:47.238Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097645495&limit=1000",
+      "requested_at": "2026-10-10T14:49:46.069Z",
+      "received_at": "2026-10-10T14:49:47.245Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-11OCT26",
+      "requested_at": "2026-10-10T14:49:47.196Z",
+      "received_at": "2026-10-10T14:49:47.573Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/get_book_summary_by_currency?currency=ETH&kind=option",
+      "requested_at": "2026-10-10T14:49:47.456Z",
+      "received_at": "2026-10-10T14:49:47.741Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/get_book_summary_by_currency?currency=USDC&kind=option",
-      "requested_at": "2026-10-10T13:50:18.034Z",
-      "received_at": "2026-10-10T13:50:18.937Z",
+      "requested_at": "2026-10-10T14:49:47.716Z",
+      "received_at": "2026-10-10T14:49:47.972Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-12OCT26",
-      "requested_at": "2026-10-10T13:50:18.814Z",
-      "received_at": "2026-10-10T13:50:19.037Z",
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097647495&limit=1000",
+      "requested_at": "2026-10-10T14:49:47.266Z",
+      "received_at": "2026-10-10T14:49:48.252Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-11OCT26",
+      "requested_at": "2026-10-10T14:49:47.981Z",
+      "received_at": "2026-10-10T14:49:48.259Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097648495&limit=1000",
+      "requested_at": "2026-10-10T14:49:47.386Z",
+      "received_at": "2026-10-10T14:49:48.350Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/get_index_price?index_name=eth_usd",
-      "requested_at": "2026-10-10T13:50:19.074Z",
-      "received_at": "2026-10-10T13:50:19.307Z",
+      "requested_at": "2026-10-10T14:49:48.236Z",
+      "received_at": "2026-10-10T14:49:48.505Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791553800000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:14.221Z",
-      "received_at": "2026-10-10T13:50:19.423Z",
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097649495&limit=1000",
+      "requested_at": "2026-10-10T14:49:47.506Z",
+      "received_at": "2026-10-10T14:49:48.634Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097650495&limit=1000",
+      "requested_at": "2026-10-10T14:49:47.626Z",
+      "received_at": "2026-10-10T14:49:48.738Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097651495&limit=1000",
+      "requested_at": "2026-10-10T14:49:47.746Z",
+      "received_at": "2026-10-10T14:49:48.770Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-12OCT26",
+      "requested_at": "2026-10-10T14:49:48.496Z",
+      "received_at": "2026-10-10T14:49:48.843Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097652495&limit=1000",
+      "requested_at": "2026-10-10T14:49:47.866Z",
+      "received_at": "2026-10-10T14:49:48.849Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097655495&limit=1000",
+      "requested_at": "2026-10-10T14:49:48.226Z",
+      "received_at": "2026-10-10T14:49:48.885Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097653495&limit=1000",
+      "requested_at": "2026-10-10T14:49:47.986Z",
+      "received_at": "2026-10-10T14:49:48.954Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-12OCT26",
+      "requested_at": "2026-10-10T14:49:48.843Z",
+      "received_at": "2026-10-10T14:49:49.015Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097654495&limit=1000",
+      "requested_at": "2026-10-10T14:49:48.106Z",
+      "received_at": "2026-10-10T14:49:49.088Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-13OCT26",
-      "requested_at": "2026-10-10T13:50:19.339Z",
-      "received_at": "2026-10-10T13:50:19.645Z",
+      "requested_at": "2026-10-10T14:49:49.104Z",
+      "received_at": "2026-10-10T14:49:49.279Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-13OCT26",
-      "requested_at": "2026-10-10T13:50:19.645Z",
-      "received_at": "2026-10-10T13:50:19.929Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097628119&limit=1000",
-      "requested_at": "2026-10-10T13:50:18.936Z",
-      "received_at": "2026-10-10T13:50:19.991Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097629119&limit=1000",
-      "requested_at": "2026-10-10T13:50:19.056Z",
-      "received_at": "2026-10-10T13:50:20.172Z",
+      "requested_at": "2026-10-10T14:49:49.363Z",
+      "received_at": "2026-10-10T14:49:49.536Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-14OCT26",
-      "requested_at": "2026-10-10T13:50:19.929Z",
-      "received_at": "2026-10-10T13:50:20.208Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097630119&limit=1000",
-      "requested_at": "2026-10-10T13:50:19.176Z",
-      "received_at": "2026-10-10T13:50:20.230Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097631119&limit=1000",
-      "requested_at": "2026-10-10T13:50:19.296Z",
-      "received_at": "2026-10-10T13:50:20.361Z",
+      "requested_at": "2026-10-10T14:49:49.623Z",
+      "received_at": "2026-10-10T14:49:49.830Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-14OCT26",
-      "requested_at": "2026-10-10T13:50:20.208Z",
-      "received_at": "2026-10-10T13:50:20.447Z",
+      "requested_at": "2026-10-10T14:49:49.883Z",
+      "received_at": "2026-10-10T14:49:50.049Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097632119&limit=1000",
-      "requested_at": "2026-10-10T13:50:19.423Z",
-      "received_at": "2026-10-10T13:50:20.509Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097633119&limit=1000",
-      "requested_at": "2026-10-10T13:50:19.542Z",
-      "received_at": "2026-10-10T13:50:20.624Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097635119&limit=1000",
-      "requested_at": "2026-10-10T13:50:19.782Z",
-      "received_at": "2026-10-10T13:50:20.670Z",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791038940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:49.107Z",
+      "received_at": "2026-10-10T14:49:50.092Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-16OCT26",
-      "requested_at": "2026-10-10T13:50:20.468Z",
-      "received_at": "2026-10-10T13:50:20.692Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=ETHUSDT&fromId=2097634119&limit=1000",
-      "requested_at": "2026-10-10T13:50:19.661Z",
-      "received_at": "2026-10-10T13:50:20.705Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791613800000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:19.901Z",
-      "received_at": "2026-10-10T13:50:20.831Z",
+      "requested_at": "2026-10-10T14:49:50.143Z",
+      "received_at": "2026-10-10T14:49:50.432Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-16OCT26",
-      "requested_at": "2026-10-10T13:50:20.728Z",
-      "received_at": "2026-10-10T13:50:20.954Z",
+      "requested_at": "2026-10-10T14:49:50.432Z",
+      "received_at": "2026-10-10T14:49:50.584Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-23OCT26",
-      "requested_at": "2026-10-10T13:50:20.988Z",
-      "received_at": "2026-10-10T13:50:21.213Z",
+      "requested_at": "2026-10-10T14:49:50.692Z",
+      "received_at": "2026-10-10T14:49:50.842Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791098940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:50.093Z",
+      "received_at": "2026-10-10T14:49:51.097Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-23OCT26",
-      "requested_at": "2026-10-10T13:50:21.248Z",
-      "received_at": "2026-10-10T13:50:21.476Z",
+      "requested_at": "2026-10-10T14:49:50.952Z",
+      "received_at": "2026-10-10T14:49:51.222Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-30OCT26",
-      "requested_at": "2026-10-10T13:50:21.508Z",
-      "received_at": "2026-10-10T13:50:21.738Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791035400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:20.727Z",
-      "received_at": "2026-10-10T13:50:21.748Z",
+      "requested_at": "2026-10-10T14:49:51.222Z",
+      "received_at": "2026-10-10T14:49:51.508Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-30OCT26",
-      "requested_at": "2026-10-10T13:50:21.768Z",
-      "received_at": "2026-10-10T13:50:22.001Z",
+      "requested_at": "2026-10-10T14:49:51.509Z",
+      "received_at": "2026-10-10T14:49:51.739Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-27NOV26",
-      "requested_at": "2026-10-10T13:50:22.028Z",
-      "received_at": "2026-10-10T13:50:22.260Z",
+      "requested_at": "2026-10-10T14:49:51.769Z",
+      "received_at": "2026-10-10T14:49:52.056Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791158940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:51.097Z",
+      "received_at": "2026-10-10T14:49:52.077Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-27NOV26",
-      "requested_at": "2026-10-10T13:50:22.288Z",
-      "received_at": "2026-10-10T13:50:22.532Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791095400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:21.748Z",
-      "received_at": "2026-10-10T13:50:22.775Z",
+      "requested_at": "2026-10-10T14:49:52.056Z",
+      "received_at": "2026-10-10T14:49:52.348Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-25DEC26",
-      "requested_at": "2026-10-10T13:50:22.548Z",
-      "received_at": "2026-10-10T13:50:22.777Z",
+      "requested_at": "2026-10-10T14:49:52.349Z",
+      "received_at": "2026-10-10T14:49:52.530Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH_USDC-25DEC26",
-      "requested_at": "2026-10-10T13:50:22.808Z",
-      "received_at": "2026-10-10T13:50:23.033Z",
+      "requested_at": "2026-10-10T14:49:52.609Z",
+      "received_at": "2026-10-10T14:49:52.773Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-26MAR27",
-      "requested_at": "2026-10-10T13:50:23.068Z",
-      "received_at": "2026-10-10T13:50:23.296Z",
+      "requested_at": "2026-10-10T14:49:52.869Z",
+      "received_at": "2026-10-10T14:49:53.058Z",
+      "http_status": 200,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791218940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:52.077Z",
+      "received_at": "2026-10-10T14:49:53.059Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-25JUN27",
-      "requested_at": "2026-10-10T13:50:23.328Z",
-      "received_at": "2026-10-10T13:50:23.552Z",
+      "requested_at": "2026-10-10T14:49:53.129Z",
+      "received_at": "2026-10-10T14:49:53.418Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://www.deribit.com/api/v2/public/ticker?instrument_name=ETH-24SEP27",
-      "requested_at": "2026-10-10T13:50:23.588Z",
-      "received_at": "2026-10-10T13:50:23.815Z",
+      "requested_at": "2026-10-10T14:49:53.418Z",
+      "received_at": "2026-10-10T14:49:53.568Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791155400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:22.775Z",
-      "received_at": "2026-10-10T13:50:24.001Z",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791278940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:53.059Z",
+      "received_at": "2026-10-10T14:49:54.017Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791215400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:24.001Z",
-      "received_at": "2026-10-10T13:50:25.171Z",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791338940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:54.017Z",
+      "received_at": "2026-10-10T14:49:54.989Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791275400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:25.171Z",
-      "received_at": "2026-10-10T13:50:26.195Z",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791398940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:54.989Z",
+      "received_at": "2026-10-10T14:49:56.004Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791335400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:26.195Z",
-      "received_at": "2026-10-10T13:50:27.261Z",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791458940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:56.004Z",
+      "received_at": "2026-10-10T14:49:57.015Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791395400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:27.261Z",
-      "received_at": "2026-10-10T13:50:28.292Z",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791518940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:57.015Z",
+      "received_at": "2026-10-10T14:49:57.997Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791455400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:28.292Z",
-      "received_at": "2026-10-10T13:50:29.323Z",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791578940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:57.997Z",
+      "received_at": "2026-10-10T14:49:58.997Z",
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791515400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:29.323Z",
-      "received_at": "2026-10-10T13:50:30.348Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791575400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:30.348Z",
-      "received_at": "2026-10-10T13:50:31.376Z",
-      "http_status": 200,
-      "status": "ok",
-      "error": null
-    },
-    {
-      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791635400000&endTime=1791640199999&limit=1000",
-      "requested_at": "2026-10-10T13:50:31.376Z",
-      "received_at": "2026-10-10T13:50:32.112Z",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1791638940000&endTime=1791643739999&limit=1000",
+      "requested_at": "2026-10-10T14:49:58.998Z",
+      "received_at": "2026-10-10T14:49:59.703Z",
       "http_status": 200,
       "status": "ok",
       "error": null
