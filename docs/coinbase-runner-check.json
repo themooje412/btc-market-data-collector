@@ -1,5 +1,5 @@
 {
-  "tested_at": "2026-10-28T21:40:46.628Z",
+  "tested_at": "2026-10-29T01:49:39.099Z",
   "runner": "GitHub Actions",
   "results": [
     {
@@ -8,7 +8,7 @@
       "path": "/products/BTC-USD/ticker",
       "parameters": {},
       "status": "ok",
-      "received_at": "2026-10-28T21:40:45.809Z"
+      "received_at": "2026-10-29T01:49:26.918Z"
     },
     {
       "name": "USDT-USD ticker",
@@ -16,7 +16,7 @@
       "path": "/products/USDT-USD/ticker",
       "parameters": {},
       "status": "ok",
-      "received_at": "2026-10-28T21:40:46.098Z"
+      "received_at": "2026-10-29T01:49:27.173Z"
     },
     {
       "name": "BTC-USD trades",
@@ -26,39 +26,47 @@
         "limit": 5
       },
       "status": "ok",
-      "received_at": "2026-10-28T21:40:46.357Z",
+      "received_at": "2026-10-29T01:49:31.966Z",
       "pagination": "verified"
     }
   ],
   "http_audit": [
     {
       "url": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
-      "requested_at": 1793223645.74212,
-      "received_at": 1793223645.8095922,
+      "requested_at": 1793238566.8755372,
+      "received_at": 1793238566.918068,
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://api.exchange.coinbase.com/products/USDT-USD/ticker",
-      "requested_at": 1793223646.0022943,
-      "received_at": 1793223646.0989256,
+      "requested_at": 1793238567.135657,
+      "received_at": 1793238567.1738229,
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
       "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=5",
-      "requested_at": 1793223646.2622588,
-      "received_at": 1793223646.3575654,
+      "requested_at": 1793238567.3956804,
+      "received_at": 1793238571.9662445,
       "http_status": 200,
       "status": "ok",
       "error": null
     },
     {
-      "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=5&after=1111713957",
-      "requested_at": 1793223646.5222547,
-      "received_at": 1793223646.6282542,
+      "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=5&after=1111788240",
+      "requested_at": 1793238571.966322,
+      "received_at": 1793238577.029249,
+      "http_status": 500,
+      "status": "error",
+      "error": "HTTP 500"
+    },
+    {
+      "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=5&after=1111788240",
+      "requested_at": 1793238579.0295947,
+      "received_at": 1793238579.0997617,
       "http_status": 200,
       "status": "ok",
       "error": null
